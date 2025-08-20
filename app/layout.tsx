@@ -17,6 +17,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "이성준 - 웹 개발자 포트폴리오",
   description: "React, Next.js 전문 웹 개발자 이성준의 포트폴리오입니다.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 interface RootLayoutProps {
