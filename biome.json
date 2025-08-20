@@ -13,6 +13,8 @@
       "!.next",
       "!dist",
       "!build",
+      "!out",
+      "!app/globals.css",
       "!components/ui"
     ]
   },

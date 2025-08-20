@@ -30,13 +30,13 @@ const ProjectDetailModal = ({
 }: ProjectDetailModalProps) => {
   if (!project) return null;
 
-  const { images } = project;
-
   const handleOpenChange = (open: boolean) => {
     if (!open) {
       onClose();
     }
   };
+
+  const hasImages = project.images.length > 0;
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
@@ -52,24 +52,26 @@ const ProjectDetailModal = ({
 
         <div className="space-y-6">
           {/* 이미지 캐러셀 */}
-          <Carousel className="w-full max-w-full">
-            <CarouselContent className="h-48 md:h-64">
-              {images?.map((image, index) => (
-                <CarouselItem key={index}>
-                  <div className="h-48 md:h-64 lg:aspect-video bg-muted rounded-lg overflow-hidden relative">
-                    <Image
-                      src={image}
-                      alt={`${project.title} 이미지 ${index + 1}`}
-                      className="h-full w-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-2 top-1/2" />
-            <CarouselNext className="right-2 top-1/2" />
-          </Carousel>
+          {hasImages && (
+            <Carousel className="w-full max-w-full">
+              <CarouselContent className="h-48 md:h-64">
+                {project.images.map((image, index) => (
+                  <CarouselItem key={`${project.id}-image-${index}`}>
+                    <div className="h-48 md:h-64 lg:aspect-video bg-muted rounded-lg overflow-hidden relative">
+                      <Image
+                        src={image}
+                        alt={`${project.title} 이미지 ${index + 1}`}
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2 top-1/2" />
+              <CarouselNext className="right-2 top-1/2" />
+            </Carousel>
+          )}
 
           {/* 프로젝트 상세 설명 */}
           <div className="space-y-4">
@@ -84,8 +86,11 @@ const ProjectDetailModal = ({
             <div>
               <h3 className="text-lg font-semibold mb-3">사용 기술</h3>
               <div className="flex flex-wrap gap-2">
-                {project.techStack.map((tech) => (
-                  <Badge key={tech} variant="secondary">
+                {project.techStack.map((tech, index) => (
+                  <Badge
+                    key={`${project.id}-tech-${index}`}
+                    variant="secondary"
+                  >
                     {tech}
                   </Badge>
                 ))}
