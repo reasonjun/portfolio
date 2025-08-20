@@ -119,4 +119,7 @@
   body {
     @apply bg-background text-foreground;
   }
+  html {
+    scroll-padding-top: 5rem; /* 헤더 높이만큼 스크롤 패딩 적용 */
+  }
 }
