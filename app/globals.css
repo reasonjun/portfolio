@@ -120,6 +120,6 @@
     @apply bg-background text-foreground;
   }
   html {
-    scroll-padding-top: 5rem; /* 헤더 높이만큼 스크롤 패딩 적용 */
+    scroll-padding-top: 80px; /* 헤더 높이 + 12px(약간의 마진) 만큼 스크롤 패딩 적용 */
   }
 }
