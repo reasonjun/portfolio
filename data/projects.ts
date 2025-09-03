@@ -1,6 +1,6 @@
 import type { Project } from "@/app/types/project";
 
-export const PROJECTS_PER_PAGE = 4;
+export const PROJECTS_PER_PAGE = 6;
 
 export const PROJECTS_DATA: Project[] = [
   {

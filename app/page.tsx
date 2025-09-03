@@ -10,7 +10,7 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <main className="max-w-4xl mx-auto px-6 py-12 space-y-20">
+      <main className="max-w-5xl mx-auto px-6 py-12 space-y-20">
         <HeroSection />
         <SkillsSection />
         <ProjectsSection />
