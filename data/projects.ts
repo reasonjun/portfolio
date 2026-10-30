@@ -4,6 +4,56 @@ export const PROJECTS_PER_PAGE = 6;
 
 export const PROJECTS_DATA: Project[] = [
   {
+    id: "legal-management-system",
+    title: "법무관리 시스템 재구축",
+    description:
+      "2008년 구축된 레거시 법무관리 시스템을 대체하는 신규 사내 시스템",
+    detailDescription:
+      "토큰이 브라우저에 노출되지 않도록 서버(BFF)가 중계하는 로그인 구조를 설계했습니다. JWT 토큰을 암호화 쿠키로 봉인하고, 동시 요청이 몰려도 refresh를 한 번으로 합쳐 토큰 회전 정책의 무효화 위험을 줄였습니다. GitLab CI/CD·Docker로 개발·스테이징·운영 3개 환경을 구성하고, Nginx blue/green으로 헬스체크를 통과한 뒤에만 트래픽을 전환합니다. 명세 기반 개발과 Git 훅 자동 검증을 적용했습니다.",
+    company: "㈜키다리스튜디오",
+    period: "2026.07. - 진행 중",
+    techStack: [
+      "TypeScript",
+      "Next.js 16",
+      "React 19",
+      "Ant Design",
+      "TanStack Query",
+      "Zod",
+      "Docker",
+      "Nginx",
+    ],
+    images: [],
+  },
+  {
+    id: "external-settlement-system",
+    title: "외부정산 시스템",
+    description: "저작권자가 정산 내역을 확인하는 외부 제공 웹 페이지",
+    detailDescription:
+      "양식이 다른 3개 정산 유형의 조회 탭·엑셀 업로드 양식·안내 메일 항목을 유형별 설정으로 분리하고, 신규 유형의 설정 누락을 컴파일 단계에서 검출하도록 설계했습니다. 배포 후에도 옛 화면이 보인다는 문의에 대응해 S3·CloudFront 캐시 정책을 분리했습니다(해시 파일은 장기 캐시, index.html은 매번 재검증).",
+    company: "㈜키다리스튜디오",
+    period: "2026.03. - 2026.04.",
+    techStack: ["TypeScript", "Vue 3", "Vite 8", "Pinia", "AWS S3·CloudFront"],
+    images: [],
+  },
+  {
+    id: "ip-management-system",
+    title: "IP 관리 시스템",
+    description: "콘텐츠 IP를 관리하는 사내 업무 시스템",
+    detailDescription:
+      "약 1만 줄 단일 파일이던 핵심 업무 화면을 단계·영역별 컴포넌트로 재설계하고, 5개 화면에 중복된 입력 영역을 공통 컴포넌트로 통합했습니다. 계약등록 화면의 정산 조합 326가지를 Playwright로 전수 순회하는 E2E를 구성하고, 기존 동작을 테스트로 고정한 뒤 레거시 기능을 제거했습니다. Vite 8 업그레이드로 로컬 빌드를 11.6초에서 2.77초로 줄였습니다.",
+    company: "㈜키다리스튜디오",
+    period: "2025.10. - 진행 중",
+    techStack: [
+      "TypeScript",
+      "Vue 3",
+      "Vite 8",
+      "Pinia",
+      "RealGrid2",
+      "Playwright",
+    ],
+    images: [],
+  },
+  {
     id: "ats-monitoring-system",
     title: "채용 관리 솔루션 관리자 모니터링 시스템",
     description: "중소기업 채용관리솔루션(ATS) 운영 모니터링 웹 시스템",
@@ -74,10 +124,10 @@ export const PROJECTS_DATA: Project[] = [
     title: "모바일 기반 접근성 전자책 뷰어",
     description: "DAISY 포맷 기반 eBook 리더 앱",
     detailDescription:
-      "Flutter로 설계 후 접근성 제약으로 iOS(Swift)로 재개발했습니다. Daisy Parser 모듈과 확장 가능한 파서 아키텍처를 설계했습니다.",
+      "Flutter로 DAISY 전자책 뷰어를 개발했습니다. Daisy Parser 모듈과 확장 가능한 파서 아키텍처를 설계했습니다.",
     company: "㈜닷",
     period: "2023.03. - 2023.08.",
-    techStack: ["Flutter", "Dart", "Swift"],
+    techStack: ["Flutter", "Dart"],
     images: [],
   },
   {

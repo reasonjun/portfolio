@@ -5,8 +5,8 @@ import { SheetClose } from "@/components/ui/sheet";
 const navItems = [
   { label: "소개", href: "#about" },
   { label: "기술", href: "#skills" },
-  { label: "프로젝트", href: "#projects" },
   { label: "경력", href: "#experience" },
+  { label: "프로젝트", href: "#projects" },
 ];
 
 const NavLink = ({
@@ -26,7 +26,7 @@ const NavLink = ({
 );
 
 const DesktopNav = () => (
-  <div className="hidden md:flex space-x-8">
+  <div className="hidden md:col-start-2 md:flex md:gap-2">
     {navItems.map((item) => (
       <NavLink key={item.label} item={item} />
     ))}
@@ -36,7 +36,7 @@ const DesktopNav = () => (
 const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b shadow-sm supports-[backdrop-filter]:bg-background/60">
-      <div className="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="max-w-5xl mx-auto px-6 py-4 grid grid-cols-[1fr_auto_1fr] items-center">
         <DesktopNav />
         <MobileNav>
           {navItems.map((item) => (
@@ -45,7 +45,9 @@ const Navbar = () => {
             </SheetClose>
           ))}
         </MobileNav>
-        <ModeToggle />
+        <div className="col-start-3 justify-self-end">
+          <ModeToggle />
+        </div>
       </div>
     </nav>
   );

@@ -13,8 +13,8 @@ export default function Home() {
       <main className="max-w-5xl mx-auto px-6 py-12 space-y-20">
         <HeroSection />
         <SkillsSection />
-        <ProjectsSection />
         <ExperienceSection />
+        <ProjectsSection />
       </main>
 
       <Footer />

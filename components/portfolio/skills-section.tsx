@@ -3,11 +3,11 @@ import { Badge } from "@/components/ui/badge";
 const skills = [
   {
     category: "프로그래밍 언어",
-    items: ["TypeScript", "JavaScript", "Java", "Dart", "Swift"],
+    items: ["TypeScript", "JavaScript", "Java", "Dart"],
   },
   { category: "프론트엔드", items: ["Vue.js", "React", "Next.js", "Flutter"] },
   { category: "백엔드", items: ["Spring (Boot)", "SQL"] },
-  { category: "데브옵스", items: ["Docker", "AWS", "Jenkins", "Keycloak"] },
+  { category: "데브옵스", items: ["Docker", "AWS"] },
 ];
 
 const SkillsSection = () => {
