@@ -3,7 +3,7 @@ import { Github, Mail } from "lucide-react";
 const Footer = () => {
   return (
     <footer className="border-t mt-20">
-      <div className="max-w-4xl mx-auto px-6 py-8">
+      <div className="max-w-5xl mx-auto px-6 py-8">
         <div className="flex justify-center space-x-6">
           <a
             href="https://github.com/reasonjun"

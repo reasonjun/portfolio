@@ -2,38 +2,37 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useEffect, useState } from "react";
 
 export function ModeToggle() {
-  const { setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted && resolvedTheme === "dark";
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">테마 전환</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          라이트
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          다크
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          시스템
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <button
+      type="button"
+      role="switch"
+      aria-checked={isDark}
+      aria-label="다크 모드"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className="relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border bg-muted p-[3px] outline-none transition-colors! duration-300 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 motion-reduce:transition-none!"
+    >
+      <span className="pointer-events-none relative flex size-5 items-center justify-center rounded-full bg-background text-foreground shadow-sm transition-transform! duration-300 ease-out motion-reduce:transition-none! dark:translate-x-5">
+        <Sun
+          aria-hidden="true"
+          className="size-3.5 scale-100 transition-transform! duration-300 motion-reduce:transition-none! dark:scale-0"
+        />
+        <Moon
+          aria-hidden="true"
+          className="absolute size-3.5 scale-0 transition-transform! duration-300 motion-reduce:transition-none! dark:scale-100"
+        />
+      </span>
+    </button>
   );
 }
