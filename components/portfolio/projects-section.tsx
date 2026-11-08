@@ -26,7 +26,7 @@ const ProjectsSection = () => {
     <section id="projects" className="space-y-8">
       <h2 className="text-2xl font-semibold text-center">프로젝트</h2>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-3 gap-6">
         {visibleProjects.map((project) => (
           <ProjectCard
             key={project.id}

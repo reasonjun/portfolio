@@ -21,9 +21,7 @@ const ExperienceSection = () => {
               <h3 className="font-semibold">{exp.company}</h3>
             </div>
             <p className="text-sm text-muted-foreground">{exp.period}</p>
-            {exp.role && (
-              <p className="text-sm text-muted-foreground mt-1">{exp.role}</p>
-            )}
+            {exp.role && <p className="text-sm font-medium mt-1">{exp.role}</p>}
           </div>
         ))}
       </div>

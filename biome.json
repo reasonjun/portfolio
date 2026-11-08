@@ -14,8 +14,7 @@
       "!dist",
       "!build",
       "!out",
-      "!app/globals.css",
-      "!components/ui"
+      "!app/globals.css"
     ]
   },
   "formatter": {
