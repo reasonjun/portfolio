@@ -1,5 +1,15 @@
-const PERIOD_PATTERN =
-  /^(\d{4})\.\s*(\d{1,2})\.\s*-\s*(\d{4})\.\s*(\d{1,2})\.?$/;
+const MONTH_PATTERN = /^(\d{4})\.\s*(\d{1,2})\.?$/;
+
+// "2022. 12. - 2024. 12." → ["2022. 12.", "2024. 12."]. 끝이 없으면 빈 문자열이다.
+export const splitPeriod = (period: string): [string, string] => {
+  const [start, end = ""] = period.trim().split(/\s*-\s*/);
+  return [start, end];
+};
+
+const toMonths = (date: string): number | null => {
+  const match = date.match(MONTH_PATTERN);
+  return match ? Number(match[1]) * 12 + Number(match[2]) : null;
+};
 
 /**
  * "2022. 12. - 2024. 12." 형태의 기간을 "2년 1개월"로 바꾼다.
@@ -7,11 +17,10 @@ const PERIOD_PATTERN =
  * 끝이 날짜가 아니거나("재직 중") 형식이 맞지 않으면 null을 돌려준다.
  */
 export const getTotalPeriod = (period: string): string | null => {
-  const match = period.trim().match(PERIOD_PATTERN);
-  if (!match) return null;
+  const [start, end] = splitPeriod(period).map(toMonths);
+  if (start === null || end === null) return null;
 
-  const [startYear, startMonth, endYear, endMonth] = match.slice(1).map(Number);
-  const months = endYear * 12 + endMonth - (startYear * 12 + startMonth) + 1;
+  const months = end - start + 1;
   if (months < 1) return null;
 
   const years = Math.floor(months / 12);

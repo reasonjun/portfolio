@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { EXPERIENCES_DATA } from "@/data/experiences";
-import { getTotalPeriod } from "./period";
+import { getTotalPeriod, splitPeriod } from "./period";
 
 describe("getTotalPeriod", () => {
   it("이력서와 같은 방식으로 시작한 달과 끝난 달을 모두 센다", () => {
@@ -21,10 +21,7 @@ describe("getTotalPeriod", () => {
 
   it("경력 데이터에서는 종료된 회사만 총 기간이 나온다", () => {
     const totals = Object.fromEntries(
-      EXPERIENCES_DATA.map((exp) => [
-        exp.id,
-        exp.isActive ? null : getTotalPeriod(exp.period),
-      ]),
+      EXPERIENCES_DATA.map((exp) => [exp.id, getTotalPeriod(exp.period)]),
     );
     expect(totals).toEqual({
       kidaristudio: null,
@@ -32,5 +29,30 @@ describe("getTotalPeriod", () => {
       dot: "2년 1개월",
       innodale: "3년 7개월",
     });
+  });
+});
+
+describe("splitPeriod", () => {
+  it("시작과 끝으로 나눈다", () => {
+    expect(splitPeriod("2022. 12. - 2024. 12.")).toEqual([
+      "2022. 12.",
+      "2024. 12.",
+    ]);
+    expect(splitPeriod("2025. 10. - 재직 중")).toEqual([
+      "2025. 10.",
+      "재직 중",
+    ]);
+  });
+
+  it("구분자 앞뒤 공백이 없어도 getTotalPeriod와 같은 기준으로 나눈다", () => {
+    expect(splitPeriod("2022. 12.-2024. 12.")).toEqual([
+      "2022. 12.",
+      "2024. 12.",
+    ]);
+    expect(getTotalPeriod("2022. 12.-2024. 12.")).toBe("2년 1개월");
+  });
+
+  it("끝이 없으면 빈 문자열이다", () => {
+    expect(splitPeriod("2025년 10월")).toEqual(["2025년 10월", ""]);
   });
 });

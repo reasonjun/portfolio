@@ -1,11 +1,5 @@
 import { EXPERIENCES_DATA } from "@/data/experiences";
-import { getTotalPeriod } from "@/lib/period";
-
-// "2022. 12. - 2024. 12." → ["2022. 12.", "2024. 12."]
-const splitPeriod = (period: string): [string, string] => {
-  const [start, end = ""] = period.split(/\s+-\s+/);
-  return [start, end];
-};
+import { getTotalPeriod, splitPeriod } from "@/lib/period";
 
 const ExperienceSection = () => {
   return (
@@ -22,7 +16,7 @@ const ExperienceSection = () => {
 
       <ol className="space-y-12">
         {EXPERIENCES_DATA.map((exp, index) => {
-          const total = exp.isActive ? null : getTotalPeriod(exp.period);
+          const total = getTotalPeriod(exp.period);
           const [start, end] = splitPeriod(exp.period);
 
           return (
