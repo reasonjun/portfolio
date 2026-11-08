@@ -1,13 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-archivo), var(--font-noto-sans-kr);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -43,26 +41,32 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/*
+ * 색 규칙: 남색(blue) 바탕 한 장, 잉크 한 가지, 초록(green) 포인트 한 가지.
+ * 초록은 "헬스체크를 통과해 트래픽을 받는 쪽"을 뜻하며 행동 버튼과 연락처 면에만 쓴다.
+ */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --radius: 0;
+  /* sticky 네비바 높이. navbar.tsx의 높이, 스테이지 top, scroll-padding-top이 함께 쓴다. */
+  --navbar-height: 4rem;
+  --background: #f3f5fb;
+  --foreground: #141a33;
+  --card: #e4e9f5;
+  --card-foreground: #141a33;
+  --popover: #f3f5fb;
+  --popover-foreground: #141a33;
+  --primary: #0b7a4b;
+  --primary-foreground: #ffffff;
+  --secondary: #e4e9f5;
+  --secondary-foreground: #141a33;
+  --muted: #e4e9f5;
+  --muted-foreground: #444d70;
+  --accent: #d6ddf0;
+  --accent-foreground: #141a33;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: oklch(0.25 0.06 270 / 16%);
+  --input: oklch(0.25 0.06 270 / 20%);
+  --ring: #0b7a4b;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -76,41 +80,12 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  /* 연락처 면: 초록 바탕에 남색 잉크 */
+  --field: #0b7a4b;
+  --field-ink: #ffffff;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
 
 @layer base {
   * {
@@ -118,8 +93,94 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* @theme inline의 --font-sans는 프리플라이트 기본 폰트에 연결되지 않아 직접 지정한다. */
+    font-family:
+      var(--font-archivo), var(--font-noto-sans-kr), ui-sans-serif, system-ui,
+      sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    word-break: keep-all;
+  }
+  code,
+  pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   }
   html {
-    scroll-padding-top: 80px; /* 헤더 높이 + 12px(약간의 마진) 만큼 스크롤 패딩 적용 */
+    /* 앵커·포커스 이동 시 sticky 네비바에 가려지지 않게 한다. */
+    scroll-padding-top: var(--navbar-height);
+  }
+}
+
+@keyframes pipeline-light {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 섹션이 들어올 때 머리말, 글, 그림 순으로 60~90ms 간격으로 오른다. 스크립트가 없으면 숨기지 않는다. */
+.js-motion [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+.js-motion [data-reveal][data-in] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-motion [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* 인쇄본(PDF)은 흰 종이에 남색 잉크로 낸다. */
+@media print {
+  :root {
+    --background: #ffffff;
+    --foreground: #141a33;
+    --card: #ffffff;
+    --card-foreground: #141a33;
+    --muted: #f1f3f9;
+    --muted-foreground: #444d70;
+    --secondary: #f1f3f9;
+    --secondary-foreground: #141a33;
+    --accent: #f1f3f9;
+    --accent-foreground: #141a33;
+    --primary: #141a33;
+    --primary-foreground: #ffffff;
+    --border: oklch(0.25 0.06 270 / 20%);
+  }
+}
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* 인쇄본에서는 캐러셀 조작 버튼을 숨기고 첫 장만 일정한 높이로 보여 준다. */
+  [data-slot="carousel-previous"],
+  [data-slot="carousel-next"] {
+    display: none !important;
+  }
+
+  [data-slot="carousel-item"] {
+    height: 80mm !important;
+  }
+
+  figure {
+    break-inside: avoid;
   }
 }

@@ -1,49 +1,63 @@
-import { Badge } from "@/components/ui/badge";
-
 const skills = [
   {
-    category: "프로그래밍 언어",
-    items: ["TypeScript", "JavaScript", "Java", "Dart"],
+    category: "언어·프레임워크",
+    items: [
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Vue",
+      "Java",
+      "Spring Boot",
+      "SQL",
+      "Flutter",
+    ],
   },
-  { category: "프론트엔드", items: ["Vue.js", "React", "Next.js", "Flutter"] },
-  { category: "백엔드", items: ["Spring (Boot)", "SQL"] },
-  { category: "데브옵스", items: ["Docker", "AWS"] },
+  { category: "상태·데이터", items: ["TanStack Query", "Pinia", "Zod"] },
+  {
+    category: "UI·디자인 시스템",
+    items: ["Ant Design", "Storybook", "Figma"],
+  },
+  {
+    category: "품질·자동화",
+    items: ["Playwright", "Biome", "ESLint", "husky"],
+  },
+  {
+    category: "빌드·배포",
+    items: ["Vite", "Docker", "Nginx", "GitLab CI/CD", "AWS S3·CloudFront"],
+  },
 ];
 
 const SkillsSection = () => {
   return (
-    <section id="skills" className="space-y-8">
-      <h2 className="text-2xl font-semibold text-center">기술</h2>
-      <div className="overflow-hidden rounded-lg border">
-        <table className="w-full">
-          <thead className="bg-muted/50">
-            <tr>
-              <th className="px-6 py-3 text-left text-sm font-medium">분야</th>
-              <th className="px-6 py-3 text-left text-sm font-medium">
-                기술 스택
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {skills.map((skillGroup) => (
-              <tr key={skillGroup.category} className="hover:bg-muted/30">
-                <td className="px-6 py-4 text-sm font-medium text-muted-foreground whitespace-nowrap">
-                  {skillGroup.category}
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex flex-wrap gap-2">
-                    {skillGroup.items.map((skill) => (
-                      <Badge key={skill} variant="secondary">
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <section id="skills" className="scroll-mt-3 space-y-10 py-12 lg:py-16">
+      <h2
+        data-reveal
+        className="text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.1] tracking-[-0.02em] text-balance"
+      >
+        기술
+      </h2>
+
+      <dl className="space-y-8">
+        {skills.map((group, index) => (
+          <div
+            key={group.category}
+            data-reveal
+            style={{ "--i": index % 3 } as React.CSSProperties}
+            className="grid gap-2 sm:grid-cols-[11rem_1fr] sm:gap-8"
+          >
+            <dt className="text-lg text-muted-foreground">{group.category}</dt>
+            <dd>
+              <ul className="flex flex-wrap gap-x-6 gap-y-1 text-2xl font-medium">
+                {group.items.map((item) => (
+                  <li key={item} translate="no">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))}
+      </dl>
     </section>
   );
 };
