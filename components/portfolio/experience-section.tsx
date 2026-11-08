@@ -1,6 +1,12 @@
 import { EXPERIENCES_DATA } from "@/data/experiences";
 import { getTotalPeriod } from "@/lib/period";
 
+// "2022. 12. - 2024. 12." → ["2022. 12.", "2024. 12."]
+const splitPeriod = (period: string): [string, string] => {
+  const [start, end = ""] = period.split(/\s+-\s+/);
+  return [start, end];
+};
+
 const ExperienceSection = () => {
   return (
     <section
@@ -14,48 +20,50 @@ const ExperienceSection = () => {
         경력
       </h2>
 
-      <ol className="space-y-16">
+      <ol className="space-y-12">
         {EXPERIENCES_DATA.map((exp, index) => {
           const total = exp.isActive ? null : getTotalPeriod(exp.period);
+          const [start, end] = splitPeriod(exp.period);
 
           return (
             <li
               key={exp.id}
               data-reveal
               style={{ "--i": index % 3 } as React.CSSProperties}
-              className="grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-x-12"
+              className="grid gap-2 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-x-10"
             >
+              <p
+                className={`text-[0.9375rem] tabular-nums leading-relaxed md:pt-1 ${
+                  exp.isActive ? "text-foreground" : "text-muted-foreground"
+                }`}
+              >
+                <span className="md:block">
+                  {start}
+                  <span aria-hidden="true"> –</span>
+                </span>{" "}
+                <span className="md:block">{end}</span>
+                {total && (
+                  <span className="ml-2 md:ml-0 md:block">({total})</span>
+                )}
+              </p>
+
               <div className="space-y-3">
                 <div className="space-y-1">
-                  <h3 className="text-2xl font-medium leading-snug">
+                  <h3 className="text-xl font-medium leading-snug">
                     {exp.company}
                     {exp.isActive && (
                       <span className="sr-only">(현재 재직 중)</span>
                     )}
                   </h3>
-                  <p
-                    className={`text-base tabular-nums ${
-                      exp.isActive ? "text-primary" : "text-muted-foreground"
-                    }`}
-                  >
-                    {exp.period}
-                    {total && <span className="ml-2">({total})</span>}
+                  {exp.position && (
+                    <p className="text-base font-medium">{exp.position}</p>
+                  )}
+                  <p className="text-[0.9375rem] text-muted-foreground">
+                    {exp.jobs.join(" · ")}
                   </p>
                 </div>
-                {exp.position && (
-                  <p className="text-lg font-medium">{exp.position}</p>
-                )}
-                <ul aria-label="직무" className="flex flex-wrap gap-2">
-                  {exp.jobs.map((job) => (
-                    <li key={job} className="bg-card px-3 py-1 text-sm">
-                      {job}
-                    </li>
-                  ))}
-                </ul>
-              </div>
 
-              <div className="space-y-4">
-                <p className="text-lg font-medium leading-snug">
+                <p className="text-base font-medium leading-snug">
                   {exp.tagline}
                 </p>
                 <ul className="space-y-2 text-base leading-relaxed">
@@ -63,6 +71,20 @@ const ExperienceSection = () => {
                     <li key={duty}>{duty}</li>
                   ))}
                 </ul>
+
+                {exp.techs && exp.techs.length > 0 && (
+                  <ul aria-label="사용 기술" className="flex flex-wrap gap-2">
+                    {exp.techs.map((tech) => (
+                      <li
+                        key={tech}
+                        translate="no"
+                        className="bg-card px-3 py-1 text-[0.9375rem]"
+                      >
+                        {tech}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </li>
           );

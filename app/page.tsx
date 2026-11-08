@@ -1,6 +1,6 @@
 import CaseStudiesSection from "@/components/portfolio/case-studies-section";
-import ContactSection from "@/components/portfolio/contact-section";
 import ExperienceSection from "@/components/portfolio/experience-section";
+import Footer from "@/components/portfolio/footer";
 import HeroSection from "@/components/portfolio/hero-section";
 import { MotionObserver } from "@/components/portfolio/motion-observer";
 import Navbar from "@/components/portfolio/navbar";
@@ -29,8 +29,8 @@ export default function Home() {
         <div className="mx-auto max-w-5xl px-6">
           <ExperienceSection />
         </div>
-        <ContactSection />
       </main>
+      <Footer />
     </div>
   );
 }

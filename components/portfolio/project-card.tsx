@@ -34,7 +34,7 @@ export const ProjectCard = ({
   <li
     data-reveal
     style={{ "--i": index % 3 } as React.CSSProperties}
-    className="group relative flex flex-col bg-card transition-colors duration-200 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary hover:bg-accent motion-reduce:transition-none"
+    className="group relative flex flex-col bg-card transition-colors duration-200 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary hover:bg-accent motion-reduce:transition-none"
   >
     <div className="relative aspect-video overflow-hidden bg-accent">
       {image ? (
@@ -48,7 +48,7 @@ export const ProjectCard = ({
         />
       ) : (
         <p
-          className="absolute inset-x-0 bottom-0 p-4 text-sm text-muted-foreground"
+          className="absolute inset-x-0 bottom-0 p-4 text-[0.9375rem] text-muted-foreground"
           translate="no"
         >
           {techStack.slice(0, FALLBACK_TECH_COUNT).join(" · ")}
@@ -65,9 +65,11 @@ export const ProjectCard = ({
           {title}
         </Link>
       </h3>
-      <p className="mt-1 text-sm text-primary">{role}</p>
-      <p className="mt-2 line-clamp-3 text-sm leading-relaxed">{summary}</p>
-      <p className="mt-auto pt-4 text-sm tabular-nums text-muted-foreground">
+      <p className="mt-1 text-[0.9375rem] font-medium">{role}</p>
+      <p className="mt-2 line-clamp-3 text-[0.9375rem] leading-relaxed">
+        {summary}
+      </p>
+      <p className="mt-auto pt-4 text-[0.9375rem] tabular-nums text-muted-foreground">
         {meta}
       </p>
     </div>

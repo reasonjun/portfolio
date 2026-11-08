@@ -37,7 +37,7 @@ const CaseStudiesSection = () => {
 
       <Link
         href="/archive/"
-        className="mt-10 inline-flex h-12 items-center gap-2 bg-primary px-6 text-base font-semibold text-primary-foreground outline-none transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary active:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+        className="mt-10 inline-flex h-12 items-center gap-2 bg-primary px-6 text-base font-semibold text-primary-foreground transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary active:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
       >
         전체 프로젝트 보기
         <ArrowRight aria-hidden="true" className="size-4" />

@@ -25,7 +25,7 @@ const MobileNav = ({ children }: MobileNavProps) => {
             ref={triggerRef}
             type="button"
             aria-label="메뉴 열기"
-            className="p-2 rounded-md hover:bg-accent outline-none focus-visible:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50"
+            className="-ml-1 p-3 rounded-md hover:bg-accent outline-none focus-visible:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50"
           >
             <Menu className="h-5 w-5" />
           </button>

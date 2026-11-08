@@ -16,6 +16,15 @@ export const EXPERIENCES_DATA: Experience[] = [
       "개발 환경·품질 체계 정비",
       "공통 컴포넌트·유틸 개발",
     ],
+    techs: [
+      "TypeScript",
+      "Next.js",
+      "React",
+      "TanStack Query",
+      "Docker",
+      "Nginx",
+      "GitLab CI/CD",
+    ],
   },
   {
     id: "freelancer",
@@ -30,6 +39,7 @@ export const EXPERIENCES_DATA: Experience[] = [
       "NextAuth.js 기반 사용자 인증 연동",
       "모니터링 대시보드, 리포트, 설문조사 관리 화면 개발",
     ],
+    techs: ["Next.js", "NextAuth.js"],
   },
   {
     id: "dot",
@@ -46,6 +56,7 @@ export const EXPERIENCES_DATA: Experience[] = [
       "코드 컨벤션·리뷰 프로세스, Git 브랜치 전략 운영",
       "일부 프로젝트에서 Java/Spring Boot 기반 API 개발까지 맡은 풀스택 개발",
     ],
+    techs: ["Vue 3", "TypeScript", "Java", "Spring Boot"],
   },
   {
     id: "innodale",
@@ -61,6 +72,16 @@ export const EXPERIENCES_DATA: Experience[] = [
       "대용량 데이터 그리드(jqGrid) 기반 조회·편집 화면 개발",
       "CSV/Excel 일괄 업로드와 정기 보고서 자동 생성 기능 개발",
       "OpenLayers/GeoServer 기반 GIS 공간 데이터 처리와 지도 시각화 화면 개발",
+    ],
+    techs: [
+      "JavaScript",
+      "Java",
+      "Spring",
+      "SQL",
+      "Highcharts",
+      "jqGrid",
+      "OpenLayers",
+      "GeoServer",
     ],
   },
 ];

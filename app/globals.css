@@ -43,7 +43,7 @@
 
 /*
  * 색 규칙: 남색(blue) 바탕 한 장, 잉크 한 가지, 초록(green) 포인트 한 가지.
- * 초록은 "헬스체크를 통과해 트래픽을 받는 쪽"을 뜻하며 행동 버튼과 연락처 면에만 쓴다.
+ * 초록은 "헬스체크를 통과해 트래픽을 받는 쪽"을 뜻하며 행동 버튼에만 쓴다.
  */
 :root {
   --radius: 0;
@@ -80,9 +80,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  /* 연락처 면: 초록 바탕에 남색 잉크 */
-  --field: #0b7a4b;
-  --field-ink: #ffffff;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 

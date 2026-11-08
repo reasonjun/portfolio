@@ -11,4 +11,6 @@ export interface Experience {
   tagline: string;
   // 그 회사에서 맡은 역할·책임. 대표 프로젝트 카드와 겹치지 않게 쓴다.
   duties: string[];
+  // 그 회사에서 실제로 쓴 기술. 경력 항목 아래 칩으로 보인다. 없으면 생략한다.
+  techs?: string[];
 }
