@@ -117,6 +117,16 @@
   }
 }
 
+/*
+ * 히어로 그림 뒤의 패널. 남색에서 초록으로 이어지는 면 위에서 밝은 종이색 브라우저 창과 레고 블록이 또렷해진다.
+ * 양 끝 색은 사이트의 남색(--foreground)과 초록(--primary)을 그대로 쓴다.
+ */
+.hero-backdrop {
+  background:
+    radial-gradient(70% 60% at 30% 20%, rgb(255 255 255 / 0.14), transparent 60%),
+    linear-gradient(145deg, var(--foreground) 0%, #1c2a5c 55%, var(--primary) 135%);
+}
+
 /* 섹션이 들어올 때 머리말, 글, 그림 순으로 60~90ms 간격으로 오른다. 스크립트가 없으면 숨기지 않는다. */
 .js-motion [data-reveal] {
   opacity: 0;

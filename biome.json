@@ -14,7 +14,8 @@
       "!dist",
       "!build",
       "!out",
-      "!app/globals.css"
+      "!app/globals.css",
+      "!components/iso"
     ]
   },
   "formatter": {

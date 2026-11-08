@@ -1,0 +1,270 @@
+/*
+ * 히어로 피규어: 브라우저 창과 레고 블록. 사이트의 남색 바탕 위에 밝은 종이색 부품이 올라간다.
+ * 색은 아래 토큰에서 바꾼다. 초록은 사이트 규칙대로 행동 버튼(버튼 블록)에만 쓴다.
+ */
+.hero-lego.iso {
+  --anatomy-paper: #f3f5fb;
+  --anatomy-card: #f3f5fb;
+  --anatomy-face: #fbfcff;
+  --anatomy-top: #ffffff;
+  --anatomy-shade-0: #c4cbe3;
+  --anatomy-shade-1: #d3d9ee;
+  --anatomy-shade-2: #e1e6f5;
+  --anatomy-shade-3: #eef1fb;
+  --anatomy-hi: #1b2250;
+  --anatomy-mid: #7983b3;
+  --anatomy-lo: #a9b2d6;
+  --anatomy-faint: #ced5ec;
+  --anatomy-lit: #0b7a4b;
+  --anatomy-halo: #060919;
+  --anatomy-halo-opacity: 0.55;
+  --anatomy-dot: #1b2250;
+  --gx-dim: #aab3d8;
+  --gx-soft: #cdd4ee;
+  --gx-blue: #8fa3ea;
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero-lego:focus-visible {
+  outline: 2px solid #8bffc6;
+  outline-offset: -6px;
+}
+
+.hero-lego .iso-svg {
+  height: 100%;
+  overflow: hidden;
+}
+
+/*
+ * 블록 색 변형: 같은 모양에 면 색 토큰만 바꾼다. 블록의 윤곽선은 mid 톤이다.
+ * 명도는 세 단계로 나눈다: 종이색 블록(가장 밝음), 창 안쪽(중간), 파란 블록(더 짙음).
+ * 파란 블록 위의 인쇄 그림은 바탕에 묻히지 않게 색을 뒤집는다.
+ */
+.bt-blue {
+  --anatomy-paper: #a7b6ef;
+  --anatomy-shade-0: #6f80cb;
+  --anatomy-shade-1: #7e8fd4;
+  --anatomy-shade-2: #8e9edd;
+  --anatomy-shade-3: #a7b6ef;
+  --anatomy-top: #c5d0f7;
+  --anatomy-mid: #5f70bd;
+  --anatomy-faint: #8fa0e0;
+  --gx-dim: #e6ecfd;
+  --gx-soft: #c5d0f7;
+  --gx-blue: #4f63c0;
+}
+
+.bt-ink {
+  --anatomy-paper: #2a3466;
+  --anatomy-shade-0: #161c42;
+  --anatomy-shade-1: #1c2450;
+  --anatomy-shade-2: #232c5c;
+  --anatomy-shade-3: #2b3568;
+  --anatomy-top: #3a4680;
+  --anatomy-mid: #0c1030;
+}
+
+.bt-green {
+  --anatomy-paper: #1c9a66;
+  --anatomy-shade-0: #0d6c46;
+  --anatomy-shade-1: #107c51;
+  --anatomy-shade-2: #148c5b;
+  --anatomy-shade-3: #19a06a;
+  --anatomy-top: #3cc48c;
+  --anatomy-mid: #09553a;
+}
+
+/* 블록 앞면에 인쇄된 그림 */
+.gx-ink {
+  fill: var(--anatomy-hi);
+}
+.gx-dim {
+  fill: var(--gx-dim);
+}
+.gx-soft {
+  fill: var(--gx-soft);
+}
+.gx-w {
+  fill: #ffffff;
+}
+.gx-blue {
+  fill: var(--gx-blue);
+}
+.gx-green {
+  fill: #0d6c46;
+}
+.gx-arc {
+  fill: none;
+  stroke-width: 3px;
+}
+.gx-arc-soft {
+  stroke: var(--gx-soft);
+}
+.gx-arc-blue {
+  stroke: var(--gx-blue);
+}
+.gx-arc-ink {
+  stroke: var(--anatomy-hi);
+}
+.gx-caret {
+  fill: var(--anatomy-hi);
+  animation: lg-blink 1.1s steps(1, end) infinite;
+}
+
+@keyframes lg-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* 바닥 판: 창과 블록을 받치는 부품이라 한 단계 어둡게 둔다. 그림에서 가장 밝은 면이 되면 시선을 뺏는다. */
+.lg-base {
+  --anatomy-paper: #d9dff1;
+  --anatomy-top: #d9dff1;
+  --anatomy-shade-0: #a9b3d4;
+  --anatomy-shade-1: #b7c0dc;
+  --anatomy-shade-2: #c4cce4;
+  --anatomy-shade-3: #cfd6ea;
+}
+.lg-plate {
+  fill: #e6eaf6;
+  stroke: #8f9ac4;
+  stroke-width: 0.4px;
+}
+.lg-plate-screw {
+  fill: #7983b3;
+}
+.lg-plate-rule {
+  fill: #a3aed0;
+}
+
+/* 브라우저 창 */
+/* 창 안쪽을 블록보다 한 단계 짙게 해서 블록이 떠 보이게 한다. */
+.ch-view {
+  fill: #d0d8ef;
+}
+.ch-bar {
+  fill: #bfc8e6;
+}
+
+/* 블록이 창 앞면에 드리우는 그림자: 크기가 다른 두 겹으로 가장자리를 부드럽게 한다. */
+.lg-shadow-a {
+  fill: rgb(22 30 86 / 0.08);
+}
+.lg-shadow-b {
+  fill: rgb(22 30 86 / 0.13);
+}
+/* 규격 홈: 블록이 빠진 자리와 아래 줄의 빈 칸에서 보인다. 창 안쪽보다 한 단계 짙게 파여 있다. */
+.lg-slot {
+  fill: #bcc6e6;
+  stroke: #a3aed6;
+  stroke-width: 0.6px;
+}
+.lg-pin {
+  fill: #98a4cf;
+}
+.ch-pill {
+  fill: #f8f9ff;
+}
+.ch-d1 {
+  fill: #ff8b7e;
+}
+.ch-d2 {
+  fill: #ffc35c;
+}
+.ch-d3 {
+  fill: #5fd08f;
+}
+
+.gx-cursor {
+  fill: #ffffff;
+  stroke: var(--anatomy-hi);
+  stroke-width: 1px;
+  stroke-linejoin: round;
+}
+
+/* 누름 영역: 그림 맨 위의 투명한 사각형. 입력은 모두 여기서 받으므로 아래 그림은 누름을 신경 쓰지 않는다. */
+.lg-hit {
+  fill: transparent;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+/* 커서는 사용자가 조작하면 사라진다. */
+[data-cursor] {
+  transition: opacity 240ms var(--anatomy-ease);
+}
+
+.hero-lego[data-still] [data-cursor] {
+  opacity: 0;
+}
+
+/* 자동 시연의 커서가 블록을 누를 때 고리가 나타나고 커서는 눌린 듯 작아진다. */
+.lg-ring {
+  fill: color-mix(in srgb, var(--anatomy-hi) 8%, transparent);
+  stroke: var(--anatomy-hi);
+  stroke-width: 1px;
+  opacity: 0;
+  transform: scale(0.55);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity 180ms var(--anatomy-ease),
+    transform 240ms var(--anatomy-ease);
+}
+
+.lg-pointer {
+  transition: transform 180ms var(--anatomy-ease);
+}
+
+.hero-lego[data-press] .lg-ring {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero-lego[data-press] .lg-pointer {
+  transform: scale(0.92);
+}
+
+/* 호버 강조는 마우스가 있는 환경에서만 한다. 터치 화면에서는 탭한 뒤에도 :hover가 남아 강조가 풀리지 않는다. */
+@media (hover: hover) {
+  .lg-hit:hover {
+    stroke: var(--anatomy-hi);
+    stroke-width: 1px;
+    vector-effect: non-scaling-stroke;
+  }
+}
+
+/* 자동 시연이 멈추면(사용자가 만진 뒤, 또는 모션 줄이기) 깜빡이는 커서도 멈춘다. */
+.hero-lego[data-still] .gx-caret {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gx-caret {
+    animation: none;
+  }
+
+  .lg-ring,
+  .lg-pointer,
+  [data-cursor] {
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-lego .iso-svg {
+    width: 118%;
+    height: 100%;
+    margin-left: -9%;
+  }
+}
