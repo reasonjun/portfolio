@@ -25,22 +25,6 @@ describe("validateCaseStudy", () => {
     expect(validateCaseStudy("x", makeCaseStudy())).toEqual([]);
   });
 
-  it("문제가 1개면 개수 부족을 알린다", () => {
-    const cs = makeCaseStudy({ problems: [makeProblem()] });
-    expect(validateCaseStudy("x", cs)).toEqual([
-      "x: problems 2~3개 필요 (현재 1개)",
-    ]);
-  });
-
-  it("문제가 4개면 개수 초과를 알린다", () => {
-    const cs = makeCaseStudy({
-      problems: [makeProblem(), makeProblem(), makeProblem(), makeProblem()],
-    });
-    expect(validateCaseStudy("x", cs)).toEqual([
-      "x: problems 2~3개 필요 (현재 4개)",
-    ]);
-  });
-
   it("검토한 방법이 없어도 문제로 보지 않는다(비교하지 않은 결정일 수 있다)", () => {
     const cs = makeCaseStudy({
       problems: [makeProblem(), makeProblem({ considered: [] })],

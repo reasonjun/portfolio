@@ -12,7 +12,7 @@ export const EXPERIENCES_DATA: Experience[] = [
       "콘텐츠 IP·정산·법무 업무를 다루는 사내 백오피스 시스템을 만드는 팀",
     duties: [
       "백오피스 프런트엔드 아키텍처 설계와 기술 결정",
-      "인증 구조와 CI/CD·무중단 배포 파이프라인 설계·구현",
+      "인증 구조와 CI/CD·blue/green 배포 파이프라인 설계·구현",
       "개발 환경·품질 체계 정비",
       "공통 컴포넌트·유틸 개발",
     ],
@@ -29,7 +29,7 @@ export const EXPERIENCES_DATA: Experience[] = [
   {
     id: "freelancer",
     company: "프리랜서",
-    period: "2025. 01. - 2025. 09.",
+    period: "2025. 05. - 2025. 09.",
     isActive: false,
     jobs: ["프런트엔드 개발", "백엔드 개발"],
     tagline:

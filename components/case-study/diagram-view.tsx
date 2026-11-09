@@ -2,10 +2,12 @@ import type { ComponentType } from "react";
 import type { DiagramId } from "@/app/types/project";
 import { BffAuthFlowDiagram } from "./diagrams/bff-auth-flow";
 import { BlueGreenDeployDiagram } from "./diagrams/blue-green-deploy";
+import { ModalLazyLoadDiagram } from "./diagrams/modal-lazy-load";
 
 const DIAGRAMS: Record<DiagramId, ComponentType> = {
   "bff-auth-flow": BffAuthFlowDiagram,
   "blue-green-deploy": BlueGreenDeployDiagram,
+  "modal-lazy-load": ModalLazyLoadDiagram,
 };
 
 interface DiagramViewProps {

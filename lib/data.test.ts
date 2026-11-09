@@ -34,8 +34,8 @@ describe("대표 프로젝트 데이터", () => {
     }
   });
 
-  it("아카이브는 전체 프로젝트 17개를 담는다", () => {
-    expect(getArchiveRows()).toHaveLength(17);
+  it("아카이브는 전체 프로젝트 18개를 담는다", () => {
+    expect(getArchiveRows()).toHaveLength(18);
   });
 
   it("프로젝트 id가 중복되지 않는다", () => {
@@ -50,7 +50,11 @@ describe("대표 프로젝트 데이터", () => {
     const diagramIds = legal?.caseStudy.problems.flatMap((problem) =>
       problem.visual?.type === "diagram" ? [problem.visual.id] : [],
     );
-    expect(diagramIds).toEqual(["bff-auth-flow", "blue-green-deploy"]);
+    expect(diagramIds).toEqual([
+      "bff-auth-flow",
+      "blue-green-deploy",
+      "modal-lazy-load",
+    ]);
   });
 
   it("모든 프로젝트와 경력에서 '채용관리솔루션' 표기를 쓴다", () => {

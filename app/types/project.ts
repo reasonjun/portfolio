@@ -1,4 +1,7 @@
-export type DiagramId = "bff-auth-flow" | "blue-green-deploy";
+export type DiagramId =
+  | "bff-auth-flow"
+  | "blue-green-deploy"
+  | "modal-lazy-load";
 
 export type CaseVisual =
   | { type: "diagram"; id: DiagramId; caption: string }

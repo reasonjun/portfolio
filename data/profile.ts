@@ -3,11 +3,10 @@ export const PROFILE = {
   role: "프런트엔드 개발자",
   positioning: [
     "복잡한 업무 화면을 설계하고,",
-    "테스트와 무중단 배포까지 책임집니다.",
+    "테스트와 blue/green 배포까지 책임집니다.",
   ],
-  // 초안: 20s → 1s(WYSIWYG)는 해당 프로젝트의 결과로 두고, Hero 수치는 인터뷰에서 확정한다.
   metrics: [
-    { value: "11.6s → 2.77s", label: "로컬 빌드" },
+    { value: "75%", label: "운영 빌드 단축 (약 80s → 20s)" },
     { value: "326", label: "E2E 정산 조합" },
     { value: "60s → 1s", label: "초기 로딩 (닷 사내 웹 서비스)" },
   ],

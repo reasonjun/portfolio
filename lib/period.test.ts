@@ -25,7 +25,7 @@ describe("getTotalPeriod", () => {
     );
     expect(totals).toEqual({
       kidaristudio: null,
-      freelancer: "9개월",
+      freelancer: "5개월",
       dot: "2년 1개월",
       innodale: "3년 7개월",
     });

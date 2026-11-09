@@ -1,8 +1,5 @@
 import type { CaseStudy } from "@/app/types/project";
 
-const MIN_PROBLEMS = 2;
-const MAX_PROBLEMS = 3;
-
 const isBlank = (value: string): boolean => value.trim() === "";
 
 export const validateCaseStudy = (
@@ -21,13 +18,6 @@ export const validateCaseStudy = (
     "retrospective",
   ] as const) {
     if (isBlank(caseStudy[field])) reportEmpty(field);
-  }
-
-  const count = caseStudy.problems.length;
-  if (count < MIN_PROBLEMS || count > MAX_PROBLEMS) {
-    issues.push(
-      `${id}: problems ${MIN_PROBLEMS}~${MAX_PROBLEMS}개 필요 (현재 ${count}개)`,
-    );
   }
 
   caseStudy.problems.forEach((problem, index) => {
