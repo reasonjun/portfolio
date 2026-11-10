@@ -17,14 +17,14 @@ describe("대표 프로젝트 데이터", () => {
     ]);
   });
 
-  it("홈 대표 프로젝트 6개가 시작일 최신순으로 나온다", () => {
+  it("홈 대표 프로젝트 6개가 임팩트순으로 나온다", () => {
     expect(getHomeProjects().map((project) => project.id)).toEqual([
       "enterprise-legal-management",
-      "external-settlement-system",
       "ip-management-system",
-      "design-system",
+      "external-settlement-system",
       "wysiwyg-editor",
       "tactile-graphics-editor",
+      "design-system",
     ]);
   });
 
@@ -37,7 +37,7 @@ describe("대표 프로젝트 데이터", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it("법무관리 프로젝트의 문제에 인증 흐름과 배포 도식이 연결되어 있다", () => {
+  it("법무관리 프로젝트의 문제에 배포와 인증 흐름 도식이 연결되어 있다", () => {
     const legal = getCaseStudies().find(
       (project) => project.id === "enterprise-legal-management",
     );
@@ -45,8 +45,8 @@ describe("대표 프로젝트 데이터", () => {
       problem.visual?.type === "diagram" ? [problem.visual.id] : [],
     );
     expect(diagramIds).toEqual([
-      "bff-auth-flow",
       "blue-green-deploy",
+      "bff-auth-flow",
       "modal-lazy-load",
     ]);
   });

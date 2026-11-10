@@ -3,7 +3,7 @@ import { chromium } from "@playwright/test";
 import { startServer } from "./serve-out.mjs";
 
 const PORT = 4174;
-const PRINT_URL = `http://localhost:${PORT}/portfolio/print/`;
+const EXPORT_URL = `http://localhost:${PORT}/portfolio/export/`;
 const OUTPUT_PATH = "out/portfolio.pdf";
 
 const server = await startServer(PORT);
@@ -11,7 +11,7 @@ const browser = await chromium.launch();
 
 try {
   const page = await browser.newPage();
-  await page.goto(PRINT_URL, { waitUntil: "networkidle" });
+  await page.goto(EXPORT_URL, { waitUntil: "networkidle" });
   await page.emulateMedia({ media: "print", colorScheme: "light" });
 
   // lazy 이미지를 모두 불러오고, 한글 글꼴 조각이 로드될 때까지 기다린다.

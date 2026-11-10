@@ -4,6 +4,7 @@ import {
   getArchiveRows,
   getCaseStudies,
   getCaseStudyById,
+  getExportProjects,
   getStartYear,
 } from "./projects";
 
@@ -88,5 +89,24 @@ describe("getArchiveRows", () => {
     const rows = getArchiveRows(fixtures);
     expect(rows[0].href).toBe("/projects/case-a/");
     expect(rows[1].href).toBeUndefined();
+  });
+});
+
+describe("getExportProjects", () => {
+  it("홈 대표 사례를 homeOrder 순으로, 콘텐츠 검사를 통과한 것만 반환한다", () => {
+    const projects = [
+      makeProject({ id: "third", homeOrder: 3, caseStudy }),
+      makeProject({
+        id: "blank",
+        homeOrder: 1,
+        caseStudy: { ...caseStudy, summary: "" },
+      }),
+      makeProject({ id: "second", homeOrder: 2, caseStudy }),
+      makeProject({ id: "unranked", caseStudy }),
+    ];
+    expect(getExportProjects(projects).map((p) => p.id)).toEqual([
+      "second",
+      "third",
+    ]);
   });
 });

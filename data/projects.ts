@@ -34,23 +34,6 @@ export const PROJECTS_DATA: Project[] = [
         "2008년경 구축된 JSP 레거시 법무 시스템을 대체하는 신규 시스템입니다. 계약 정보 오입력을 줄이고, 이후 AI 기반 계약서 정보 추출과 콘텐츠 IP·계약 관리 시스템 연동으로 업무를 자동화하기 위한 기반입니다.",
       problems: [
         {
-          title: "BFF 암호화 쿠키로 브라우저 스크립트의 토큰 접근 차단",
-          problem:
-            "신규 구축이라 토큰을 어디에 둘지부터 정해야 했습니다. 브라우저 저장소에 두면 XSS로 토큰이 탈취될 수 있었고, 쿠키로 옮기면 브라우저가 자동으로 전송하는 만큼 CSRF에 대비해야 했습니다. BFF 핸들러가 병렬로 호출되면 같은 토큰으로 refresh가 동시에 나가 토큰 회전 정책 때문에 일부 요청이 실패할 수 있었습니다.",
-          considered: [
-            "NextAuth.js: 로그인과 토큰 회전은 백엔드가 이미 담당해 프런트에는 세션 쿠키 봉인만 필요했고, 공식 문서도 비밀번호 방식보다 OAuth 등을 권장하며 refresh 토큰 회전은 내장하지 않아 콜백으로 직접 구현해야 하므로 제외",
-          ],
-          decision:
-            "서버(BFF)가 JWT 액세스·리프레시 토큰을 iron-session의 HttpOnly 암호화 쿠키로 봉인해 중계하고, 브라우저는 백엔드를 직접 호출하지 않게 했습니다. 토큰 갱신은 쿠키를 쓸 수 있는 proxy(페이지 이동)와 BFF 핸들러(클라이언트 리페치) 두 지점으로 한정하고, 만료 5분 전부터 자동으로 갱신합니다. 같은 서버 모듈 안에서는 진행 중인 refresh Promise를 토큰별로 공유해 동시 요청을 하나로 합쳤고, 모듈이나 서버를 넘는 경합은 백엔드의 재사용 유예가 처리합니다. 세션 쿠키는 SameSite=Lax로 설정하고, GET으로 동작하는 세션 파기 경로는 Sec-Fetch-Site를 허용 목록 방식으로 검사해 이 경로의 로그아웃 CSRF를 막았습니다.",
-          result:
-            "토큰 값을 브라우저 스크립트에서 읽을 수 없게 했고, 같은 서버 모듈 안의 중복 refresh를 줄였습니다.",
-          visual: {
-            type: "diagram",
-            id: "bff-auth-flow",
-            caption: "BFF가 토큰을 암호화 쿠키로 봉인해 중계하는 인증 흐름",
-          },
-        },
-        {
           title:
             "Next.js 서버 blue/green 배포와 배포 전 열어 둔 탭의 Server Action 실패 해결",
           problem:
@@ -70,6 +53,23 @@ export const PROJECTS_DATA: Project[] = [
             id: "blue-green-deploy",
             caption:
               "헬스체크를 통과해야 슬롯을 전환하고, 배포 전에 열어 둔 탭의 요청은 `X-Deployment-Id` 헤더와 `?dpl=` 쿼리의 배포 ID로 이전 슬롯에 보내는 배포 흐름",
+          },
+        },
+        {
+          title: "BFF 암호화 쿠키로 브라우저 스크립트의 토큰 접근 차단",
+          problem:
+            "신규 구축이라 토큰을 어디에 둘지부터 정해야 했습니다. 브라우저 저장소에 두면 XSS로 토큰이 탈취될 수 있었고, 쿠키로 옮기면 브라우저가 자동으로 전송하는 만큼 CSRF에 대비해야 했습니다. BFF 핸들러가 병렬로 호출되면 같은 토큰으로 refresh가 동시에 나가 토큰 회전 정책 때문에 일부 요청이 실패할 수 있었습니다.",
+          considered: [
+            "NextAuth.js: 로그인과 토큰 회전은 백엔드가 이미 담당해 프런트에는 세션 쿠키 봉인만 필요했고, 공식 문서도 비밀번호 방식보다 OAuth 등을 권장하며 refresh 토큰 회전은 내장하지 않아 콜백으로 직접 구현해야 하므로 제외",
+          ],
+          decision:
+            "서버(BFF)가 JWT 액세스·리프레시 토큰을 iron-session의 HttpOnly 암호화 쿠키로 봉인해 중계하고, 브라우저는 백엔드를 직접 호출하지 않게 했습니다. 토큰 갱신은 쿠키를 쓸 수 있는 proxy(페이지 이동)와 BFF 핸들러(클라이언트 리페치) 두 지점으로 한정하고, 만료 5분 전부터 자동으로 갱신합니다. 같은 서버 모듈 안에서는 진행 중인 refresh Promise를 토큰별로 공유해 동시 요청을 하나로 합쳤고, 모듈이나 서버를 넘는 경합은 백엔드의 재사용 유예가 처리합니다. 세션 쿠키는 SameSite=Lax로 설정하고, GET으로 동작하는 세션 파기 경로는 Sec-Fetch-Site를 허용 목록 방식으로 검사해 이 경로의 로그아웃 CSRF를 막았습니다.",
+          result:
+            "토큰 값을 브라우저 스크립트에서 읽을 수 없게 했고, 같은 서버 모듈 안의 중복 refresh를 줄였습니다.",
+          visual: {
+            type: "diagram",
+            id: "bff-auth-flow",
+            caption: "BFF가 토큰을 암호화 쿠키로 봉인해 중계하는 인증 흐름",
           },
         },
         {
@@ -111,7 +111,7 @@ export const PROJECTS_DATA: Project[] = [
       "AWS S3·CloudFront",
     ],
     images: [],
-    homeOrder: 2,
+    homeOrder: 3,
     caseStudy: {
       team: "프런트엔드 1 · 백엔드 1",
       summary:
@@ -125,9 +125,9 @@ export const PROJECTS_DATA: Project[] = [
             "봄툰KR·소설유통·부가판권은 조회 탭, 그리드 컬럼, 엑셀 업로드 시트, 안내 메일 항목이 서로 달랐습니다. 이 차이를 화면 코드의 분기로 처리하면 유형이 늘 때마다 목록·업로드·메일 화면을 모두 고쳐야 했습니다.",
           considered: [],
           decision:
-            "양식이 서로 다른 3개 유형의 조회 탭·엑셀 업로드 양식·안내 메일 항목을 목록·업로드·메일별 설정 객체로 분리했습니다. 화면은 현재 정산 유형의 설정을 조회해 탭과 엑셀 시트 매핑을 동적으로 구성합니다. 각 설정에 satisfies Record<SettlementDomain, …>를 적용해, 신규 유형을 추가할 때 설정이 빠지면 컴파일 단계에서 검출되도록 했습니다.",
+            "양식이 서로 다른 3개 유형의 조회 탭·엑셀 업로드 양식·안내 메일 항목을 목록·업로드·메일별 설정 객체로 분리했습니다. 화면은 현재 정산 유형의 설정을 조회해 탭과 엑셀 시트 매핑을 동적으로 구성합니다. 각 설정에 satisfies Record<SettlementDomain, …>를 적용했습니다.",
           result:
-            "이후 유형은 설정 추가 중심으로 늘릴 수 있는 구조가 되었습니다.",
+            "신규 유형을 추가할 때 설정이 빠지면 컴파일 단계에서 검출되므로, 이후 유형은 설정 추가 중심으로 늘릴 수 있는 구조가 되었습니다.",
         },
         {
           title: "배포 후에도 옛 화면이 보이는 문제",
@@ -164,7 +164,7 @@ export const PROJECTS_DATA: Project[] = [
       { value: "326", label: "E2E로 동작을 고정한 정산 조합" },
       { value: "75%", label: "운영 빌드 단축 (약 80s → 20s)" },
     ],
-    homeOrder: 3,
+    homeOrder: 2,
     caseStudy: {
       team: "프런트엔드 1 · 백엔드 1",
       summary:
@@ -181,15 +181,6 @@ export const PROJECTS_DATA: Project[] = [
             "Playwright로 실제 화면을 조작하고 API 응답은 녹화한 픽스처로 고정해, 계약등록·변경의 현재 검증·저장 동작을 테스트로 남겼습니다. 정산방식·계약분류·콘텐츠형태·지급방식 4개 축의 조합 중 분석상 도달 가능한 326가지를 원장으로 정리해 전수 순회했고, 도달할 수 없는 조합은 막는 코드 위치를 기록해 제외했습니다. 이 기준선을 통과한 상태에서 계약등록에서 도달할 수 없던 일괄등록 코드를 제거했습니다.",
           result:
             "일괄등록 코드를 제거한 뒤 계약등록 208건·계약변경 232건의 E2E가 통과해 기존 동작이 유지됨을 확인했습니다. 백엔드를 목으로 처리한 화면 검증이고, 테스트 코드는 배포 브랜치에 병합하지 않아 CI에서 상시 실행되지는 않습니다. 운영 중 Playwright가 같은 포트에 떠 있던 다른 작업 공간의 서버를 검증한 일이 있어, 이후에는 통과 여부와 함께 테스트 대상 서버가 맞는지도 확인합니다.",
-        },
-        {
-          title: "5개 화면에 복제된 콘텐츠 입력 폼",
-          problem:
-            "5개 화면에 중복 구현된 콘텐츠 정보 입력 영역은 필수값·검증 규칙이 서로 달라 오류가 발생했습니다.",
-          considered: [],
-          decision:
-            "계약등록, 콘텐츠 등록·변경, 영상 등록·변경 5개 화면에 복제돼 있던 콘텐츠 입력 폼은 공통 컴포넌트 하나로 통합해 필수값과 검증 규칙의 기준을 한곳으로 모았습니다. 그룹콘텐츠 중복 검사는 공통 composable로 분리했습니다.",
-          result: "콘텐츠 입력 폼의 기준이 5곳에서 1곳으로 줄었습니다.",
         },
         {
           title: "번들러 전환과 청크 분리로 운영 빌드 약 75% 단축",
@@ -210,6 +201,15 @@ export const PROJECTS_DATA: Project[] = [
               },
             ],
           },
+        },
+        {
+          title: "5개 화면에 복제된 콘텐츠 입력 폼",
+          problem:
+            "5개 화면에 중복 구현된 콘텐츠 정보 입력 영역은 필수값·검증 규칙이 서로 달라 오류가 발생했습니다.",
+          considered: [],
+          decision:
+            "계약등록, 콘텐츠 등록·변경, 영상 등록·변경 5개 화면에 복제돼 있던 콘텐츠 입력 폼은 공통 컴포넌트 하나로 통합해 필수값과 검증 규칙의 기준을 한곳으로 모았습니다. 그룹콘텐츠 중복 검사는 공통 composable로 분리했습니다.",
+          result: "콘텐츠 입력 폼의 기준이 5곳에서 1곳으로 줄었습니다.",
         },
       ],
     },
@@ -299,7 +299,7 @@ export const PROJECTS_DATA: Project[] = [
       "design-system/image-3.png",
       "design-system/image-4.png",
     ],
-    homeOrder: 4,
+    homeOrder: 6,
     caseStudy: {
       team: "프런트엔드 1",
       summary:
@@ -372,7 +372,7 @@ export const PROJECTS_DATA: Project[] = [
     images: ["dot-editor/image-1.png", "dot-editor/image-2.png"],
     coverPosition: "left top",
     highlights: [{ value: "20s → 1s", label: "대용량 문서 로딩" }],
-    homeOrder: 5,
+    homeOrder: 4,
     caseStudy: {
       team: "프런트엔드 2 · 백엔드 1",
       summary:
@@ -456,7 +456,7 @@ export const PROJECTS_DATA: Project[] = [
       "dot-canvas/image-3.png",
       "dot-canvas/image-4.webp",
     ],
-    homeOrder: 6,
+    homeOrder: 5,
     caseStudy: {
       team: "프런트엔드 1 · 백엔드 1 · SDK 1 · 점역엔진 1",
       summary:

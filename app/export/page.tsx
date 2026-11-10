@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { CaseStudyBody } from "@/components/case-study/case-study-body";
 import { EXPERIENCES_DATA } from "@/data/experiences";
 import { PROFILE } from "@/data/profile";
-import { getCaseStudies } from "@/lib/projects";
+import { getExportProjects } from "@/lib/projects";
 
 // PDF 생성 스크립트(scripts/generate-pdf.mjs)가 이 페이지를 인쇄한다. 메뉴에는 노출하지 않는다.
 export const metadata: Metadata = {
@@ -60,11 +60,11 @@ const Cover = () => (
   </section>
 );
 
-export default function PrintPage() {
+export default function ExportPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-8">
       <Cover />
-      {getCaseStudies().map((project) => (
+      {getExportProjects().map((project) => (
         <div key={project.id} className="break-before-page">
           <CaseStudyBody project={project} />
         </div>

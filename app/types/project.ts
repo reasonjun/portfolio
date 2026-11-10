@@ -45,7 +45,7 @@ export interface Project {
   images: string[];
   // 대표 컷(images[0])을 16:10으로 자를 때 남길 부분. object-position 값(기본 "top").
   coverPosition?: string;
-  // 홈 대표 프로젝트 카드의 표시 순서(1부터). 없으면 홈에 나오지 않는다.
+  // 홈 대표 프로젝트 카드와 PDF(export 페이지)의 표시 순서(1부터). 없으면 둘 다에 나오지 않는다.
   homeOrder?: number;
   highlights?: Highlight[];
   caseStudy?: CaseStudy;

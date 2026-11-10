@@ -4,7 +4,7 @@
 
 **Goal:** 이력서/경력기술서 형태인 현재 사이트를, 대표 사례 7개를 깊게 보여 주는 포트폴리오 전용 사이트와 같은 내용의 PDF로 바꾼다.
 
-**Architecture:** 콘텐츠는 기존처럼 `data/*.ts` 정적 데이터로 두고 `Project`에 선택 필드 `caseStudy`를 더한다. 순수 셀렉터(`lib/projects.ts`)가 메인·사례 페이지(`/projects/[id]`)·아카이브(`/archive`)·인쇄 페이지(`/print`)에 데이터를 공급한다. 빌드 후 Playwright가 `/print`를 PDF로 저장한다.
+**Architecture:** 콘텐츠는 기존처럼 `data/*.ts` 정적 데이터로 두고 `Project`에 선택 필드 `caseStudy`를 더한다. 순수 셀렉터(`lib/projects.ts`)가 메인·사례 페이지(`/projects/[id]`)·아카이브(`/archive`)·인쇄 페이지(`/export`)에 데이터를 공급한다. 빌드 후 Playwright가 `/export`를 PDF로 저장한다.
 
 **Tech Stack:** Next.js 16 (App Router, `output: "export"`), React 19, TypeScript, Tailwind CSS 4 + `tw-animate-css`, shadcn/ui, Biome, pnpm. 신규 devDependency: `vitest`, `@playwright/test`.
 
@@ -283,14 +283,14 @@
 ### Task 10: 인쇄 페이지 · PDF 생성 · CI
 
 **Files:**
-- Create: `app/print/page.tsx`, `scripts/generate-pdf.mjs`, `e2e/pdf.spec.ts`
+- Create: `app/export/page.tsx`, `scripts/generate-pdf.mjs`, `e2e/pdf.spec.ts`
 - Modify: `app/globals.css`, `package.json`, `.github/workflows/deploy.yml`
 
 **Interfaces:**
 - Consumes: `CaseStudyBody`, `getCaseStudies`, `PROFILE`, `startServer`
 - Produces:
-  - `/print/` (메뉴에 노출 안 함, Navbar·Footer 없음): 표지(이름·직함·positioning·metrics·경력 4개 회사·기간·GitHub·이메일·사이트 주소) + 사례 7개를 `CaseStudyBody`로. 각 사례는 `break-before: page`. `@media print`에서 애니메이션·다크 배경 제거, 이미지는 첫 장만.
-  - `scripts/generate-pdf.mjs`: `startServer(4174)` → `chromium.launch()`(`@playwright/test`) → `goto("http://localhost:4174/portfolio/print/")` → `emulateMedia({ media: "print" })` → `document.fonts.ready` 대기 → `page.pdf({ path: "out/portfolio.pdf", format: "A4", printBackground: true, margin: { top: "16mm", bottom: "16mm", left: "14mm", right: "14mm" } })` → 서버·브라우저 종료.
+  - `/export/` (메뉴에 노출 안 함, Navbar·Footer 없음): 표지(이름·직함·positioning·metrics·경력 4개 회사·기간·GitHub·이메일·사이트 주소) + 사례 7개를 `CaseStudyBody`로. 각 사례는 `break-before: page`. `@media print`에서 애니메이션·다크 배경 제거, 이미지는 첫 장만.
+  - `scripts/generate-pdf.mjs`: `startServer(4174)` → `chromium.launch()`(`@playwright/test`) → `goto("http://localhost:4174/portfolio/export/")` → `emulateMedia({ media: "print" })` → `document.fonts.ready` 대기 → `page.pdf({ path: "out/portfolio.pdf", format: "A4", printBackground: true, margin: { top: "16mm", bottom: "16mm", left: "14mm", right: "14mm" } })` → 서버·브라우저 종료.
   - scripts: `"build:pdf": "node scripts/generate-pdf.mjs"`, `"build": "pnpm build:site && pnpm build:pdf"`.
   - `deploy.yml`: `Install dependencies` 다음에 `pnpm exec playwright install --with-deps chromium`, `pnpm test`, `pnpm check:content`. `Build with Next.js` 다음에 `pnpm test:e2e`.
 
