@@ -33,7 +33,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   if (!project) notFound();
 
   return (
-    <div className="max-w-4xl mx-auto px-5 sm:px-6 py-12 space-y-10">
+    <div className="py-12 space-y-10">
       <BackLink href="/archive/">전체 프로젝트</BackLink>
       <CaseStudyBody project={project} />
       <BackLink href="/archive/">전체 프로젝트</BackLink>

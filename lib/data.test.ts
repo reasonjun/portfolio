@@ -61,10 +61,6 @@ describe("프로필 데이터", () => {
   it("Hero 핵심 수치는 정확히 3개다", () => {
     expect(PROFILE.metrics).toHaveLength(3);
   });
-
-  it("파이프라인은 설계·구현·테스트·배포 4단계다", () => {
-    expect(PROFILE.pipeline).toEqual(["설계", "구현", "테스트", "배포"]);
-  });
 });
 
 describe("경력 데이터", () => {

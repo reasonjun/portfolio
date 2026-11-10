@@ -77,7 +77,7 @@ describe("readImageSize", () => {
 describe("getPublicImageSize", () => {
   it("앞부분만 읽어도 파일 전체를 읽은 것과 같은 크기를 낸다(앞의 '/'는 무시)", () => {
     for (const publicPath of [
-      "design-system/image-1.png",
+      "design-system/image-1.webp",
       "dot-canvas/image-4.webp",
       "diagrams/blue-green-deploy.drawio.svg",
     ]) {

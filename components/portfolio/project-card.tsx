@@ -9,15 +9,12 @@ interface ProjectCardProps {
   meta: string;
   image: string | null;
   imagePosition?: string;
-  techStack: string[];
   index: number;
 }
 
-const FALLBACK_TECH_COUNT = 3;
-
 /**
  * 대표 프로젝트 카드 하나. 링크는 제목에만 걸고, 카드 전체가 눌리도록 ::after로 영역을 넓힌다.
- * 이미지가 아직 없는 프로젝트는 같은 16:9 틀에 기술 스택만 보여 준다.
+ * 이미지가 없는 프로젝트는 썸네일 영역 없이 텍스트 카드로 둔다.
  */
 export const ProjectCard = ({
   id,
@@ -26,7 +23,6 @@ export const ProjectCard = ({
   meta,
   image,
   imagePosition,
-  techStack,
   index,
 }: ProjectCardProps) => (
   <li
@@ -34,8 +30,8 @@ export const ProjectCard = ({
     style={{ "--i": index % 3 } as React.CSSProperties}
     className="group relative flex flex-col bg-card transition-colors duration-200 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary hover:bg-accent motion-reduce:transition-none"
   >
-    <div className="relative aspect-video overflow-hidden bg-accent">
-      {image ? (
+    {image && (
+      <div className="relative aspect-video overflow-hidden bg-accent">
         <Image
           src={withBasePath(`/${image}`)}
           alt={`${title} 화면`}
@@ -44,15 +40,8 @@ export const ProjectCard = ({
           className="object-cover"
           style={{ objectPosition: imagePosition ?? "top" }}
         />
-      ) : (
-        <p
-          className="absolute inset-x-0 bottom-0 p-4 text-[0.9375rem] text-muted-foreground"
-          translate="no"
-        >
-          {techStack.slice(0, FALLBACK_TECH_COUNT).join(" · ")}
-        </p>
-      )}
-    </div>
+      </div>
+    )}
 
     <div className="flex flex-1 flex-col p-5">
       <h3 className="text-lg font-medium leading-snug">

@@ -14,7 +14,7 @@ export default function ArchivePage() {
   const rows = getArchiveRows();
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-12 space-y-8">
+    <div className="py-12 space-y-8">
       <BackLink href="/#case-studies">대표 프로젝트</BackLink>
 
       <h1 id="archive-heading" className="text-3xl font-bold text-balance">

@@ -55,7 +55,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <main
             id="main-content"
             tabIndex={-1}
-            className="flex-1 focus:outline-none"
+            className="mx-auto w-full max-w-5xl flex-1 px-6 focus:outline-none"
           >
             {children}
           </main>

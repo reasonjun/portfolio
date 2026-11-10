@@ -234,7 +234,7 @@ export const PROJECTS_DATA: Project[] = [
     company: "프리랜서",
     period: "2025.05. ~ 2025.08.",
     techStack: ["TypeScript 5", "Next.js 15", "NextAuth.js", "Ant Design 5"],
-    images: ["ats/image-1.png"],
+    images: ["ats/image-1.webp"],
     caseStudy: {
       team: "프런트엔드 1 · 백엔드 1",
       summary:
@@ -267,7 +267,7 @@ export const PROJECTS_DATA: Project[] = [
     company: "㈜닷",
     period: "2024.11. ~ 2024.12.",
     techStack: ["JavaScript", "Vue 3"],
-    images: ["ebook-reader-web/image-2.png"],
+    images: ["ebook-reader-web/image-1.webp", "ebook-reader-web/image-2.webp"],
   },
   {
     id: "design-system",
@@ -279,10 +279,10 @@ export const PROJECTS_DATA: Project[] = [
     period: "2024.08. ~ 2024.10.",
     techStack: ["TypeScript 5", "Vue 3", "Storybook", "Figma"],
     images: [
-      "design-system/image-1.png",
-      "design-system/image-2.png",
-      "design-system/image-3.png",
-      "design-system/image-4.png",
+      "design-system/image-1.webp",
+      "design-system/image-2.webp",
+      "design-system/image-3.webp",
+      "design-system/image-4.webp",
     ],
     homeOrder: 6,
     caseStudy: {
@@ -326,9 +326,9 @@ export const PROJECTS_DATA: Project[] = [
     period: "2024.07.",
     techStack: ["TypeScript 5", "Vue 3", "i18n", "Java", "Spring Boot"],
     images: [
-      "support/image-1.png",
-      "support/image-2.png",
-      "support/image-3.png",
+      "support/image-1.webp",
+      "support/image-2.webp",
+      "support/image-3.webp",
     ],
   },
   {
@@ -351,7 +351,7 @@ export const PROJECTS_DATA: Project[] = [
     company: "㈜닷",
     period: "2023.09. ~ 2024.04.",
     techStack: ["JavaScript", "Vue 3", "CKEditor 5"],
-    images: ["dot-editor/image-1.png", "dot-editor/image-2.png"],
+    images: ["dot-editor/image-1.webp", "dot-editor/image-2.webp"],
     coverPosition: "left top",
     highlights: [{ value: "20s → 1s", label: "대용량 문서 로딩" }],
     homeOrder: 4,
@@ -412,7 +412,7 @@ export const PROJECTS_DATA: Project[] = [
       "MariaDB",
       "AWS S3",
     ],
-    images: ["dot-cloud/image-1.png", "dot-cloud/image-2.png"],
+    images: ["dot-cloud/image-1.webp", "dot-cloud/image-2.webp"],
   },
   {
     id: "tactile-graphics-editor",
@@ -431,9 +431,9 @@ export const PROJECTS_DATA: Project[] = [
       "MariaDB",
     ],
     images: [
-      "dot-canvas/image-1.png",
-      "dot-canvas/image-2.png",
-      "dot-canvas/image-3.png",
+      "dot-canvas/image-1.webp",
+      "dot-canvas/image-2.webp",
+      "dot-canvas/image-3.webp",
       "dot-canvas/image-4.webp",
     ],
     homeOrder: 5,

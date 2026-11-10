@@ -8,7 +8,7 @@ const CaseStudiesSection = () => {
     <section
       id="case-studies"
       aria-labelledby="case-studies-heading"
-      className="mx-auto max-w-5xl scroll-mt-3 px-6 py-16 lg:-scroll-mt-11 lg:py-[7.5rem]"
+      className="scroll-mt-3 py-16 lg:-scroll-mt-11 lg:py-[7.5rem]"
     >
       <h2
         id="case-studies-heading"
@@ -25,10 +25,10 @@ const CaseStudiesSection = () => {
             id={project.id}
             title={project.title}
             summary={project.caseStudy.summary}
-            meta={`${project.company} · ${project.period}`}
+            // 기간 안에서는 줄이 꺾이지 않게 공백을 NBSP로 바꾼다. 좁으면 기간 전체가 아래 줄로 내려간다.
+            meta={`${project.company} · ${project.period.replaceAll(" ", "\u00A0")}`}
             image={project.images[0] ?? null}
             imagePosition={project.coverPosition}
-            techStack={project.techStack}
             index={index}
           />
         ))}

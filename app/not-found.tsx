@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 // 네비·푸터는 루트 레이아웃이 그린다. 여기서는 본문만 채운다.
 export default function NotFound() {
   return (
-    <div className="max-w-5xl mx-auto px-6 py-24 space-y-6">
+    <div className="py-24 space-y-6">
       <p className="text-sm font-medium text-muted-foreground tabular-nums">
         404
       </p>

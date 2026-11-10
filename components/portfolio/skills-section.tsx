@@ -52,9 +52,13 @@ const SkillsSection = () => {
               {group.category}
             </dt>
             <dd>
-              <ul className="flex flex-wrap gap-x-6 gap-y-1 text-base font-medium">
+              <ul className="flex flex-wrap gap-2 text-sm font-medium">
                 {group.items.map((item) => (
-                  <li key={item} translate="no">
+                  <li
+                    key={item}
+                    translate="no"
+                    className="whitespace-nowrap rounded-full border border-foreground/25 px-3 py-0.5"
+                  >
                     {item}
                   </li>
                 ))}

@@ -10,7 +10,6 @@ export const PROFILE = {
     { value: "326", label: "E2E 정산 조합" },
     { value: "60s → 1s", label: "초기 로딩 (닷 사내 웹 서비스)" },
   ],
-  pipeline: ["설계", "구현", "테스트", "배포"],
   githubUrl: "https://github.com/reasonjun",
   email: "xmaseve96@naver.com",
   // 원격 저장소(reasonjun/portfolio)와 basePath(/portfolio)로 추정한 GitHub Pages 주소
