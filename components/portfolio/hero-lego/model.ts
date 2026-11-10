@@ -125,7 +125,6 @@ export function swapPose(away: number) {
   };
 }
 
-// ───────── 자동 시연 ─────────
 // 큰 블록을 교체하고, 두 카드의 자리를 맞바꾸고, 빈 칸에 새 블록을 끼운 뒤 처음으로 돌아간다.
 const idOf = (kind: Kind) => BRICKS.findIndex((brick) => brick.kind === kind);
 const HERO = idOf("hero");
@@ -185,9 +184,9 @@ export const STATES: readonly (readonly number[])[] = STEPS.reduce<number[][]>(
   [[...REST]],
 );
 
-// 주기 안의 시각 t에 몇 번째 단계까지 지났는가
-export function stepAt(t: number) {
-  return STEPS.filter((step) => t >= step.at).length;
+// 주기 안의 시각에 몇 번째 단계까지 지났는가
+export function stepAt(cycleTime: number) {
+  return STEPS.filter((step) => cycleTime >= step.at).length;
 }
 
 // 커서가 누르러 가는 동작. 맞바꿀 때는 블록을 따라 옆 자리로 옮겨 간다.
@@ -210,17 +209,17 @@ const CENTERS = SLOTS.map((slot) => ({
   top: slot.top + slot.h / 2,
 }));
 
-export function tourCursor(t: number) {
+export function tourCursor(cycleTime: number) {
   const action = ACTIONS.find(
-    ({ at }) => t >= at - CURSOR_LEAD && t <= at + CURSOR_TAIL,
+    ({ at }) => cycleTime >= at - CURSOR_LEAD && cycleTime <= at + CURSOR_TAIL,
   );
   if (!action) return CURSOR_HOME;
-  return CENTERS[t < action.at ? action.from : action.to];
+  return CENTERS[cycleTime < action.at ? action.from : action.to];
 }
 
-export function tourPress(t: number) {
+export function tourPress(cycleTime: number) {
   return ACTIONS.some(({ at, from, to }) => {
     const tail = from === to ? PRESS_TAIL : CARRY_TAIL;
-    return t >= at - PRESS_LEAD && t <= at + tail;
+    return cycleTime >= at - PRESS_LEAD && cycleTime <= at + tail;
   });
 }

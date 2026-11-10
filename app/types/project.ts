@@ -11,11 +11,12 @@ export type CaseVisual =
       items: { label: string; before: string; after: string }[];
     };
 
+// 사례 카드의 세 칸(문제 확인 → 해결 과정 → 결과)과 1:1로 대응한다.
+// 검토했다가 제외한 방법은 solution 문단 안에 문장으로 쓴다.
 export interface CaseProblem {
   title: string;
   problem: string;
-  considered: string[];
-  decision: string;
+  solution: string;
   result: string;
   visual?: CaseVisual;
 }
@@ -55,7 +56,7 @@ export type CaseStudyProject = Project & { caseStudy: CaseStudy };
 
 export interface ArchiveRow {
   id: string;
-  year: string;
+  period: string;
   title: string;
   company: string;
   techStack: string[];

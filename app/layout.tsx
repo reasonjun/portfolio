@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Archivo, Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import type { ReactNode } from "react";
+import Footer from "@/components/portfolio/footer";
+import Navbar from "@/components/portfolio/navbar";
+import { SkipLink } from "@/components/skip-link";
 
 // 라틴·숫자는 Archivo가, 한글은 아래 Noto Sans KR이 맡는다.
 const archivo = Archivo({
@@ -44,7 +47,20 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={`${archivo.variable} ${notoSansKr.variable} antialiased`}
       >
-        {children}
+        {/* 모든 페이지의 <main id="main-content">로 건너뛴다. */}
+        <SkipLink />
+        {/* 모든 페이지가 같은 네비·본문·푸터 골격을 쓴다. 인쇄본(/export → PDF)에는 본문만 나간다. */}
+        <div className="flex min-h-svh flex-col">
+          <Navbar />
+          <main
+            id="main-content"
+            tabIndex={-1}
+            className="flex-1 focus:outline-none"
+          >
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

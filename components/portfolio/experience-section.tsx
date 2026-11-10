@@ -5,7 +5,7 @@ const ExperienceSection = () => {
   return (
     <section
       id="experience"
-      className="scroll-mt-3 space-y-10 py-16 lg:py-[7.5rem]"
+      className="scroll-mt-3 space-y-10 py-16 lg:-scroll-mt-11 lg:py-[7.5rem]"
     >
       <h2
         data-reveal
@@ -65,20 +65,6 @@ const ExperienceSection = () => {
                     <li key={duty}>{duty}</li>
                   ))}
                 </ul>
-
-                {exp.techs && exp.techs.length > 0 && (
-                  <ul aria-label="사용 기술" className="flex flex-wrap gap-2">
-                    {exp.techs.map((tech) => (
-                      <li
-                        key={tech}
-                        translate="no"
-                        className="bg-card px-3 py-1 text-[0.9375rem]"
-                      >
-                        {tech}
-                      </li>
-                    ))}
-                  </ul>
-                )}
               </div>
             </li>
           );

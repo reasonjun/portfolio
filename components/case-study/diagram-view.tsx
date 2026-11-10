@@ -1,15 +1,8 @@
-import type { ComponentType } from "react";
 import type { DiagramId } from "@/app/types/project";
-import { BffAuthFlowDiagram } from "./diagrams/bff-auth-flow";
-import { BlueGreenDeployDiagram } from "./diagrams/blue-green-deploy";
-import { ModalLazyLoadDiagram } from "./diagrams/modal-lazy-load";
-import { renderInlineCode } from "./inline-code";
-
-const DIAGRAMS: Record<DiagramId, ComponentType> = {
-  "bff-auth-flow": BffAuthFlowDiagram,
-  "blue-green-deploy": BlueGreenDeployDiagram,
-  "modal-lazy-load": ModalLazyLoadDiagram,
-};
+import { getPublicImageSize } from "@/lib/image-size";
+import { DIAGRAMS } from "./diagrams";
+import { renderInlineCode, stripInlineCode } from "./inline-code";
+import { ZoomableImage } from "./zoomable-image";
 
 interface DiagramViewProps {
   id: DiagramId;
@@ -17,12 +10,17 @@ interface DiagramViewProps {
 }
 
 export const DiagramView = ({ id, caption }: DiagramViewProps) => {
-  const Diagram = DIAGRAMS[id];
+  const diagram = DIAGRAMS[id];
 
   return (
     <figure className="space-y-2">
-      <div className="overflow-x-auto rounded-lg border p-4">
-        <Diagram />
+      <div className="rounded-lg border p-4 print:p-2">
+        <ZoomableImage
+          {...diagram}
+          {...getPublicImageSize(diagram.src)}
+          title={stripInlineCode(caption)}
+          className="rounded bg-white p-2 print:p-0"
+        />
       </div>
       <figcaption className="text-sm text-muted-foreground">
         {renderInlineCode(caption)}

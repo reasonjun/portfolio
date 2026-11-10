@@ -5,7 +5,7 @@ import {
   getCaseStudies,
   getCaseStudyById,
   getExportProjects,
-  getStartYear,
+  getMainTech,
 } from "./projects";
 
 const caseStudy: CaseStudy = {
@@ -40,16 +40,33 @@ const fixtures: Project[] = [
   makeProject({ id: "plain-c", period: "2019.02. ~ 2019.11." }),
 ];
 
-describe("getStartYear", () => {
-  it("기간 문자열에서 시작 연도 4자리를 반환한다", () => {
-    expect(getStartYear("2026.07. ~ 진행 중")).toBe("2026");
-    expect(getStartYear("2024.07.")).toBe("2024");
+describe("getMainTech", () => {
+  it("TypeScript가 있으면 JavaScript를 빼고 앞에서 5개까지 남긴다", () => {
+    expect(
+      getMainTech([
+        "JavaScript",
+        "TypeScript",
+        "Vue 3",
+        "Vite 8",
+        "Pinia",
+        "AWS",
+      ]),
+    ).toEqual(["TypeScript", "Vue 3", "Vite 8", "Pinia", "AWS"]);
+  });
+
+  it("TypeScript가 없으면 JavaScript를 남긴다", () => {
+    expect(getMainTech(["JavaScript", "Vue.js"])).toEqual([
+      "JavaScript",
+      "Vue.js",
+    ]);
   });
 });
 
 describe("getCaseStudies", () => {
   it("caseStudy가 있는 프로젝트만 데이터 순서대로 반환한다", () => {
-    expect(getCaseStudies(fixtures).map((p) => p.id)).toEqual(["case-a"]);
+    expect(getCaseStudies(fixtures).map((project) => project.id)).toEqual([
+      "case-a",
+    ]);
   });
 });
 
@@ -76,9 +93,9 @@ describe("getArchiveRows", () => {
     ]);
   });
 
-  it("행에 연도·제목·회사·기술을 담는다", () => {
+  it("행에 기간·제목·회사·기술을 담는다", () => {
     expect(getArchiveRows(fixtures)[0]).toMatchObject({
-      year: "2026",
+      period: "2026.07. ~ 진행 중",
       title: "사례 A",
       company: "회사 A",
       techStack: ["Next.js", "React"],
@@ -104,7 +121,7 @@ describe("getExportProjects", () => {
       makeProject({ id: "second", homeOrder: 2, caseStudy }),
       makeProject({ id: "unranked", caseStudy }),
     ];
-    expect(getExportProjects(projects).map((p) => p.id)).toEqual([
+    expect(getExportProjects(projects).map((project) => project.id)).toEqual([
       "second",
       "third",
     ]);

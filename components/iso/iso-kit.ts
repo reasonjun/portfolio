@@ -46,9 +46,9 @@ interface Camera {
 }
 
 export function cameraOf({ scale, azimuth = AZIMUTH, elevation = ELEVATION }: Projection): Camera {
-  const a = azimuth * RADIANS;
-  const e = elevation * RADIANS;
-  return { sinA: Math.sin(a), cosA: Math.cos(a), sinE: Math.sin(e), cosE: Math.cos(e), k: scale * UNIT };
+  const azimuthRad = azimuth * RADIANS;
+  const elevationRad = elevation * RADIANS;
+  return { sinA: Math.sin(azimuthRad), cosA: Math.cos(azimuthRad), sinE: Math.sin(elevationRad), cosE: Math.cos(elevationRad), k: scale * UNIT };
 }
 
 export function iso([x, y, z]: Point3, projection: Projection): Flat {
@@ -387,9 +387,9 @@ export function topTicks(from: number, to: number, step: number, every: number, 
   for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
     const big = index % every === 0;
     const length = big ? lengths[1] : lengths[0];
-    const a: Plane = axis === "x" ? [at, edge] : [edge, at];
-    const b: Plane = axis === "x" ? [at, edge + length] : [edge + length, at];
-    (big ? major : minor).push(lineOnTop(a, b, z, projection));
+    const start: Plane = axis === "x" ? [at, edge] : [edge, at];
+    const end: Plane = axis === "x" ? [at, edge + length] : [edge + length, at];
+    (big ? major : minor).push(lineOnTop(start, end, z, projection));
   }
   return { minor: minor.join(""), major: major.join("") };
 }
@@ -401,9 +401,9 @@ export function sideTicks(from: number, to: number, step: number, every: number,
   for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
     const big = index % every === 0;
     const length = big ? lengths[1] : lengths[0];
-    const a: Point3 = axis === "x" ? [at, face, top] : [face, at, top];
-    const b: Point3 = axis === "x" ? [at, face, top - length] : [face, at, top - length];
-    (big ? major : minor).push(segment(a, b, projection));
+    const start: Point3 = axis === "x" ? [at, face, top] : [face, at, top];
+    const end: Point3 = axis === "x" ? [at, face, top - length] : [face, at, top - length];
+    (big ? major : minor).push(segment(start, end, projection));
   }
   return { minor: minor.join(""), major: major.join("") };
 }

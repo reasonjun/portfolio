@@ -19,7 +19,7 @@ const LINK_CLASS =
 // 페이지의 끝. 메뉴의 "연락하기"(모바일)가 이곳으로 이동한다.
 const Footer = () => {
   return (
-    <footer id="contact" className="scroll-mt-3">
+    <footer id="contact" className="scroll-mt-3 print:hidden">
       <div className="mx-auto max-w-5xl px-6">
         <div className="flex flex-wrap gap-x-8 border-t py-5">
           <a href={`mailto:${PROFILE.email}`} className={LINK_CLASS}>

@@ -7,3 +7,7 @@ export const renderInlineCode = (text: string): ReactNode =>
     // biome-ignore lint/suspicious/noArrayIndexKey: 고정 문자열을 나눈 결과라 순서가 바뀌지 않는다.
     return <Tag key={i}>{part}</Tag>;
   });
+
+/** 백틱 표시를 뺀 평문. 스크린리더용 제목처럼 마크업을 쓸 수 없는 곳에 쓴다. */
+export const stripInlineCode = (text: string): string =>
+  text.replaceAll("`", "");

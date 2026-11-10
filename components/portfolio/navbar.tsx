@@ -4,12 +4,13 @@ import { SheetClose } from "@/components/ui/sheet";
 import { PROFILE } from "@/data/profile";
 
 const navItems = [
-  { label: "기술", href: "/#skills" },
   { label: "프로젝트", href: "/#case-studies" },
   { label: "경력", href: "/#experience" },
+  { label: "기술", href: "/#skills" },
 ];
 
-const contactItem = { label: "연락하기", href: "/#contact" };
+// 푸터(#contact)는 모든 페이지에 있으므로 홈으로 가지 않고 지금 페이지의 푸터로 이동한다.
+const contactItem = { label: "연락하기", href: "#contact" };
 
 const NavLink = ({
   item,
@@ -39,7 +40,7 @@ const Navbar = () => {
   return (
     <nav
       aria-label="주 메뉴"
-      className="sticky top-0 z-50 h-[var(--navbar-height)] bg-background"
+      className="sticky top-0 z-50 h-[var(--navbar-height)] bg-background print:hidden"
     >
       <div className="mx-auto grid h-full max-w-5xl grid-cols-[1fr_auto_1fr] items-center px-6">
         <DesktopNav />

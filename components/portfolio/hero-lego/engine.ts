@@ -108,17 +108,17 @@ export function createLego(root: HTMLElement): Lego {
 
   const playTour = (dt: number) => {
     tour += dt;
-    const t = tour % PERIOD;
-    const index = stepAt(t);
+    const cycleTime = tour % PERIOD;
+    const index = stepAt(cycleTime);
     if (index !== step) {
       step = index;
       commit(STATES[index]);
     }
-    const goal = tourCursor(t);
+    const goal = tourCursor(cycleTime);
     cursor.x = follow(cursor.x, goal.x, dt, CURSOR_TAU);
     cursor.top = follow(cursor.top, goal.top, dt, CURSOR_TAU);
     cursorPlace(cursorAt(cursor.x, cursor.top));
-    setPress(tourPress(t));
+    setPress(tourPress(cycleTime));
   };
 
   const settled = (part: Part, slot: number) => {

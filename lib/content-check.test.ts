@@ -5,8 +5,7 @@ import { validateCaseStudy } from "./content-check";
 const makeProblem = (overrides: Partial<CaseProblem> = {}): CaseProblem => ({
   title: "문제 제목",
   problem: "무엇이 위험했는가",
-  considered: ["검토한 대안"],
-  decision: "선택한 방법",
+  solution: "해결 과정",
   result: "결과",
   ...overrides,
 });
@@ -24,23 +23,16 @@ describe("validateCaseStudy", () => {
     expect(validateCaseStudy("x", makeCaseStudy())).toEqual([]);
   });
 
-  it("검토한 방법이 없어도 문제로 보지 않는다(비교하지 않은 결정일 수 있다)", () => {
-    const cs = makeCaseStudy({
-      problems: [makeProblem(), makeProblem({ considered: [] })],
-    });
-    expect(validateCaseStudy("x", cs)).toEqual([]);
-  });
-
-  it("문제·선택·결과가 비어 있으면 각각 알린다", () => {
+  it("문제 확인·해결 과정·결과가 비어 있으면 각각 알린다", () => {
     const cs = makeCaseStudy({
       problems: [
-        makeProblem({ problem: "", decision: "", result: "" }),
+        makeProblem({ problem: "", solution: "", result: "" }),
         makeProblem(),
       ],
     });
     expect(validateCaseStudy("x", cs)).toEqual([
       "x: problems[0].problem 비어 있음",
-      "x: problems[0].decision 비어 있음",
+      "x: problems[0].solution 비어 있음",
       "x: problems[0].result 비어 있음",
     ]);
   });
@@ -48,12 +40,12 @@ describe("validateCaseStudy", () => {
   it("백틱 짝이 안 맞으면 알린다", () => {
     const cs = makeCaseStudy({
       problems: [
-        makeProblem({ decision: "`X-Id` 헤더와 `?dpl= 쿼리" }),
+        makeProblem({ solution: "`X-Id` 헤더와 `?dpl= 쿼리" }),
         makeProblem(),
       ],
     });
     expect(validateCaseStudy("x", cs)).toEqual([
-      "x: problems[0].decision 백틱 짝 안 맞음",
+      "x: problems[0].solution 백틱 짝 안 맞음",
     ]);
   });
 

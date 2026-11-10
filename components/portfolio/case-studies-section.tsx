@@ -8,7 +8,7 @@ const CaseStudiesSection = () => {
     <section
       id="case-studies"
       aria-labelledby="case-studies-heading"
-      className="mx-auto max-w-5xl scroll-mt-3 px-6 py-16 lg:py-[7.5rem]"
+      className="mx-auto max-w-5xl scroll-mt-3 px-6 py-16 lg:-scroll-mt-11 lg:py-[7.5rem]"
     >
       <h2
         id="case-studies-heading"

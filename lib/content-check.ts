@@ -24,16 +24,12 @@ export const validateCaseStudy = (
 
   caseStudy.problems.forEach((problem, index) => {
     const path = `problems[${index}]`;
-    for (const [i, item] of problem.considered.entries()) {
-      checkBackticks(`${path}.considered[${i}]`, item);
-    }
     const caption =
       problem.visual && "caption" in problem.visual
         ? problem.visual.caption
         : undefined;
     if (caption) checkBackticks(`${path}.visual.caption`, caption);
-    // considered(검토한 방법)는 비교하지 않고 내린 결정도 있으므로 필수로 보지 않는다.
-    for (const field of ["problem", "decision", "result"] as const) {
+    for (const field of ["problem", "solution", "result"] as const) {
       if (!hasText(problem[field])) reportEmpty(`${path}.${field}`);
       checkBackticks(`${path}.${field}`, problem[field]);
     }

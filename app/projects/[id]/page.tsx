@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BackLink } from "@/components/back-link";
 import { CaseStudyBody } from "@/components/case-study/case-study-body";
-import Navbar from "@/components/portfolio/navbar";
 import { getCaseStudies, getCaseStudyById } from "@/lib/projects";
 
 export const dynamicParams = false;
@@ -27,15 +26,6 @@ export const generateMetadata = async ({
   };
 };
 
-const BackLink = ({ href, children }: { href: string; children: string }) => (
-  <Link
-    href={href}
-    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-  >
-    {children}
-  </Link>
-);
-
 export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const { id } = await params;
   const project = getCaseStudyById(id);
@@ -43,14 +33,10 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   if (!project) notFound();
 
   return (
-    <div className="min-h-svh bg-background">
-      <Navbar />
-
-      <main className="max-w-3xl mx-auto px-6 py-12 space-y-10">
-        <BackLink href="/">← 메인으로</BackLink>
-        <CaseStudyBody project={project} />
-        <BackLink href="/archive/">전체 프로젝트 보기</BackLink>
-      </main>
+    <div className="max-w-4xl mx-auto px-5 sm:px-6 py-12 space-y-10">
+      <BackLink href="/archive/">전체 프로젝트</BackLink>
+      <CaseStudyBody project={project} />
+      <BackLink href="/archive/">전체 프로젝트</BackLink>
     </div>
   );
 }

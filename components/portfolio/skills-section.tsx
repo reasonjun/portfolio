@@ -29,7 +29,10 @@ const skills = [
 
 const SkillsSection = () => {
   return (
-    <section id="skills" className="scroll-mt-3 space-y-10 py-12 lg:py-16">
+    <section
+      id="skills"
+      className="scroll-mt-7 space-y-10 py-12 lg:scroll-mt-3 lg:py-16"
+    >
       <h2
         data-reveal
         className="text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.1] tracking-[-0.02em] text-balance"
@@ -45,9 +48,11 @@ const SkillsSection = () => {
             style={{ "--i": index % 3 } as React.CSSProperties}
             className="grid gap-2 sm:grid-cols-[11rem_1fr] sm:gap-8"
           >
-            <dt className="text-lg text-muted-foreground">{group.category}</dt>
+            <dt className="text-base text-muted-foreground">
+              {group.category}
+            </dt>
             <dd>
-              <ul className="flex flex-wrap gap-x-6 gap-y-1 text-2xl font-medium">
+              <ul className="flex flex-wrap gap-x-6 gap-y-1 text-base font-medium">
                 {group.items.map((item) => (
                   <li key={item} translate="no">
                     {item}
