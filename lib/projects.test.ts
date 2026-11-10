@@ -10,7 +10,7 @@ import {
 const caseStudy: CaseStudy = {
   summary: "요약",
   background: "배경",
-  role: "역할",
+  team: "프런트엔드 1",
   problems: [],
 };
 
@@ -31,17 +31,17 @@ const fixtures: Project[] = [
     id: "case-a",
     title: "사례 A",
     company: "회사 A",
-    period: "2026.07. - 진행 중",
+    period: "2026.07. ~ 진행 중",
     techStack: ["Next.js", "React"],
     caseStudy,
   }),
   makeProject({ id: "plain-b", period: "2024.07." }),
-  makeProject({ id: "plain-c", period: "2019.02. - 2019.11." }),
+  makeProject({ id: "plain-c", period: "2019.02. ~ 2019.11." }),
 ];
 
 describe("getStartYear", () => {
   it("기간 문자열에서 시작 연도 4자리를 반환한다", () => {
-    expect(getStartYear("2026.07. - 진행 중")).toBe("2026");
+    expect(getStartYear("2026.07. ~ 진행 중")).toBe("2026");
     expect(getStartYear("2024.07.")).toBe("2024");
   });
 });

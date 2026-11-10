@@ -28,12 +28,6 @@ describe("대표 프로젝트 데이터", () => {
     ]);
   });
 
-  it("홈에 나오는 프로젝트는 모두 한 줄 역할을 가진다", () => {
-    for (const project of getHomeProjects()) {
-      expect(project.roleShort, project.id).toBeTruthy();
-    }
-  });
-
   it("아카이브는 전체 프로젝트 18개를 담는다", () => {
     expect(getArchiveRows()).toHaveLength(18);
   });

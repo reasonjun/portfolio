@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
 import type { CaseProblem, CaseStudyProject } from "@/app/types/project";
 import { Badge } from "@/components/ui/badge";
+import { hasText } from "@/lib/utils";
 import { CaseGallery } from "./case-gallery";
 import { CaseVisual } from "./case-visual";
 import { renderInlineCode } from "./inline-code";
-
-const hasText = (value: string): boolean => value.trim() !== "";
 
 const Section = ({
   title,
@@ -82,7 +81,7 @@ export const CaseStudyBody = ({ project }: CaseStudyBodyProps) => {
       <header className="space-y-3">
         <h1 className="text-3xl font-bold">{project.title}</h1>
         <p className="text-sm text-muted-foreground">
-          {project.company} | {project.period}
+          {project.company} | {project.period} | {caseStudy.team}
         </p>
         <div className="flex flex-wrap gap-2">
           {project.techStack.map((tech) => (
@@ -99,14 +98,6 @@ export const CaseStudyBody = ({ project }: CaseStudyBodyProps) => {
         <Section title="배경">
           <p className="leading-relaxed text-muted-foreground">
             {renderInlineCode(caseStudy.background)}
-          </p>
-        </Section>
-      )}
-
-      {hasText(caseStudy.role) && (
-        <Section title="역할">
-          <p className="leading-relaxed text-muted-foreground">
-            {renderInlineCode(caseStudy.role)}
           </p>
         </Section>
       )}

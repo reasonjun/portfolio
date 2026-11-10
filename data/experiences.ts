@@ -4,7 +4,7 @@ export const EXPERIENCES_DATA: Experience[] = [
   {
     id: "kidaristudio",
     company: "㈜키다리스튜디오",
-    period: "2025. 10. - 재직 중",
+    period: "2025. 10. ~ 재직 중",
     isActive: true,
     position: "백오피스개발팀 · 매니저",
     jobs: ["프런트엔드 개발"],
@@ -29,7 +29,7 @@ export const EXPERIENCES_DATA: Experience[] = [
   {
     id: "freelancer",
     company: "프리랜서",
-    period: "2025. 05. - 2025. 09.",
+    period: "2025. 05. ~ 2025. 09.",
     isActive: false,
     jobs: ["프런트엔드 개발", "백엔드 개발"],
     tagline:
@@ -44,7 +44,7 @@ export const EXPERIENCES_DATA: Experience[] = [
   {
     id: "dot",
     company: "㈜닷",
-    period: "2022. 12. - 2024. 12.",
+    period: "2022. 12. ~ 2024. 12.",
     isActive: false,
     position: "R&D SW · 주임연구원",
     jobs: ["프런트엔드 개발", "백엔드 개발"],
@@ -61,7 +61,7 @@ export const EXPERIENCES_DATA: Experience[] = [
   {
     id: "innodale",
     company: "이노데일㈜",
-    period: "2019. 02. - 2022. 08.",
+    period: "2019. 02. ~ 2022. 08.",
     isActive: false,
     position: "SI사업부 · 대리",
     jobs: ["프런트엔드 개발", "백엔드 개발"],

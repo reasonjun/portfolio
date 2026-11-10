@@ -14,7 +14,7 @@ const makeProblem = (overrides: Partial<CaseProblem> = {}): CaseProblem => ({
 const makeCaseStudy = (overrides: Partial<CaseStudy> = {}): CaseStudy => ({
   summary: "요약",
   background: "배경",
-  role: "역할",
+  team: "프런트엔드 1",
   problems: [makeProblem(), makeProblem()],
   ...overrides,
 });
@@ -57,23 +57,23 @@ describe("validateCaseStudy", () => {
     ]);
   });
 
-  it("역할이 비어 있으면 알린다", () => {
-    expect(validateCaseStudy("x", makeCaseStudy({ role: "" }))).toEqual([
-      "x: role 비어 있음",
+  it("팀 구성이 비어 있으면 알린다", () => {
+    expect(validateCaseStudy("x", makeCaseStudy({ team: "" }))).toEqual([
+      "x: team 비어 있음",
     ]);
   });
 
   it("공백만 있는 값도 비어 있는 것으로 본다", () => {
-    expect(validateCaseStudy("x", makeCaseStudy({ role: "   " }))).toEqual([
-      "x: role 비어 있음",
-    ]);
+    expect(
+      validateCaseStudy("x", makeCaseStudy({ background: "   " })),
+    ).toEqual(["x: background 비어 있음"]);
   });
 
   it("비어 있는 항목을 필드 순서대로 모두 알린다", () => {
-    const cs = makeCaseStudy({ role: "", summary: "" });
+    const cs = makeCaseStudy({ background: "", summary: "" });
     expect(validateCaseStudy("x", cs)).toEqual([
       "x: summary 비어 있음",
-      "x: role 비어 있음",
+      "x: background 비어 있음",
     ]);
   });
 });

@@ -5,7 +5,6 @@ import { withBasePath } from "@/lib/base-path";
 interface ProjectCardProps {
   id: string;
   title: string;
-  role: string;
   summary: string;
   meta: string;
   image: string | null;
@@ -23,7 +22,6 @@ const FALLBACK_TECH_COUNT = 3;
 export const ProjectCard = ({
   id,
   title,
-  role,
   summary,
   meta,
   image,
@@ -65,7 +63,6 @@ export const ProjectCard = ({
           {title}
         </Link>
       </h3>
-      <p className="mt-1 text-[0.9375rem] font-medium">{role}</p>
       <p className="mt-2 line-clamp-3 text-[0.9375rem] leading-relaxed">
         {summary}
       </p>

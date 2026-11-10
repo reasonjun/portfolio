@@ -1,6 +1,5 @@
 import type { CaseStudy } from "@/app/types/project";
-
-const isBlank = (value: string): boolean => value.trim() === "";
+import { hasText } from "@/lib/utils";
 
 export const validateCaseStudy = (
   id: string,
@@ -11,8 +10,8 @@ export const validateCaseStudy = (
     issues.push(`${id}: ${path} 비어 있음`);
   };
 
-  for (const field of ["summary", "background", "role"] as const) {
-    if (isBlank(caseStudy[field])) reportEmpty(field);
+  for (const field of ["summary", "background", "team"] as const) {
+    if (!hasText(caseStudy[field])) reportEmpty(field);
   }
 
   // 백틱은 <code> 표시라 짝이 안 맞으면 뒤 문장 전체가 코드로 바뀐다.
@@ -22,7 +21,6 @@ export const validateCaseStudy = (
     }
   };
   checkBackticks("background", caseStudy.background);
-  checkBackticks("role", caseStudy.role);
 
   caseStudy.problems.forEach((problem, index) => {
     const path = `problems[${index}]`;
@@ -36,7 +34,7 @@ export const validateCaseStudy = (
     if (caption) checkBackticks(`${path}.visual.caption`, caption);
     // considered(검토한 방법)는 비교하지 않고 내린 결정도 있으므로 필수로 보지 않는다.
     for (const field of ["problem", "decision", "result"] as const) {
-      if (isBlank(problem[field])) reportEmpty(`${path}.${field}`);
+      if (!hasText(problem[field])) reportEmpty(`${path}.${field}`);
       checkBackticks(`${path}.${field}`, problem[field]);
     }
   });

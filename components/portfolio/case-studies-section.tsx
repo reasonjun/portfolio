@@ -24,7 +24,6 @@ const CaseStudiesSection = () => {
             key={project.id}
             id={project.id}
             title={project.title}
-            role={project.roleShort ?? ""}
             summary={project.caseStudy.summary}
             meta={`${project.company} · ${project.period}`}
             image={project.images[0] ?? null}

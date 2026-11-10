@@ -23,7 +23,8 @@ export interface CaseProblem {
 export interface CaseStudy {
   summary: string;
   background: string;
-  role: string;
+  // 상세 페이지 메타 줄에 붙일 팀 구성("프런트엔드 1 · 백엔드 2")
+  team: string;
   problems: CaseProblem[];
 }
 
@@ -44,8 +45,6 @@ export interface Project {
   images: string[];
   // 대표 컷(images[0])을 16:10으로 자를 때 남길 부분. object-position 값(기본 "top").
   coverPosition?: string;
-  // 홈 대표 프로젝트 카드에 한 줄로 보여 줄 내 역할
-  roleShort?: string;
   // 홈 대표 프로젝트 카드의 표시 순서(1부터). 없으면 홈에 나오지 않는다.
   homeOrder?: number;
   highlights?: Highlight[];

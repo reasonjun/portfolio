@@ -9,7 +9,7 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "토큰이 브라우저에 노출되지 않도록 서버(BFF)가 중계하는 로그인 구조를 설계했습니다. JWT 토큰을 암호화 쿠키로 봉인하고, 같은 서버 모듈 안의 동시 refresh를 하나로 합쳤습니다. GitLab CI/CD·Docker 배포 파이프라인을 구성하고, Nginx blue/green으로 헬스체크를 통과한 뒤에만 트래픽을 전환합니다. 명세 기반 개발과 Git 훅 자동 검증을 적용했습니다.",
     company: "㈜키다리스튜디오",
-    period: "2026.08. - 2026.10.",
+    period: "2026.08. ~ 2026.10.",
     techStack: [
       "TypeScript 7",
       "Next.js 16",
@@ -25,14 +25,13 @@ export const PROJECTS_DATA: Project[] = [
       "AWS EC2·ALB·ECR",
     ],
     images: [],
-    roleShort: "프런트엔드 1 · 백엔드 2",
     homeOrder: 1,
     caseStudy: {
+      team: "프런트엔드 1 · 백엔드 2",
       summary:
         "브라우저 스크립트에서 토큰을 분리한 BFF 인증과, 헬스체크를 통과한 버전만 전환하는 blue/green 배포를 설계·구현",
       background:
         "2008년경 구축된 JSP 레거시 법무 시스템을 대체하는 신규 시스템입니다. 계약 정보 오입력을 줄이고, 이후 AI 기반 계약서 정보 추출과 콘텐츠 IP·계약 관리 시스템 연동으로 업무를 자동화하기 위한 기반입니다.",
-      role: "프런트엔드를 전담해 기술 스택 선정과 FSD 기반 아키텍처 설계, 인증·화면 구현을 맡았고, 컨테이너 배포 파이프라인을 설계·구현했습니다.",
       problems: [
         {
           title: "BFF 암호화 쿠키로 브라우저 스크립트의 토큰 접근 차단",
@@ -100,7 +99,7 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "양식이 다른 3개 정산 유형의 조회 탭·엑셀 업로드 양식·안내 메일 항목을 유형별 설정으로 분리하고, 신규 유형의 설정 누락을 컴파일 단계에서 검출하도록 설계했습니다. 배포 후에도 옛 화면이 보인다는 문의에 대응해 S3·CloudFront 캐시 정책을 분리했습니다(해시 파일은 장기 캐시, index.html은 매번 재검증).",
     company: "㈜키다리스튜디오",
-    period: "2026.03. - 2026.10.",
+    period: "2026.03. ~ 2026.10.",
     techStack: [
       "JavaScript",
       "TypeScript",
@@ -112,14 +111,13 @@ export const PROJECTS_DATA: Project[] = [
       "AWS S3·CloudFront",
     ],
     images: [],
-    roleShort: "프런트엔드 1 · 백엔드 1",
     homeOrder: 2,
     caseStudy: {
+      team: "프런트엔드 1 · 백엔드 1",
       summary:
         "양식이 다른 3개 정산 유형을 설정 추가 중심으로 늘릴 수 있게 설계한 저작권자용 정산 조회 웹 페이지",
       background:
         "저작권자가 정산 내역을 확인하는 외부 제공 웹 페이지의 기능을 확장했습니다.",
-      role: "정산 유형별 조회·업로드·메일 구조 설계와 프런트엔드 개발을 맡았습니다.",
       problems: [
         {
           title: "설정 추가만으로 늘릴 수 있는 정산 유형 구조",
@@ -151,7 +149,7 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "5개 화면에 중복된 콘텐츠 입력 폼을 공통 컴포넌트로 통합했습니다. 계약등록 화면의 정산 조합 326가지를 Playwright E2E로 전수 순회해 현재 동작을 고정한 뒤, 도달할 수 없던 일괄등록 코드를 제거했습니다. Vite 8 업그레이드로 운영 빌드를 약 80초에서 약 20초로 약 75% 단축했습니다.",
     company: "㈜키다리스튜디오",
-    period: "2025.10. - 2026.10.",
+    period: "2025.10. ~ 2026.10.",
     techStack: [
       "TypeScript",
       "Vue 3",
@@ -166,14 +164,13 @@ export const PROJECTS_DATA: Project[] = [
       { value: "326", label: "E2E로 동작을 고정한 정산 조합" },
       { value: "75%", label: "운영 빌드 단축 (약 80s → 20s)" },
     ],
-    roleShort: "프런트엔드 1 · 백엔드 1",
     homeOrder: 3,
     caseStudy: {
+      team: "프런트엔드 1 · 백엔드 1",
       summary:
         "5개 화면의 입력 폼을 통합하고 정산 조합 326가지의 동작을 E2E로 고정해 레거시 코드를 제거한 콘텐츠 IP·계약 관리 시스템",
       background:
         "콘텐츠 IP를 관리하는 사내 업무 시스템입니다. 계약등록 화면은 기능 추가·수정이 어렵고 수정할 때마다 다른 화면에 회귀가 발생하던 약 10,000줄 단일 파일이었습니다.",
-      role: "프런트엔드 개발, 개발 환경·품질 체계 정비, 공통 컴포넌트·유틸 개발을 맡았습니다.",
       problems: [
         {
           title: "회귀를 막으면서 레거시 걷어내기",
@@ -248,15 +245,15 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "Next.js 기반으로 관리자 페이지를 구축하고, NextAuth.js를 통한 사용자 인증 및 권한 관리 기능을 구현했습니다. 모니터링 대시보드, 리포트, 설문조사 관리 기능을 포함하여 프런트엔드 아키텍처 전반을 설계했습니다.",
     company: "프리랜서",
-    period: "2025.05. - 2025.08.",
+    period: "2025.05. ~ 2025.08.",
     techStack: ["TypeScript", "Next.js", "NextAuth.js", "Ant Design"],
     images: ["ats/image-1.png"],
     caseStudy: {
+      team: "프런트엔드 1 · 백엔드 1",
       summary:
         "Next.js 초기 환경과 개발 아키텍처를 설계한 중소기업 채용관리솔루션(ATS) 운영 모니터링 웹 시스템",
       background:
         "중소기업 채용관리솔루션(ATS) 서비스 운영 모니터링을 위한 관리자용 웹 시스템입니다.",
-      role: "프런트엔드 개발 및 아키텍처 설계, 관리자 페이지 개발, 인증 시스템 연동",
       problems: [
         {
           title: "Next.js 프로젝트 초기 환경과 개발 아키텍처",
@@ -283,7 +280,7 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "DAISY 및 BRF 파일을 파싱해 HTML로 렌더링하는 전자책 뷰어를 개발했습니다. Web Speech API를 활용한 문단 단위 TTS 기능과 점자 디스플레이 연동 기능을 구현했습니다.",
     company: "㈜닷",
-    period: "2024.11. - 2024.12.",
+    period: "2024.11. ~ 2024.12.",
     techStack: ["JavaScript", "Vue.js"],
     images: ["ebook-reader-web/image-2.png"],
   },
@@ -294,7 +291,7 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "Figma와 Storybook을 활용하여 컴포넌트 문서화 및 시각적 회귀 테스트(Chromatic)를 구현했습니다. 아토믹 디자인 패턴을 적용해 재사용성과 일관성을 확보했습니다.",
     company: "㈜닷",
-    period: "2024.08. - 2024.10.",
+    period: "2024.08. ~ 2024.10.",
     techStack: ["TypeScript", "Vue.js", "Storybook", "Figma"],
     images: [
       "design-system/image-1.png",
@@ -302,14 +299,13 @@ export const PROJECTS_DATA: Project[] = [
       "design-system/image-3.png",
       "design-system/image-4.png",
     ],
-    roleShort: "컴포넌트 구조 · 디자인 토큰",
     homeOrder: 4,
     caseStudy: {
+      team: "프런트엔드 1",
       summary:
         "아토믹 디자인 기반 컴포넌트 라이브러리와 디자인 토큰, Storybook·Chromatic 시각 회귀 테스트를 구축한 디자인 시스템",
       background:
         "아토믹 디자인 패턴 기반의 재사용 가능한 컴포넌트 라이브러리 및 디자인 토큰 시스템을 구축했습니다.",
-      role: "컴포넌트 계층 구조 설계 및 구현, 디자인 토큰 시스템 구축",
       problems: [
         {
           title: "역할이 명확한 컴포넌트 구조",
@@ -371,19 +367,18 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "CKEditor5 기반으로 접근성 검사 기능(alt 텍스트, 색상 대비 등)을 추가하고, 대용량 문서 가상 스크롤을 구현해 로딩 속도를 20초에서 1초로 단축했습니다.",
     company: "㈜닷",
-    period: "2023.09. - 2024.04.",
+    period: "2023.09. ~ 2024.04.",
     techStack: ["JavaScript", "Vue.js", "CKEditor 5"],
     images: ["dot-editor/image-1.png", "dot-editor/image-2.png"],
     coverPosition: "left top",
     highlights: [{ value: "20s → 1s", label: "대용량 문서 로딩" }],
-    roleShort: "접근성 검사 · 성능 최적화",
     homeOrder: 5,
     caseStudy: {
+      team: "프런트엔드 2 · 백엔드 1",
       summary:
         "접근성 검사와 가상 스크롤을 더해 대용량 문서 로딩을 20초에서 1초로 줄인 점자 디스플레이용 WYSIWYG 에디터",
       background:
         "시각장애인을 위한 점자 디스플레이(Dot Pad) 출력에 최적화된 웹 기반 WYSIWYG 에디터입니다.",
-      role: "웹 접근성 검사 기능 구현, 가상 스크롤 등 성능 최적화",
       problems: [
         {
           title: "대용량 문서 로딩 속도",
@@ -417,7 +412,7 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "Flutter로 DAISY 전자책 뷰어를 개발했습니다. Daisy Parser 모듈과 확장 가능한 파서 아키텍처를 설계했습니다.",
     company: "㈜닷",
-    period: "2023.03. - 2023.08.",
+    period: "2023.03. ~ 2023.08.",
     techStack: ["Flutter", "Dart", "Swift"],
     images: [],
   },
@@ -428,7 +423,7 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "비동기 업로드/다운로드와 권한 기반 파일 접근 제어를 구현했습니다. 커맨드 패턴으로 파일 조작 인터페이스를 설계했습니다.",
     company: "㈜닷",
-    period: "2023.01. - 2023.02.",
+    period: "2023.01. ~ 2023.02.",
     techStack: [
       "JavaScript",
       "Vue.js",
@@ -444,9 +439,9 @@ export const PROJECTS_DATA: Project[] = [
     title: "시각장애인을 위한 웹 기반 촉각 그래픽 편집 도구",
     description: "시각장애인용 촉각 그래픽 제작 툴",
     detailDescription:
-      "Fabric.js 기반 그래픽 편집기와 하드웨어 연동 SDK를 구축했습니다. 이미지 → 촉각 그래픽 변환 기능을 개발했으며, CES 2024 접근성 부문 혁신상을 수상했습니다.",
+      "Fabric.js 기반 그래픽 편집기를 구축하고 하드웨어 장치 SDK를 웹 에디터에 연동했습니다. 이미지 → 촉각 그래픽 변환 기능을 개발했으며, CES 2024 접근성 부문 혁신상을 수상했습니다.",
     company: "㈜닷",
-    period: "2022.12. - 2024.12.",
+    period: "2022.12. ~ 2024.12.",
     techStack: [
       "JavaScript",
       "Vue.js",
@@ -461,14 +456,13 @@ export const PROJECTS_DATA: Project[] = [
       "dot-canvas/image-3.png",
       "dot-canvas/image-4.webp",
     ],
-    roleShort: "에디터 · 하드웨어 SDK",
     homeOrder: 6,
     caseStudy: {
+      team: "프런트엔드 1 · 백엔드 1 · SDK 1 · 점역엔진 1",
       summary:
-        "CES 2024 접근성 부문 혁신상을 수상한 촉각 그래픽 편집 도구의 캔버스 에디터와 하드웨어 연동 SDK",
+        "CES 2024 접근성 부문 혁신상을 수상한 촉각 그래픽 편집 도구의 캔버스 에디터 개발과 하드웨어 SDK 연동",
       background:
         "시각장애인을 포함한 모든 사용자가 촉각 그래픽을 제작, 편집, 저장, 공유할 수 있도록 설계된 웹 애플리케이션입니다.",
-      role: "프런트엔드 개발 및 하드웨어 장치 연동 SDK 구축",
       problems: [
         {
           title: "캔버스 기반 그래픽 에디터",
@@ -479,10 +473,11 @@ export const PROJECTS_DATA: Project[] = [
           result: "",
         },
         {
-          title: "하드웨어 장치 연동 SDK",
+          title: "하드웨어 장치 SDK를 웹 에디터에 연동",
           problem: "",
           considered: [],
-          decision: "하드웨어 장치와 연동하는 SDK를 구축했습니다.",
+          decision:
+            "SDK 개발자가 만든 하드웨어 장치 SDK를 캔버스 웹 에디터에 연동해, 편집한 촉각 그래픽을 장치로 출력할 수 있게 했습니다.",
           result: "",
         },
         {
@@ -502,7 +497,7 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "GIS 기반 관리 기능을 구현하고, Highcharts를 통한 데이터 시각화 및 Excel 보고서 자동화를 구축했습니다.",
     company: "이노데일㈜",
-    period: "2022.03. - 2022.07.",
+    period: "2022.03. ~ 2022.07.",
     techStack: [
       "AngularJS",
       "JavaScript",
@@ -520,7 +515,7 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "OpenLayers, GeoServer를 활용한 GIS 기반 시설물 관리와 Draw2D로 인터랙티브 편집 가능한 계통도를 개발했습니다.",
     company: "이노데일㈜",
-    period: "2021.03. - 2022.02.",
+    period: "2021.03. ~ 2022.02.",
     techStack: [
       "JSP",
       "JavaScript",
@@ -538,7 +533,7 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "ParamQuery Grid와 Highcharts를 활용해 대용량 실시간 데이터 시각화를 구현했습니다. 설비 가동률, 불량률, 다운타임 분석 로직을 설계했습니다.",
     company: "이노데일㈜",
-    period: "2020.03. - 2021.02.",
+    period: "2020.03. ~ 2021.02.",
     techStack: [
       "JSP",
       "JavaScript",
@@ -556,7 +551,7 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "모바일 최적화 화면과 NICE API 기반 본인 인증 기능을 구현했습니다.",
     company: "이노데일㈜",
-    period: "2019.12. - 2020.02.",
+    period: "2019.12. ~ 2020.02.",
     techStack: ["JSP", "JavaScript", "jQuery", "NICE API"],
     images: [],
   },
@@ -567,7 +562,7 @@ export const PROJECTS_DATA: Project[] = [
     detailDescription:
       "AngularJS 기반 SPA와 Highcharts/jqGrid를 활용해 실시간 데이터 시각화를 구현했습니다.",
     company: "이노데일㈜",
-    period: "2019.02. - 2019.11.",
+    period: "2019.02. ~ 2019.11.",
     techStack: ["AngularJS", "JavaScript", "Highcharts", "jqGrid"],
     images: [],
   },
