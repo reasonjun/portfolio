@@ -94,12 +94,12 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: "external-settlement-system",
-    title: "외부정산 시스템 개발 및 개선",
+    title: "저작권자용 외부정산 시스템 기능 확장",
     description: "저작권자용 정산 조회 외부 페이지의 기능 확장",
     detailDescription:
       "양식이 다른 3개 정산 유형의 조회 탭·엑셀 업로드 양식·안내 메일 항목을 유형별 설정으로 분리하고, 신규 유형의 설정 누락을 컴파일 단계에서 검출하도록 설계했습니다. 배포 후에도 옛 화면이 보인다는 문의에 대응해 S3·CloudFront 캐시 정책을 분리했습니다(해시 파일은 장기 캐시, index.html은 매번 재검증).",
     company: "㈜키다리스튜디오",
-    period: "2026.03. ~ 2026.10.",
+    period: "2026.03. ~ 2026.04.",
     techStack: [
       "JavaScript",
       "TypeScript",
@@ -240,8 +240,9 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: "ats-monitoring-system",
-    title: "사람인 채용관리솔루션(리버스) 정부지원사업 모니터링 시스템 개발",
-    description: "중소기업 채용관리솔루션(ATS) 운영 모니터링 웹 시스템",
+    title: "사람인 리버스 정부지원사업 모니터링 시스템 개발",
+    description:
+      "사람인 채용관리솔루션(ATS) 리버스의 정부지원사업 모니터링 웹 시스템",
     detailDescription:
       "Next.js 기반으로 관리자 페이지를 구축하고, NextAuth.js를 통한 사용자 인증 및 권한 관리 기능을 구현했습니다. 모니터링 대시보드, 리포트, 설문조사 관리 기능을 포함하여 프런트엔드 아키텍처 전반을 설계했습니다.",
     company: "프리랜서",
@@ -251,9 +252,9 @@ export const PROJECTS_DATA: Project[] = [
     caseStudy: {
       team: "프런트엔드 1 · 백엔드 1",
       summary:
-        "Next.js 초기 환경과 개발 아키텍처를 설계한 중소기업 채용관리솔루션(ATS) 운영 모니터링 웹 시스템",
+        "Next.js 초기 환경과 개발 아키텍처를 설계한 사람인 리버스 정부지원사업 모니터링 웹 시스템",
       background:
-        "중소기업 채용관리솔루션(ATS) 서비스 운영 모니터링을 위한 관리자용 웹 시스템입니다.",
+        "사람인 채용관리솔루션(ATS) 리버스의 정부지원사업 운영 현황을 모니터링하는 관리자용 웹 시스템입니다.",
       problems: [
         {
           title: "Next.js 프로젝트 초기 환경과 개발 아키텍처",
@@ -362,7 +363,7 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: "wysiwyg-editor",
-    title: "웹 기반 WYSIWYG 에디터",
+    title: "점자 디스플레이용 웹 WYSIWYG 에디터 개발",
     description: "접근성 검사 기능을 포함한 웹 에디터",
     detailDescription:
       "CKEditor5 기반으로 접근성 검사 기능(alt 텍스트, 색상 대비 등)을 추가하고, 대용량 문서 가상 스크롤을 구현해 로딩 속도를 20초에서 1초로 단축했습니다.",

@@ -33,13 +33,23 @@ export const EXPERIENCES_DATA: Experience[] = [
     isActive: false,
     jobs: ["프런트엔드 개발", "백엔드 개발"],
     tagline:
-      "중소기업 채용관리솔루션(ATS) 서비스 운영 모니터링을 위한 관리자용 웹 시스템",
+      "사람인 리버스 정부지원사업 모니터링 시스템과 다이슨 프로모션 라이브 방송 페이지 개발",
     duties: [
-      "Next.js 프로젝트 초기 환경 구축과 개발 아키텍처 설계(폴더·레이어 구조, 상태·데이터 페칭 방식, 공통 컴포넌트)",
+      "사람인 리버스 모니터링 시스템의 Next.js 초기 환경 구축과 개발 아키텍처 설계(폴더·레이어 구조, 상태·데이터 페칭 방식, 공통 컴포넌트)",
       "NextAuth.js 기반 사용자 인증 연동",
       "모니터링 대시보드, 리포트, 설문조사 관리 화면 개발",
+      "다이슨 라이브 방송 페이지를 PHP에서 Next.js 모노레포(앱 6개·공유 패키지 4개)로 전환",
+      "사전알림·기대평을 운영자가 직접 확인하는 백오피스 화면 개발과 Docker·AWS ECS 롤링 배포 구성",
     ],
-    techs: ["Next.js", "NextAuth.js"],
+    techs: [
+      "Next.js",
+      "NextAuth.js",
+      "Turborepo",
+      "Java",
+      "Spring Boot",
+      "Docker",
+      "AWS ECS",
+    ],
   },
   {
     id: "dot",
