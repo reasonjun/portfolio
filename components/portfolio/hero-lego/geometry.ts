@@ -20,8 +20,8 @@ import {
   CHROME,
   FOOT_H,
   faceAt,
-  P,
   PITCH,
+  PROJECTION,
   STUD_H,
   STUD_R,
   VW,
@@ -32,7 +32,7 @@ import {
 } from "./view";
 
 const solid = (plan: Plan, z: number, h: number, steps = 4, bevel = 0) =>
-  slabOf(plan, z, h, P, steps, bevel);
+  slabOf(plan, z, h, PROJECTION, steps, bevel);
 const cyl = (
   cx: number,
   cy: number,
@@ -40,20 +40,18 @@ const cyl = (
   z: number,
   h: number,
   steps = 28,
-) => cylinder(cx, cy, r, z, h, P, steps);
+) => cylinder(cx, cy, r, z, h, PROJECTION, steps);
 
-// ───────── 창 ─────────
 export const WALL = slabOf(
   { x: WIN_X0, y: -WALL_T, w: VW, d: WALL_T, r: WALL_R },
   0,
   WIN_H,
-  P,
+  PROJECTION,
   3,
   0.6,
 );
 export const WALL_FACE = faceAt(WIN_X0, 0, WIN_H);
 
-// ───────── 바닥 판 ─────────
 const FEET = corners(BASE, 10);
 const SCREWS = corners(BASE, 8);
 const SLOT: Plan = {
@@ -65,22 +63,23 @@ const SLOT: Plan = {
 };
 
 export const BASE_ART = {
-  halo: haloOf(BASE, -BASE_H - FOOT_H, BASE_H, P),
+  halo: haloOf(BASE, -BASE_H - FOOT_H, BASE_H, PROJECTION),
   feet: FEET.map(([x, y]) => [
     cyl(x, y, 7, -BASE_H - FOOT_H, 1.6),
     cyl(x, y, 5.4, -BASE_H - FOOT_H + 1.6, FOOT_H - 1.6),
   ]),
   slab: solid(BASE, -BASE_H, BASE_H, 8, 1.6),
-  groove: planOutline(insetPlan(BASE, 4.5), 0, P),
-  slot: planOutline(SLOT, 0, P, 3),
-  screwRings: joinPaths(SCREWS.map(([x, y]) => ring(x, y, 2.2, 0, P, 16))),
-  screws: SCREWS.map(([x, y]) => iso([x, y, 0], P)),
+  groove: planOutline(insetPlan(BASE, 4.5), 0, PROJECTION),
+  slot: planOutline(SLOT, 0, PROJECTION, 3),
+  screwRings: joinPaths(
+    SCREWS.map(([x, y]) => ring(x, y, 2.2, 0, PROJECTION, 16)),
+  ),
+  screws: SCREWS.map(([x, y]) => iso([x, y, 0], PROJECTION)),
 };
 
 // 이름판은 윗면을 비워 두려고 바닥 판의 앞쪽 옆면에 붙인다. 지역 좌표의 원점은 이름판의 왼쪽 위다.
 export const PLATE_FACE = faceAt(BASE.x + 16, BASE.y + BASE.d, -2);
 
-// ───────── 레고 블록 ─────────
 const SEAM_STEP = 8;
 
 export const BRICK_ART = BRICKS.map((brick) => {
@@ -91,7 +90,7 @@ export const BRICK_ART = BRICKS.map((brick) => {
       segment(
         [brick.w, 0, (k + 1) * SEAM_STEP],
         [brick.w, BRICK_D, (k + 1) * SEAM_STEP],
-        P,
+        PROJECTION,
       ),
     ),
   );
@@ -103,7 +102,7 @@ export const BRICK_ART = BRICKS.map((brick) => {
     ),
     // 앞면에 인쇄된 화면. 지역 좌표의 원점은 앞면의 왼쪽 위다.
     face: faceAt(0, BRICK_D, brick.h),
-    center: iso([brick.w / 2, BRICK_D / 2, brick.h / 2], P),
+    center: iso([brick.w / 2, BRICK_D / 2, brick.h / 2], PROJECTION),
   };
 });
 

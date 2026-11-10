@@ -54,7 +54,6 @@ const handleRequest = async (req, res) => {
         : relative,
     );
 
-    // out/ 바깥 경로 접근 차단
     if (target.startsWith(`${OUT_DIR}${path.sep}`) && (await isFile(target))) {
       return send(res, 200, target);
     }

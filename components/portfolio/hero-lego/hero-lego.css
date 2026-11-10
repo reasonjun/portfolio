@@ -83,7 +83,6 @@
   --anatomy-mid: #09553a;
 }
 
-/* 블록 앞면에 인쇄된 그림 */
 .gx-ink {
   fill: var(--anatomy-hi);
 }
@@ -147,7 +146,6 @@
   fill: #a3aed0;
 }
 
-/* 브라우저 창 */
 /* 창 안쪽을 블록보다 한 단계 짙게 해서 블록이 떠 보이게 한다. */
 .ch-view {
   fill: #d0d8ef;

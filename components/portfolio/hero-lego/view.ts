@@ -45,7 +45,7 @@ const FIT: Point3[] = [
   ...boxCorners({ x: WIN_X0, y: -WALL_T, w: VW, d: WALL_T, r: 0 }, 0, WIN_H),
 ];
 
-export const P = fitProjection(FIT, WIDTH, HEIGHT, {
+export const PROJECTION = fitProjection(FIT, WIDTH, HEIGHT, {
   pad: 8,
   headroom: 14, // 창이 패널 윗변에 붙지 않게 위를 비운다
   azimuth: AZIMUTH,
@@ -54,7 +54,11 @@ export const P = fitProjection(FIT, WIDTH, HEIGHT, {
 
 // 블록 그룹의 위치. x, top은 뷰포트 안쪽 기준이고 forward는 벽에서 앞으로 나온 거리다.
 export const brickAt = (x: number, top: number, h: number, forward = 0) =>
-  translateAlong(P, [WIN_X0 + BEZEL + x, forward, WIN_H - CHROME - top - h]);
+  translateAlong(PROJECTION, [
+    WIN_X0 + BEZEL + x,
+    forward,
+    WIN_H - CHROME - top - h,
+  ]);
 
 // 블록을 자기 가운데(center)를 중심으로 줄인다. 크기가 0이면 그려지지 않는다.
 export const shrunk = (at: string, [cx, cy]: Flat, scale: number) =>
@@ -64,7 +68,10 @@ export const shrunk = (at: string, [cx, cy]: Flat, scale: number) =>
 
 // 커서의 화면 위치. 커서는 창 면에 붙은 그림이 아니라서 화면 기준으로 똑바로 그린다.
 export const cursorAt = (x: number, top: number) => {
-  const [u, v] = iso([WIN_X0 + BEZEL + x, CURSOR_Y, WIN_H - CHROME - top], P);
+  const [u, v] = iso(
+    [WIN_X0 + BEZEL + x, CURSOR_Y, WIN_H - CHROME - top],
+    PROJECTION,
+  );
   return `translate(${u.toFixed(2)} ${v.toFixed(2)})`;
 };
 
@@ -74,4 +81,4 @@ export const onFace = (x: number, top: number) =>
 
 // 앞을 보는 수직면에 평평한 그림을 붙이는 행렬. 지역 좌표 (u, v)는 오른쪽, 아래쪽이다.
 export const faceAt = (x: number, y: number, zTop: number) =>
-  sideMatrix([x, y], zTop, P, "left");
+  sideMatrix([x, y], zTop, PROJECTION, "left");

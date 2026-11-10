@@ -4,15 +4,15 @@ import {
   getArchiveRows,
   getCaseStudies,
   getCaseStudyById,
-  getStartYear,
+  getExportProjects,
+  getMainTech,
 } from "./projects";
 
 const caseStudy: CaseStudy = {
   summary: "요약",
   background: "배경",
-  role: "역할",
+  team: "프런트엔드 1",
   problems: [],
-  retrospective: "회고",
 };
 
 const makeProject = (overrides: Partial<Project>): Project => ({
@@ -32,24 +32,41 @@ const fixtures: Project[] = [
     id: "case-a",
     title: "사례 A",
     company: "회사 A",
-    period: "2026.07. - 진행 중",
+    period: "2026.07. ~ 진행 중",
     techStack: ["Next.js", "React"],
     caseStudy,
   }),
   makeProject({ id: "plain-b", period: "2024.07." }),
-  makeProject({ id: "plain-c", period: "2019.02. - 2019.11." }),
+  makeProject({ id: "plain-c", period: "2019.02. ~ 2019.11." }),
 ];
 
-describe("getStartYear", () => {
-  it("기간 문자열에서 시작 연도 4자리를 반환한다", () => {
-    expect(getStartYear("2026.07. - 진행 중")).toBe("2026");
-    expect(getStartYear("2024.07.")).toBe("2024");
+describe("getMainTech", () => {
+  it("TypeScript가 있으면 JavaScript를 빼고 앞에서 5개까지 남긴다", () => {
+    expect(
+      getMainTech([
+        "JavaScript",
+        "TypeScript",
+        "Vue 3",
+        "Vite 8",
+        "Pinia",
+        "AWS",
+      ]),
+    ).toEqual(["TypeScript", "Vue 3", "Vite 8", "Pinia", "AWS"]);
+  });
+
+  it("TypeScript가 없으면 JavaScript를 남긴다", () => {
+    expect(getMainTech(["JavaScript", "Vue.js"])).toEqual([
+      "JavaScript",
+      "Vue.js",
+    ]);
   });
 });
 
 describe("getCaseStudies", () => {
   it("caseStudy가 있는 프로젝트만 데이터 순서대로 반환한다", () => {
-    expect(getCaseStudies(fixtures).map((p) => p.id)).toEqual(["case-a"]);
+    expect(getCaseStudies(fixtures).map((project) => project.id)).toEqual([
+      "case-a",
+    ]);
   });
 });
 
@@ -76,9 +93,9 @@ describe("getArchiveRows", () => {
     ]);
   });
 
-  it("행에 연도·제목·회사·기술을 담는다", () => {
+  it("행에 기간·제목·회사·기술을 담는다", () => {
     expect(getArchiveRows(fixtures)[0]).toMatchObject({
-      year: "2026",
+      period: "2026.07. ~ 진행 중",
       title: "사례 A",
       company: "회사 A",
       techStack: ["Next.js", "React"],
@@ -89,5 +106,24 @@ describe("getArchiveRows", () => {
     const rows = getArchiveRows(fixtures);
     expect(rows[0].href).toBe("/projects/case-a/");
     expect(rows[1].href).toBeUndefined();
+  });
+});
+
+describe("getExportProjects", () => {
+  it("홈 대표 사례를 homeOrder 순으로, 콘텐츠 검사를 통과한 것만 반환한다", () => {
+    const projects = [
+      makeProject({ id: "third", homeOrder: 3, caseStudy }),
+      makeProject({
+        id: "blank",
+        homeOrder: 1,
+        caseStudy: { ...caseStudy, summary: "" },
+      }),
+      makeProject({ id: "second", homeOrder: 2, caseStudy }),
+      makeProject({ id: "unranked", caseStudy }),
+    ];
+    expect(getExportProjects(projects).map((project) => project.id)).toEqual([
+      "second",
+      "third",
+    ]);
   });
 });

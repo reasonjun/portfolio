@@ -17,25 +17,19 @@ describe("대표 프로젝트 데이터", () => {
     ]);
   });
 
-  it("홈 대표 프로젝트 6개가 시작일 최신순으로 나온다", () => {
+  it("홈 대표 프로젝트 6개가 임팩트순으로 나온다", () => {
     expect(getHomeProjects().map((project) => project.id)).toEqual([
       "enterprise-legal-management",
-      "external-settlement-system",
       "ip-management-system",
-      "design-system",
+      "external-settlement-system",
       "wysiwyg-editor",
       "tactile-graphics-editor",
+      "design-system",
     ]);
   });
 
-  it("홈에 나오는 프로젝트는 모두 한 줄 역할을 가진다", () => {
-    for (const project of getHomeProjects()) {
-      expect(project.roleShort, project.id).toBeTruthy();
-    }
-  });
-
-  it("아카이브는 전체 프로젝트 17개를 담는다", () => {
-    expect(getArchiveRows()).toHaveLength(17);
+  it("아카이브는 전체 프로젝트 18개를 담는다", () => {
+    expect(getArchiveRows()).toHaveLength(18);
   });
 
   it("프로젝트 id가 중복되지 않는다", () => {
@@ -43,14 +37,18 @@ describe("대표 프로젝트 데이터", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it("법무관리 프로젝트의 문제에 인증 흐름과 배포 도식이 연결되어 있다", () => {
+  it("법무관리 프로젝트의 문제에 배포와 인증 흐름 도식이 연결되어 있다", () => {
     const legal = getCaseStudies().find(
       (project) => project.id === "enterprise-legal-management",
     );
     const diagramIds = legal?.caseStudy.problems.flatMap((problem) =>
       problem.visual?.type === "diagram" ? [problem.visual.id] : [],
     );
-    expect(diagramIds).toEqual(["bff-auth-flow", "blue-green-deploy"]);
+    expect(diagramIds).toEqual([
+      "blue-green-deploy",
+      "bff-auth-flow",
+      "modal-lazy-load",
+    ]);
   });
 
   it("모든 프로젝트와 경력에서 '채용관리솔루션' 표기를 쓴다", () => {
@@ -62,10 +60,6 @@ describe("대표 프로젝트 데이터", () => {
 describe("프로필 데이터", () => {
   it("Hero 핵심 수치는 정확히 3개다", () => {
     expect(PROFILE.metrics).toHaveLength(3);
-  });
-
-  it("파이프라인은 설계·구현·테스트·배포 4단계다", () => {
-    expect(PROFILE.pipeline).toEqual(["설계", "구현", "테스트", "배포"]);
   });
 });
 

@@ -36,14 +36,14 @@ const changed = (from: readonly number[], to: readonly number[]) =>
 
 describe("hero-lego 자리", () => {
   it("자리끼리 겹치지 않고 뷰포트 안에 있다", () => {
-    SLOTS.forEach((a, i) => {
-      expect(a.top + a.h).toBeLessThanOrEqual(VIEW_HEIGHT);
-      SLOTS.slice(i + 1).forEach((b) => {
+    SLOTS.forEach((slot, i) => {
+      expect(slot.top + slot.h).toBeLessThanOrEqual(VIEW_HEIGHT);
+      SLOTS.slice(i + 1).forEach((other) => {
         const apart =
-          a.x + a.w <= b.x ||
-          b.x + b.w <= a.x ||
-          a.top + a.h <= b.top ||
-          b.top + b.h <= a.top;
+          slot.x + slot.w <= other.x ||
+          other.x + other.w <= slot.x ||
+          slot.top + slot.h <= other.top ||
+          other.top + other.h <= slot.top;
         expect(apart).toBe(true);
       });
     });
@@ -146,8 +146,8 @@ describe("자동 시연", () => {
 
   it("시간이 지나면 단계가 뒤로 가지 않고 끝 단계까지 닿는다", () => {
     let previous = 0;
-    for (let t = 0; t < PERIOD; t += 0.05) {
-      const step = stepAt(t);
+    for (let cycleTime = 0; cycleTime < PERIOD; cycleTime += 0.05) {
+      const step = stepAt(cycleTime);
       expect(step).toBeGreaterThanOrEqual(previous);
       previous = step;
     }

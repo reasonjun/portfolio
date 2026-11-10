@@ -76,6 +76,9 @@ function Carousel({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
+      // 포털로 띄운 자식(슬라이드 안 확대 모달 등)의 키 입력도 React 트리를 따라 여기까지 올라온다.
+      // DOM상 캐러셀 밖에서 일어난 입력이면 슬라이드를 넘기지 않고 기본 동작(스크롤)도 막지 않는다.
+      if (!event.currentTarget.contains(event.target as Node)) return;
       if (event.key === "ArrowLeft") {
         event.preventDefault();
         scrollPrev();
@@ -239,4 +242,5 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  useCarousel,
 };

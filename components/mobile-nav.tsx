@@ -1,7 +1,8 @@
 "use client";
 
 import { Menu } from "lucide-react";
-import { type ReactNode, useRef } from "react";
+import { usePathname } from "next/navigation";
+import { type ReactNode, useRef, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -16,10 +17,19 @@ interface MobileNavProps {
 
 const MobileNav = ({ children }: MobileNavProps) => {
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  // 네비는 루트 레이아웃에 있어 페이지가 바뀌어도 언마운트되지 않는다.
+  // 뒤로 가기처럼 메뉴 항목을 거치지 않고 페이지가 바뀌면 열린 메뉴를 닫는다.
+  const [shownPathname, setShownPathname] = useState(pathname);
+  if (pathname !== shownPathname) {
+    setShownPathname(pathname);
+    setOpen(false);
+  }
 
   return (
     <div className="md:hidden">
-      <Sheet>
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <button
             ref={triggerRef}
