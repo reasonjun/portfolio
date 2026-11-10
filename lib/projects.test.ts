@@ -12,7 +12,6 @@ const caseStudy: CaseStudy = {
   background: "배경",
   role: "역할",
   problems: [],
-  retrospective: "회고",
 };
 
 const makeProject = (overrides: Partial<Project>): Project => ({

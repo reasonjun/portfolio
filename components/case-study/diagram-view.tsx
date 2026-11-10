@@ -3,6 +3,7 @@ import type { DiagramId } from "@/app/types/project";
 import { BffAuthFlowDiagram } from "./diagrams/bff-auth-flow";
 import { BlueGreenDeployDiagram } from "./diagrams/blue-green-deploy";
 import { ModalLazyLoadDiagram } from "./diagrams/modal-lazy-load";
+import { renderInlineCode } from "./inline-code";
 
 const DIAGRAMS: Record<DiagramId, ComponentType> = {
   "bff-auth-flow": BffAuthFlowDiagram,
@@ -24,7 +25,7 @@ export const DiagramView = ({ id, caption }: DiagramViewProps) => {
         <Diagram />
       </div>
       <figcaption className="text-sm text-muted-foreground">
-        {caption}
+        {renderInlineCode(caption)}
       </figcaption>
     </figure>
   );

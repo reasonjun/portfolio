@@ -3,6 +3,7 @@ import type { CaseProblem, CaseStudyProject } from "@/app/types/project";
 import { Badge } from "@/components/ui/badge";
 import { CaseGallery } from "./case-gallery";
 import { CaseVisual } from "./case-visual";
+import { renderInlineCode } from "./inline-code";
 
 const hasText = (value: string): boolean => value.trim() !== "";
 
@@ -40,26 +41,28 @@ const ProblemBlock = ({ problem }: { problem: CaseProblem }) => {
       <h3 className="text-lg font-semibold">{problem.title}</h3>
       {hasText(problem.problem) && (
         <Labeled label="문제">
-          <p className="leading-relaxed">{problem.problem}</p>
+          <p className="leading-relaxed">{renderInlineCode(problem.problem)}</p>
         </Labeled>
       )}
       {considered.length > 0 && (
         <Labeled label="검토한 방법">
           <ul className="list-disc space-y-1 pl-5 leading-relaxed">
             {considered.map((item) => (
-              <li key={item}>{item}</li>
+              <li key={item}>{renderInlineCode(item)}</li>
             ))}
           </ul>
         </Labeled>
       )}
       {hasText(problem.decision) && (
         <Labeled label="선택">
-          <p className="leading-relaxed">{problem.decision}</p>
+          <p className="whitespace-pre-line leading-relaxed">
+            {renderInlineCode(problem.decision)}
+          </p>
         </Labeled>
       )}
       {hasText(problem.result) && (
         <Labeled label="결과">
-          <p className="leading-relaxed">{problem.result}</p>
+          <p className="leading-relaxed">{renderInlineCode(problem.result)}</p>
         </Labeled>
       )}
       {problem.visual && <CaseVisual visual={problem.visual} />}
@@ -95,7 +98,7 @@ export const CaseStudyBody = ({ project }: CaseStudyBodyProps) => {
       {hasText(caseStudy.background) && (
         <Section title="배경">
           <p className="leading-relaxed text-muted-foreground">
-            {caseStudy.background}
+            {renderInlineCode(caseStudy.background)}
           </p>
         </Section>
       )}
@@ -103,7 +106,7 @@ export const CaseStudyBody = ({ project }: CaseStudyBodyProps) => {
       {hasText(caseStudy.role) && (
         <Section title="역할">
           <p className="leading-relaxed text-muted-foreground">
-            {caseStudy.role}
+            {renderInlineCode(caseStudy.role)}
           </p>
         </Section>
       )}
@@ -115,14 +118,6 @@ export const CaseStudyBody = ({ project }: CaseStudyBodyProps) => {
               <ProblemBlock key={problem.title} problem={problem} />
             ))}
           </div>
-        </Section>
-      )}
-
-      {hasText(caseStudy.retrospective) && (
-        <Section title="회고">
-          <p className="leading-relaxed text-muted-foreground">
-            {caseStudy.retrospective}
-          </p>
         </Section>
       )}
     </article>

@@ -25,7 +25,6 @@ export interface CaseStudy {
   background: string;
   role: string;
   problems: CaseProblem[];
-  retrospective: string;
 }
 
 /** 프로젝트 결과를 한눈에 보여 주는 수치. 본문의 결과와 같은 값만 적는다. */

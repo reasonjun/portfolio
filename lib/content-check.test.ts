@@ -16,7 +16,6 @@ const makeCaseStudy = (overrides: Partial<CaseStudy> = {}): CaseStudy => ({
   background: "배경",
   role: "역할",
   problems: [makeProblem(), makeProblem()],
-  retrospective: "회고",
   ...overrides,
 });
 
@@ -46,6 +45,18 @@ describe("validateCaseStudy", () => {
     ]);
   });
 
+  it("백틱 짝이 안 맞으면 알린다", () => {
+    const cs = makeCaseStudy({
+      problems: [
+        makeProblem({ decision: "`X-Id` 헤더와 `?dpl= 쿼리" }),
+        makeProblem(),
+      ],
+    });
+    expect(validateCaseStudy("x", cs)).toEqual([
+      "x: problems[0].decision 백틱 짝 안 맞음",
+    ]);
+  });
+
   it("역할이 비어 있으면 알린다", () => {
     expect(validateCaseStudy("x", makeCaseStudy({ role: "" }))).toEqual([
       "x: role 비어 있음",
@@ -59,10 +70,10 @@ describe("validateCaseStudy", () => {
   });
 
   it("비어 있는 항목을 필드 순서대로 모두 알린다", () => {
-    const cs = makeCaseStudy({ retrospective: "", summary: "" });
+    const cs = makeCaseStudy({ role: "", summary: "" });
     expect(validateCaseStudy("x", cs)).toEqual([
       "x: summary 비어 있음",
-      "x: retrospective 비어 있음",
+      "x: role 비어 있음",
     ]);
   });
 });

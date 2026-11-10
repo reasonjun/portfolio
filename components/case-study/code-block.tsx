@@ -1,3 +1,5 @@
+import { renderInlineCode } from "./inline-code";
+
 interface CodeBlockProps {
   lang: string;
   code: string;
@@ -16,7 +18,7 @@ export const CodeBlock = ({ lang, code, caption }: CodeBlockProps) => (
     </div>
     {caption && (
       <figcaption className="text-sm text-muted-foreground">
-        {caption}
+        {renderInlineCode(caption)}
       </figcaption>
     )}
   </figure>
