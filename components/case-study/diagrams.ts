@@ -17,8 +17,8 @@ export const DIAGRAMS: Record<DiagramId, DiagramAsset> = {
     src: "/diagrams/blue-green-deploy.drawio.svg",
     alt: "브라우저 요청을 EC2 안의 Nginx map이 배포 ID로 나눠, 새로 연 탭은 활성 슬롯, 배포 전에 열어 둔 탭은 30분 유지되는 이전 슬롯으로 보내고, 만료된 배포 ID에는 410을 반환해 브라우저가 폼 수정 여부에 따라 새로고침하거나 모달로 안내한 뒤 입력을 복원하는 구조도. 아래에는 이미지 pull, 헬스체크, nginx 설정 검사를 통과해야 전환하고 실패하면 기존 버전을 유지하며, 전환 후 30분이 지나거나 재배포하면 만료 처리 후 SIGTERM으로 종료하는 배포 순서",
   },
-  "modal-lazy-load": {
-    src: "/diagrams/modal-lazy-load.drawio.svg",
-    alt: "거대 배럴과 Suspense 경계 없는 모달 때문에 지연 로드가 무효화되고 페이지 전체가 스켈레톤으로 바뀌던 흐름과, 전용 index와 모달 자체 Suspense 경계로 해결한 흐름의 비교 도식",
+  "msw-mock-switch": {
+    src: "/diagrams/msw-mock-switch.drawio.svg",
+    alt: "개발 환경에서 Next.js 서버의 fetch를 MSW setupServer가 가로채 핸들러가 있으면 mock 리졸버가, 없으면 실 백엔드 API가 응답하는 흐름과, 같은 핸들러의 mock 응답과 실API 응답을 화면의 zod 스키마로 검증하는 계약 테스트, 운영·스테이징 빌드에서 NEXT_PUBLIC_USE_MOCK=false로 mock 코드를 제거하는 구조도",
   },
 };

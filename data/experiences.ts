@@ -9,7 +9,7 @@ export const EXPERIENCES_DATA: Experience[] = [
     position: "백오피스개발팀 · 매니저",
     jobs: ["프런트엔드 개발"],
     tagline:
-      "콘텐츠 IP·정산·법무 업무를 다루는 사내 백오피스 시스템을 만드는 팀",
+      "웹툰·웹소설 플랫폼을 운영하는 콘텐츠 회사",
     duties: [
       "백오피스 프런트엔드 아키텍처 설계와 기술 결정",
       "인증 구조와 CI/CD·blue/green 배포 파이프라인 설계·구현",

@@ -47,7 +47,7 @@ describe("대표 프로젝트 데이터", () => {
     expect(diagramIds).toEqual([
       "blue-green-deploy",
       "bff-auth-flow",
-      "modal-lazy-load",
+      "msw-mock-switch",
     ]);
   });
 
