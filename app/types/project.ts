@@ -3,7 +3,10 @@ export type DiagramId =
   | "blue-green-deploy"
   | "msw-mock-switch"
   | "settlement-domain-config"
-  | "s3-cache-policy";
+  | "s3-cache-policy"
+  | "e2e-regression-baseline"
+  | "vite-rolldown-chunks"
+  | "content-form-unify";
 
 export type CaseVisual =
   | { type: "diagram"; id: DiagramId; caption: string }

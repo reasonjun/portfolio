@@ -31,4 +31,16 @@ export const DIAGRAMS: Record<DiagramId, DiagramAsset> = {
     src: "/diagrams/s3-cache-policy.drawio.svg",
     alt: "변경 전에는 S3의 모든 파일에 Cache-Control이 없어 CloudFront를 무효화해도 브라우저가 이전 버전의 index.html을 재검증 없이 사용했고, 변경 후에는 assets/* 해시 파일을 1년 immutable로 먼저 올리고 index.html 등 나머지를 no-cache로 올린다. 브라우저는 index.html을 요청할 때 저장한 ETag를 If-None-Match로 보내 그대로면 본문 없는 304를, 바뀌었으면 200과 새 ETag를 받는 흐름 비교도",
   },
+  "e2e-regression-baseline": {
+    src: "/diagrams/e2e-regression-baseline.drawio.svg",
+    alt: "정산방식·계약분류·콘텐츠형태·지급방식 4개 축의 조합 중 도달 가능한 326가지를 테스트 매트릭스로 정리하고 도달 불가 조합은 막는 코드 위치를 기록해 제외한 뒤, 실제 응답을 저장한 API mock 데이터와 Playwright 화면 조작으로 계약등록 208건·계약변경 232건의 기준선을 만들고, 일괄등록 코드를 제거한 뒤 같은 E2E를 다시 통과시킨 흐름도. 백엔드 응답을 mock으로 대체한 화면 검증이며 CI에서 상시 실행되지는 않는다",
+  },
+  "vite-rolldown-chunks": {
+    src: "/diagrams/vite-rolldown-chunks.drawio.svg",
+    alt: "변경 전 Vite 5는 개발에 esbuild, 빌드에 Rollup을 쓰고 RealGrid·Vuetify·lodash·앱 코드가 2,493KiB 단일 청크에 묶여 운영 빌드가 약 80초 걸렸다. 변경 후 Vite 8은 Rolldown으로 번들러를 통합하고 realgrid·vuetify·vendor·앱 코드 청크로 분리했으며, lodash를 lodash-es와 네이티브 메서드로 바꾸고 미사용 코드를 지워 운영 빌드 약 20초, JS·CSS 전체 6,471KiB에서 5,356KiB가 된 비교도",
+  },
+  "content-form-unify": {
+    src: "/diagrams/content-form-unify.drawio.svg",
+    alt: "변경 전에는 계약등록, 콘텐츠 등록·변경, 영상 등록·변경 5개 화면이 각자 콘텐츠 입력 폼 사본을 갖고 필수값과 검증 규칙이 제각각이었고, 변경 후에는 5개 화면이 공통 콘텐츠 입력 컴포넌트 하나를 쓰고 그룹콘텐츠 중복 검사는 공통 composable로 분리해 기준이 5곳에서 1곳으로 줄어든 비교도",
+  },
 };
