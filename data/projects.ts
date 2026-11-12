@@ -5,9 +5,7 @@ export const PROJECTS_DATA: Project[] = [
     id: "enterprise-legal-management",
     title: "계약 검토·관리 시스템 재구축",
     description:
-      "계약 검토요청·표준계약서·계약서 DB를 제공하는 사내 업무 시스템",
-    detailDescription:
-      "토큰이 브라우저에 노출되지 않도록 서버(BFF)가 백엔드 호출을 대신하는 구조를 설계했습니다. 토큰을 암호화 쿠키에 담고 같은 서버 모듈 안의 동시 refresh를 하나로 합쳤습니다. GitLab CI/CD·Docker 배포 파이프라인을 구성하고 Nginx blue/green으로 헬스체크를 통과한 뒤에만 트래픽을 전환합니다. 명세 기반 개발과 Git 훅 자동 검증을 적용했습니다.",
+      "현업 부서가 계약 검토를 요청하고 표준계약서·계약서를 찾는 시스템",
     company: "㈜키다리스튜디오",
     period: "2026.08. ~ 2026.10.",
     techStack: [
@@ -87,9 +85,8 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "external-settlement-system",
     title: "저작권자용 외부정산 시스템 기능 확장",
-    description: "저작권자용 정산 조회 외부 페이지의 기능 확장",
-    detailDescription:
-      "양식이 다른 3개 정산 유형의 조회 탭·엑셀 업로드 양식·안내 메일 항목을 유형별 설정으로 분리하고, 신규 유형의 설정 누락을 컴파일 단계에서 검출하도록 설계했습니다. 배포 후에도 옛 화면이 보인다는 문의에 대응해 S3·CloudFront 캐시 정책을 분리했습니다(해시 파일은 장기 캐시, index.html은 매번 재검증).",
+    description:
+      "저작권자가 정산을 조회하고 관리자가 정산서를 올리는 웹 페이지",
     company: "㈜키다리스튜디오",
     period: "2026.03. ~ 2026.04.",
     techStack: [
@@ -99,6 +96,7 @@ export const PROJECTS_DATA: Project[] = [
       "Vite 8",
       "Vue Router",
       "Pinia",
+      "Vuetify 3",
       "RealGrid2",
       "AWS S3·CloudFront",
     ],
@@ -109,25 +107,39 @@ export const PROJECTS_DATA: Project[] = [
       summary:
         "양식이 다른 3개 정산 유형을 설정 추가 중심으로 늘릴 수 있게 설계한 저작권자용 정산 조회 웹 페이지",
       background:
-        "저작권자가 정산 내역을 확인하는 외부 제공 웹 페이지의 기능을 확장했습니다.",
+        "저작권자가 정산 내역을 확인하는 웹 페이지는 봄툰KR 정산 하나에 맞춰 개발되어 있었고, 여기에 양식이 다른 소설유통·부가판권 정산을 추가했습니다.",
       problems: [
         {
-          title: "설정 추가만으로 늘릴 수 있는 정산 유형 구조",
+          title:
+            "봄툰KR 하나에 맞춰진 정산 화면을 유형별 설정 객체로 분리해 3개 유형으로 확장하고, 설정 누락을 타입 체크로 검출",
           problem:
-            "봄툰KR·소설유통·부가판권은 조회 탭, 그리드 컬럼, 엑셀 업로드 시트, 안내 메일 항목이 서로 달랐습니다. 이 차이를 화면 코드의 분기로 처리하면 유형이 늘 때마다 목록·업로드·메일 화면을 모두 고쳐야 했습니다.",
+            "세 유형은 정산서 양식이 서로 달라 정산 내역 화면, 엑셀 업로드 시트, 안내 메일 항목이 모두 달랐습니다. 화면이 봄툰KR 기준으로 짜여 있어 이 차이를 화면 코드의 분기로 처리하면, 유형이 늘 때마다 목록·업로드·메일 화면을 모두 고쳐야 하는 구조였습니다.",
           solution:
-            "양식이 서로 다른 3개 유형의 조회 탭·엑셀 업로드 양식·안내 메일 항목을 목록·업로드·메일별 설정 객체로 분리했습니다. 화면은 현재 정산 유형의 설정을 조회해 탭과 엑셀 시트 매핑을 동적으로 구성합니다. 각 설정에 satisfies Record<SettlementDomain, …>를 적용했습니다.",
+            "목록·업로드·메일 화면이 유형마다 다르게 쓰는 값과 데이터 변환 함수를 유형별 설정 객체로 분리했습니다. 처음에는 추상 클래스 기반 전략 패턴으로 만들었지만 유형 간 차이가 대부분 값이어서 유형 키로 꺼내 쓰는 설정 객체로 단순화했습니다. 화면은 현재 정산 유형의 설정에 따라 탭과 엑셀 시트 매핑을 구성합니다. 설정 객체에는 TypeScript의 satisfies를 적용해, 한 유형이라도 설정이 빠지면 타입 오류가 나게 했습니다.\n\n부가판권은 정산요약 탭을 표 대신 내역서 양식으로 보여 줘야 했습니다. 화면 코드가 유형 이름으로 분기하면 유형을 추가할 때마다 화면을 다시 고쳐야 합니다. 그래서 탭 설정에 표시 방식(viewType)을 두고, 화면은 이 값으로만 분기하게 했습니다.",
           result:
-            "신규 유형을 추가할 때 설정이 빠지면 컴파일 단계에서 검출되므로, 이후 유형은 설정 추가 중심으로 늘릴 수 있는 구조가 되었습니다.",
+            "화면 코드에서 유형 이름으로 분기하는 곳은 0건이 되었고, 세 유형의 차이는 설정 파일 3개에 모였습니다. 기존 표시 방식을 쓰는 유형이라면 화면 코드를 고치지 않고 유형 키와 설정, 컬럼 정의만 추가해 붙일 수 있으며 설정이 하나라도 빠지면 타입 체크에서 검출됩니다.",
+          visual: {
+            type: "diagram",
+            id: "settlement-domain-config",
+            caption:
+              "현재 정산 유형의 키로 목록·업로드·메일 설정을 조회해 각 화면을 구성하는 구조",
+          },
         },
         {
-          title: "배포 후에도 옛 화면이 보이는 문제",
+          title:
+            "배포 후 일부 사용자에게 정산 업로드 화면의 신규 컬럼이 보이지 않던 문제를 index.html과 해시 정적 자산의 캐시 정책 분리로 해결해, 새로고침·재접속 시 새 배포가 반영되게 함",
           problem:
-            "배포 후에도 옛 화면이 보인다는 사용자·운영자 문의가 있었습니다. S3 객체에 Cache-Control 헤더가 없어 브라우저가 옛 index.html을 재검증 없이 사용했고, 정산 업로드 화면의 신규 컬럼이 사용자마다 보였다 안 보였다 했습니다.",
+            "배포 후에도 정산 업로드 화면의 신규 컬럼이 사용자마다 보였다 안 보였다 한다는 사용자·운영자 문의가 있었습니다. 이 웹 페이지는 빌드한 정적 파일을 S3에 올리고 CDN(CloudFront)으로 제공합니다. 배포마다 엣지 캐시는 전체 무효화로 비우고 있었지만, 올린 파일에 Cache-Control 헤더가 없었습니다. 그래서 브라우저가 Last-Modified 기반 휴리스틱 캐시로 이전 버전의 index.html을 재검증 없이 사용했습니다.",
           solution:
-            "GitLab CI의 aws s3 cp 배포를 한 번에 올리던 방식에서 두 단계로 나눴습니다. 파일명에 해시가 붙는 assets/*는 내용이 바뀌면 이름도 바뀌므로 max-age=31536000, immutable로 1년간 캐시합니다. index.html 등 나머지 파일은 no-cache로 올려 매번 재검증하게 했습니다.",
+            "S3에 한 번에 올리던 배포를 두 단계로 나눠 파일 성격별로 캐시 정책을 다르게 줬습니다. 전부 장기 캐시하면 index.html이 갱신되지 않고, 전부 no-cache로 두면 바뀌지 않은 JS·CSS까지 매번 재검증하기 때문입니다.\n\nVite가 빌드한 assets/*는 파일명에 내용 해시가 붙어 같은 URL의 내용이 바뀌지 않으므로 max-age=31536000, immutable로 1년간 재검증 없이 캐시합니다. index.html은 URL이 고정된 채 배포마다 내용이 바뀌고 어떤 해시 파일을 불러올지 정합니다. 그래서 index.html 등 나머지 파일은 no-cache로 올렸습니다. 저장하지 않고 매번 본문 전체를 받는 no-store와 달리, no-cache는 사본을 저장하되 쓰기 전에 ETag로 서버에 변경 여부를 확인해 그대로면 304만 받습니다. CDN 엣지에 남은 이전 사본은 기존대로 배포 후 /* 무효화로 비웁니다.\n\nassets/*를 먼저, index.html 등 나머지 파일을 나중에 올리므로 새 index.html이 아직 없는 해시 파일을 가리키는 순간이 생기지 않습니다. 업로드할 때 이전 배포의 해시 파일은 지우지 않으므로, 배포 전에 열어 둔 탭도 이전 해시 파일을 계속 불러올 수 있습니다.",
           result:
-            "브라우저가 index.html을 매번 재검증해 새 배포를 받고, 해시 파일은 계속 장기 캐시를 사용합니다. 변경 후 옛 화면 관련 문의는 없었습니다.",
+            "브라우저가 index.html을 매번 재검증해 새 배포를 받고 해시 파일은 계속 장기 캐시를 사용합니다. 스테이징에서 curl로 확인한 결과 index.html은 cache-control: no-cache와 ETag가 붙어 내려왔습니다. 같은 ETag로 조건부 요청을 보내면 본문 없이 304(X-Cache: Hit from cloudfront)로 응답했습니다. 해시 자산은 public, max-age=31536000, immutable로 내려왔습니다. 엣지에 처음 요청할 때만 Miss였고 이후 요청은 Hit이었습니다. 변경 후 이전 버전 화면 관련 문의는 없었습니다.",
+          visual: {
+            type: "diagram",
+            id: "s3-cache-policy",
+            caption:
+              "Cache-Control 없이 한 번에 올리던 배포와, 해시 자산과 나머지 파일을 나눠 올리고 index.html을 ETag로 재검증하는 배포의 캐시 동작 비교",
+          },
         },
       ],
     },
@@ -135,9 +147,8 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "ip-management-system",
     title: "콘텐츠 IP·계약 관리 시스템 개선",
-    description: "콘텐츠 IP와 계약서를 등록하고 관리하는 사내 업무 시스템",
-    detailDescription:
-      "5개 화면에 중복된 콘텐츠 입력 폼을 공통 컴포넌트로 통합했습니다. 계약등록 화면의 정산 조합 326가지를 Playwright E2E로 전수 순회해 현재 동작을 고정한 뒤, 도달할 수 없던 일괄등록 코드를 제거했습니다. Vite 8 업그레이드로 운영 빌드를 약 80초에서 약 20초로 약 75% 단축했습니다.",
+    description:
+      "사내 담당자가 콘텐츠 IP와 계약·정산 조건을 등록하는 업무 시스템",
     company: "㈜키다리스튜디오",
     period: "2025.10. ~ 2026.10.",
     techStack: [
@@ -206,9 +217,7 @@ export const PROJECTS_DATA: Project[] = [
     title:
       "다이슨 사전알림·혜택 프로모션 라이브 방송 페이지의 PHP → Next.js 모노레포 전환",
     description:
-      "사전알림·혜택 프로모션을 제공하는 라이브 방송 페이지와 관리자 백오피스",
-    detailDescription:
-      "방송마다 PHP 페이지를 복사해 쓰던 구조를 앱 6개와 공유 패키지 4개의 Next.js 모노레포로 전환했습니다. 개발자가 DB를 조회해 엑셀로 전달하던 사전알림 번호·기대평을 운영자가 백오피스 화면에서 직접 확인하도록 개선하고, API 라우트에 rate limiting과 공통 입력 검증을 적용했습니다. EC2·Nginx 수동 배포를 Docker·ECR 기반 AWS ECS 롤링 배포로 전환해 무중단 배포를 구성했습니다.",
+      "시청자가 알림을 신청하고 운영자가 백오피스에서 신청 내역을 보는 서비스",
     company: "프리랜서",
     period: "2025.09.",
     techStack: [
@@ -229,10 +238,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "ats-monitoring-system",
     title: "사람인 채용관리솔루션(리버스) 정부지원사업 모니터링 시스템 개발",
-    description:
-      "사람인 채용관리솔루션(리버스)의 정부지원사업 모니터링 웹 시스템",
-    detailDescription:
-      "Next.js 기반으로 관리자 페이지를 구축하고, NextAuth.js를 통한 사용자 인증 및 권한 관리 기능을 구현했습니다. 모니터링 대시보드, 리포트, 설문조사 관리 기능을 포함하여 프런트엔드 아키텍처 전반을 설계했습니다.",
+    description: "관리자가 지원사업 대시보드·리포트·설문을 관리하는 웹 시스템",
     company: "프리랜서",
     period: "2025.05. ~ 2025.08.",
     techStack: ["TypeScript 5", "Next.js 15", "NextAuth.js", "Ant Design 5"],
@@ -263,9 +269,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "accessibility-ebook-viewer",
     title: "웹 기반 접근성 전자책 뷰어",
-    description: "시각장애인을 위한 웹 접근성 eBook 뷰어",
-    detailDescription:
-      "DAISY 및 BRF 파일을 파싱해 HTML로 렌더링하는 전자책 뷰어를 개발했습니다. Web Speech API를 활용한 문단 단위 TTS 기능과 점자 디스플레이 연동 기능을 구현했습니다.",
+    description: "시각장애인이 음성과 점자 디스플레이로 책을 읽는 서비스",
     company: "㈜닷",
     period: "2024.11. ~ 2024.12.",
     techStack: ["JavaScript", "Vue 3"],
@@ -274,9 +278,8 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "design-system",
     title: "디자인 시스템 구축",
-    description: "아토믹 디자인 기반 컴포넌트 라이브러리",
-    detailDescription:
-      "Figma와 Storybook을 활용하여 컴포넌트 문서화 및 시각적 회귀 테스트(Chromatic)를 구현했습니다. 아토믹 디자인 패턴을 적용해 재사용성과 일관성을 확보했습니다.",
+    description:
+      "개발자와 디자이너가 함께 쓰는 버튼·입력창 같은 화면 부품 모음",
     company: "㈜닷",
     period: "2024.08. ~ 2024.10.",
     techStack: ["TypeScript 5", "Vue 3", "Storybook", "Figma"],
@@ -321,9 +324,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "customer-support-site",
     title: "고객지원 사이트 구축",
-    description: "VOC 및 백오피스 시스템 개발",
-    detailDescription:
-      "JIRA API 연동으로 VOC 제출 시 자동 티켓 생성 기능을 구현하고, i18n 다국어 환경을 지원했습니다. 공통 레이아웃과 UI 컴포넌트를 적용해 일관된 사용자 경험을 제공했습니다.",
+    description: "고객이 여러 언어로 문의를 남기고 담당자가 처리하는 지원 창구",
     company: "㈜닷",
     period: "2024.07.",
     techStack: ["TypeScript 5", "Vue 3", "i18n", "Java", "Spring Boot"],
@@ -336,9 +337,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "frontend-framework-refactoring",
     title: "프런트엔드 공통 프레임워크 아키텍처 리팩터링",
-    description: "레거시 Vue.js 프로젝트 유지보수성 향상",
-    detailDescription:
-      "Vuex에서 Pinia로 전환, Composition API 도입, 빌드 최적화를 통해 번들 사이즈 30% 감소 및 타입 안정성을 강화했습니다.",
+    description: "오래 운영돼 온 사내 웹 서비스의 공통 화면 기반 코드",
     company: "㈜닷",
     period: "2024.05.",
     techStack: ["TypeScript", "Vue 3", "Vuex", "Pinia", "gulp.js"],
@@ -347,9 +346,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "wysiwyg-editor",
     title: "점자 디스플레이용 웹 WYSIWYG 에디터 개발",
-    description: "접근성 검사 기능을 포함한 웹 에디터",
-    detailDescription:
-      "CKEditor5 기반으로 접근성 검사 기능(alt 텍스트, 색상 대비 등)을 추가하고, 대용량 문서 가상 스크롤을 구현해 로딩 속도를 20초에서 1초로 단축했습니다.",
+    description: "점자 기기로 읽을 문서를 보이는 그대로 편집하는 웹 도구",
     company: "㈜닷",
     period: "2023.09. ~ 2024.04.",
     techStack: ["JavaScript", "Vue 3", "CKEditor 5"],
@@ -390,9 +387,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "mobile-ebook-viewer",
     title: "모바일 기반 접근성 전자책 뷰어",
-    description: "DAISY 포맷 기반 eBook 리더 앱",
-    detailDescription:
-      "Flutter로 DAISY 전자책 뷰어를 개발했습니다. Daisy Parser 모듈과 확장 가능한 파서 아키텍처를 설계했습니다.",
+    description: "시각장애인이 휴대폰으로 디지털 음성 도서를 읽는 앱",
     company: "㈜닷",
     period: "2023.03. ~ 2023.08.",
     techStack: ["Flutter", "Dart", "Swift"],
@@ -401,9 +396,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "cloud-file-management",
     title: "클라우드 기반 파일 관리 시스템",
-    description: "AWS S3와 Spring Boot 기반 파일 관리 서비스",
-    detailDescription:
-      "비동기 업로드/다운로드와 권한 기반 파일 접근 제어를 구현했습니다. 커맨드 패턴으로 파일 조작 인터페이스를 설계했습니다.",
+    description: "권한에 따라 사용자별로 파일을 올리고 내려받는 저장 서비스",
     company: "㈜닷",
     period: "2023.01. ~ 2023.02.",
     techStack: [
@@ -419,9 +412,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "tactile-graphics-editor",
     title: "시각장애인을 위한 웹 기반 촉각 그래픽 편집 도구",
-    description: "시각장애인용 촉각 그래픽 제작 툴",
-    detailDescription:
-      "Fabric.js 기반 그래픽 편집기를 구축하고 하드웨어 장치 SDK를 웹 에디터에 연동했습니다. 이미지 → 촉각 그래픽 변환 기능을 개발했으며, CES 2024 접근성 부문 혁신상을 수상했습니다.",
+    description: "이미지를 손끝으로 읽는 촉각 그림으로 바꿔 만드는 편집기",
     company: "㈜닷",
     period: "2022.12. ~ 2024.12.",
     techStack: [
@@ -472,9 +463,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "buan-water-management",
     title: "부안군 상수도시설 생애주기관리 시스템",
-    description: "시설물 자산관리 및 운영 효율화 시스템",
-    detailDescription:
-      "GIS 기반 관리 기능을 구현하고, Highcharts를 통한 데이터 시각화 및 Excel 보고서 자동화를 구축했습니다.",
+    description: "상수도 시설을 지도에서 관리하고 엑셀 보고서를 만드는 시스템",
     company: "이노데일㈜",
     period: "2022.03. ~ 2022.07.",
     techStack: [
@@ -490,9 +479,8 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "incheon-water-management",
     title: "인천광역시 상수도 운영관리 시스템 고도화",
-    description: "GIS 기반 상수도 관리 시스템",
-    detailDescription:
-      "OpenLayers, GeoServer를 활용한 GIS 기반 시설물 관리와 Draw2D로 인터랙티브 편집 가능한 계통도를 개발했습니다.",
+    description:
+      "상수도 시설을 지도에서 관리하고 배관 연결도를 편집하는 시스템",
     company: "이노데일㈜",
     period: "2021.03. ~ 2022.02.",
     techStack: [
@@ -508,9 +496,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "web-based-mes",
     title: "제조 실행 시스템(MES)",
-    description: "제조업 생산 공정 관리 시스템",
-    detailDescription:
-      "ParamQuery Grid와 Highcharts를 활용해 대용량 실시간 데이터 시각화를 구현했습니다. 설비 가동률, 불량률, 다운타임 분석 로직을 설계했습니다.",
+    description: "생산 현장의 설비 가동률·불량률·다운타임을 보는 관리 화면",
     company: "이노데일㈜",
     period: "2020.03. ~ 2021.02.",
     techStack: [
@@ -526,9 +512,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "elevator-complaint-system",
     title: "공공민원 모바일화 시스템 – 승강기민원24 고도화",
-    description: "승강기 민원 처리 모바일 웹뷰 플랫폼",
-    detailDescription:
-      "모바일 최적화 화면과 NICE API 기반 본인 인증 기능을 구현했습니다.",
+    description: "시민이 휴대폰으로 승강기 민원을 신청하는 모바일 웹 화면",
     company: "이노데일㈜",
     period: "2019.12. ~ 2020.02.",
     techStack: ["JSP", "JavaScript", "jQuery", "NICE API"],
@@ -537,9 +521,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "uljin-sewage-management",
     title: "울진군 하수관로 운영관리 시스템",
-    description: "하수관로 모니터링 및 관리 시스템",
-    detailDescription:
-      "AngularJS 기반 SPA와 Highcharts/jqGrid를 활용해 실시간 데이터 시각화를 구현했습니다.",
+    description: "하수 시설 데이터를 차트로 모니터링하는 화면",
     company: "이노데일㈜",
     period: "2019.02. ~ 2019.11.",
     techStack: ["AngularJS", "JavaScript", "Highcharts", "jqGrid"],

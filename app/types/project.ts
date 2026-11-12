@@ -1,7 +1,9 @@
 export type DiagramId =
   | "bff-auth-flow"
   | "blue-green-deploy"
-  | "msw-mock-switch";
+  | "msw-mock-switch"
+  | "settlement-domain-config"
+  | "s3-cache-policy";
 
 export type CaseVisual =
   | { type: "diagram"; id: DiagramId; caption: string }
@@ -38,8 +40,8 @@ export interface Highlight {
 export interface Project {
   id: string;
   title: string;
+  // /archive 표의 제목 아래 부제. "누가 쓰는 무엇"만 담는다(결과·숫자·기술 용어 없음, 45자 이하).
   description: string;
-  detailDescription: string;
   company: string;
   period: string;
   techStack: string[];
@@ -58,6 +60,7 @@ export interface ArchiveRow {
   id: string;
   period: string;
   title: string;
+  description: string;
   company: string;
   techStack: string[];
   href?: string;

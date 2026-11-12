@@ -50,6 +50,7 @@ export const getArchiveRows = (
     id: project.id,
     period: project.period,
     title: project.title,
+    description: project.description,
     company: project.company,
     techStack: getMainTech(project.techStack),
     href: hasCaseStudy(project) ? `/projects/${project.id}/` : undefined,

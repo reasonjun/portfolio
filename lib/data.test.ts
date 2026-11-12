@@ -32,6 +32,13 @@ describe("대표 프로젝트 데이터", () => {
     expect(getArchiveRows()).toHaveLength(18);
   });
 
+  it("아카이브 부제는 45자 이하다", () => {
+    const tooLong = PROJECTS_DATA.filter(
+      (project) => [...project.description].length > 45,
+    ).map((project) => project.id);
+    expect(tooLong).toEqual([]);
+  });
+
   it("프로젝트 id가 중복되지 않는다", () => {
     const ids = PROJECTS_DATA.map((project) => project.id);
     expect(new Set(ids).size).toBe(ids.length);
