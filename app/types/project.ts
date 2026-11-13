@@ -5,6 +5,7 @@ export type DiagramId =
   | "settlement-domain-config"
   | "s3-cache-policy"
   | "e2e-regression-baseline"
+  | "ai-agent-guardrails"
   | "vite-rolldown-chunks"
   | "content-form-unify";
 
