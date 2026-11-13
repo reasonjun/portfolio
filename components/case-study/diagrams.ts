@@ -41,7 +41,7 @@ export const DIAGRAMS: Record<DiagramId, DiagramAsset> = {
   },
   "vite-rolldown-chunks": {
     src: "/diagrams/vite-rolldown-chunks.drawio.svg",
-    alt: "변경 전 Vite 5는 개발에 esbuild, 빌드에 Rollup을 쓰고 RealGrid·Vuetify·lodash·앱 코드가 2,493KiB 단일 청크에 묶여 운영 빌드가 약 80초 걸렸다. 변경 후 Vite 8은 Rolldown으로 번들러를 통합하고 realgrid·vuetify·vendor·앱 코드 청크로 분리했으며, lodash를 lodash-es와 네이티브 메서드로 바꾸고 미사용 코드를 지워 운영 빌드 약 20초, JS·CSS 전체 6,471KiB에서 5,356KiB가 된 비교도",
+    alt: "변경 전 Vite 5는 개발에 esbuild, 빌드에 Rollup을 써서 운영 빌드가 약 145초 걸렸고, 청크를 나누기 직전에는 RealGrid·Vuetify·라이브러리·앱 코드가 2,493KiB 단일 청크에 묶여 있었다. 변경 후 Vite 8은 Rolldown으로 번들러를 통합하고 realgrid·vuetify·vendor·앱 코드 청크로 분리했으며, CJS 라이브러리를 ESM 버전으로 바꾸고 미사용 코드를 지워 운영 빌드 약 35초, JS·CSS 전체 6,471KiB에서 5,356KiB가 된 비교도",
   },
   "content-form-unify": {
     src: "/diagrams/content-form-unify.drawio.svg",
