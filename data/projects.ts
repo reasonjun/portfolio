@@ -490,13 +490,15 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "buan-water-management",
     title: "부안군 상수도시설 생애주기관리 시스템",
-    description: "상수도 시설을 지도에서 관리하고 엑셀 보고서를 만드는 시스템",
+    description:
+      "부안군 상수도 담당자가 지도·차트·그리드로 시설을 관리하고 엑셀 보고서를 만드는 시스템",
     company: "이노데일㈜",
     period: "2022.03. ~ 2022.07.",
     techStack: [
       "AngularJS",
       "JavaScript",
       "Highcharts",
+      "jqGrid",
       "OpenLayers",
       "Spring Framework",
       "Tibero",
@@ -507,13 +509,14 @@ export const PROJECTS_DATA: Project[] = [
     id: "incheon-water-management",
     title: "인천광역시 상수도 운영관리 시스템 고도화",
     description:
-      "상수도 시설을 지도에서 관리하고 배관 연결도를 편집하는 시스템",
+      "인천시 상수도 담당자가 지도·차트·그리드로 시설을 관리하고 배관 연결도를 편집하는 시스템",
     company: "이노데일㈜",
     period: "2021.03. ~ 2022.02.",
     techStack: [
       "JSP",
       "JavaScript",
       "Highcharts",
+      "jqGrid",
       "OpenLayers",
       "Spring Framework",
       "PostgreSQL",
@@ -523,7 +526,8 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "web-based-mes",
     title: "제조 실행 시스템(MES)",
-    description: "생산 현장의 설비 가동률·불량률·다운타임을 보는 관리 화면",
+    description:
+      "㈜진성정밀이 생산 설비의 가동률·불량률·다운타임을 확인하는 관리 화면",
     company: "이노데일㈜",
     period: "2020.03. ~ 2021.02.",
     techStack: [
@@ -548,7 +552,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: "uljin-sewage-management",
     title: "울진군 하수관로 운영관리 시스템",
-    description: "하수 시설 데이터를 차트로 모니터링하는 화면",
+    description: "울진군 하수도 담당자가 하수 시설 데이터를 차트와 그리드로 모니터링하는 화면",
     company: "이노데일㈜",
     period: "2019.02. ~ 2019.11.",
     techStack: ["AngularJS", "JavaScript", "Highcharts", "jqGrid"],
