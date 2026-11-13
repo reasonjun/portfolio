@@ -19,7 +19,6 @@ const makeProject = (overrides: Partial<Project>): Project => ({
   id: "x",
   title: "제목",
   description: "설명",
-  detailDescription: "상세 설명",
   company: "회사",
   period: "2024.07.",
   techStack: ["TypeScript"],
@@ -93,10 +92,11 @@ describe("getArchiveRows", () => {
     ]);
   });
 
-  it("행에 기간·제목·회사·기술을 담는다", () => {
+  it("행에 기간·제목·부제·회사·기술을 담는다", () => {
     expect(getArchiveRows(fixtures)[0]).toMatchObject({
       period: "2026.07. ~ 진행 중",
       title: "사례 A",
+      description: "설명",
       company: "회사 A",
       techStack: ["Next.js", "React"],
     });

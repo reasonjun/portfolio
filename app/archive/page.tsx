@@ -63,6 +63,10 @@ export default function ArchivePage() {
                   ) : (
                     row.title
                   )}
+                  {/* 부제는 링크 밖에 둔다. 링크 안에 넣으면 스크린리더가 링크마다 긴 문장을 읽는다. */}
+                  <p className="mt-1 text-xs font-normal text-muted-foreground">
+                    {row.description}
+                  </p>
                 </th>
                 <td className="px-4 py-3 text-sm text-muted-foreground whitespace-nowrap">
                   {row.company}
