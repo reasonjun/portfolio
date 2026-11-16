@@ -2,14 +2,20 @@ import { describe, expect, it } from "vitest";
 import { EXPERIENCES_DATA } from "@/data/experiences";
 import { PROFILE } from "@/data/profile";
 import { PROJECTS_DATA } from "@/data/projects";
-import { getArchiveRows, getCaseStudies, getHomeProjects } from "./projects";
+import {
+  getArchiveRows,
+  getCaseStudies,
+  getExportProjects,
+  getHomeProjects,
+} from "./projects";
 
-describe("대표 프로젝트 데이터", () => {
-  it("대표 프로젝트 6개가 데이터 순서대로 지정되어 있다", () => {
+describe("프로젝트 데이터", () => {
+  it("사례가 있는 프로젝트 7개가 데이터 순서대로 있다", () => {
     expect(getCaseStudies().map((project) => project.id)).toEqual([
       "enterprise-legal-management",
       "external-settlement-system",
       "ip-management-system",
+      "ats-monitoring-system",
       "design-system",
       "wysiwyg-editor",
       "tactile-graphics-editor",
@@ -25,6 +31,10 @@ describe("대표 프로젝트 데이터", () => {
       "tactile-graphics-editor",
       "design-system",
     ]);
+  });
+
+  it("사람인 사례는 homeOrder가 없어 홈에는 없고 PDF에는 마지막으로 실린다", () => {
+    expect(getExportProjects().at(-1)?.id).toBe("ats-monitoring-system");
   });
 
   it("아카이브는 전체 프로젝트 18개를 담는다", () => {

@@ -51,6 +51,10 @@ export const DIAGRAMS: Record<DiagramId, DiagramAsset> = {
     src: "/diagrams/design-token-pipeline.drawio.svg",
     alt: "Figma 변수의 용도 토큰 133개(배경·테두리·글자·아이콘)가 기본 팔레트 82개를 참조하고, 이 참조를 살려 내보낸 토큰 JSON을 값을 고치는 유일한 원본으로 둔 생성 구조도. Style Dictionary가 참조를 실제 값으로 풀어 컴포넌트 스타일 16개 중 13개가 참조하는 SCSS 변수와 패키지 진입점에서 export하는 JS 상수·TS 타입을 만들고, CI가 Storybook 빌드 전에 매번 생성하며 생성물은 커밋하지 않는다. 아래에는 Brand/600 하나만 바꿔 다시 생성하자 이 색을 참조하는 배경·테두리·글자·아이콘 변수 4개가 함께 바뀌었고, Toast·AlertDialog와 Form·Button 일부는 아직 값을 직접 쓴다고 적었다",
   },
+  "nextauth-token-refresh": {
+    src: "/diagrams/nextauth-token-refresh.drawio.svg",
+    alt: "브라우저가 세션을 조회할 때마다 Next.js 서버의 NextAuth.js jwt 콜백이 암호화 세션 쿠키에 담긴 액세스 토큰의 만료 시각(exp)을 확인하는 시퀀스 다이어그램. 만료 전이면 기존 토큰을 그대로 돌려주고, 만료 후면 리프레시 토큰으로 OIDC 인증 서버의 토큰 엔드포인트에 새 토큰을 요청한다. 새 리프레시 토큰이 오면 바꾸고(회전) 오지 않으면 기존 것을 유지한 뒤, 새 토큰을 담은 세션 쿠키를 Set-Cookie로 내려보낸다",
+  },
   "chromatic-visual-test": {
     src: "/diagrams/chromatic-visual-test.drawio.svg",
     alt: "develop·main 브랜치에 push하거나 PR을 열면 GitHub Actions가 토큰을 생성하고 상태별 스토리 47개로 Storybook을 빌드해 Chromatic에 올리고, Chromatic이 스토리마다 화면을 캡처해 이전 빌드에서 승인된 기준 화면과 비교해 달라진 화면이 없으면 통과, 있으면 승인 시 새 기준이 되고 거부 시 기준을 유지하는 흐름도. 아래에는 37번째 빌드에서 컴포넌트 16개·스토리 47개를 비교해 달라진 화면이 0건이었고, 접근성 검사는 위반을 표시만 하며 Vitest 스토리 테스트는 CI에 연결하지 않았다고 적었다",

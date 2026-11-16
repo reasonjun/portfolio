@@ -70,7 +70,7 @@ describe("getCaseStudies", () => {
 });
 
 describe("getCaseStudyById", () => {
-  it("대표 프로젝트 id면 해당 프로젝트를 반환한다", () => {
+  it("사례가 있는 프로젝트 id면 해당 프로젝트를 반환한다", () => {
     expect(getCaseStudyById("case-a", fixtures)?.title).toBe("사례 A");
   });
 
@@ -102,7 +102,7 @@ describe("getArchiveRows", () => {
     });
   });
 
-  it("대표 프로젝트 행만 프로젝트 페이지 href를 가진다", () => {
+  it("사례가 있는 프로젝트 행만 프로젝트 페이지 href를 가진다", () => {
     const rows = getArchiveRows(fixtures);
     expect(rows[0].href).toBe("/projects/case-a/");
     expect(rows[1].href).toBeUndefined();
@@ -110,7 +110,7 @@ describe("getArchiveRows", () => {
 });
 
 describe("getExportProjects", () => {
-  it("홈 대표 사례를 homeOrder 순으로, 콘텐츠 검사를 통과한 것만 반환한다", () => {
+  it("홈 대표 사례를 homeOrder 순으로 먼저, homeOrder가 없는 사례를 뒤에 싣고 콘텐츠 검사를 통과한 것만 반환한다", () => {
     const projects = [
       makeProject({ id: "third", homeOrder: 3, caseStudy }),
       makeProject({
@@ -120,10 +120,15 @@ describe("getExportProjects", () => {
       }),
       makeProject({ id: "second", homeOrder: 2, caseStudy }),
       makeProject({ id: "unranked", caseStudy }),
+      makeProject({
+        id: "unranked-blank",
+        caseStudy: { ...caseStudy, background: "" },
+      }),
     ];
     expect(getExportProjects(projects).map((project) => project.id)).toEqual([
       "second",
       "third",
+      "unranked",
     ]);
   });
 });
