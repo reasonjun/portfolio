@@ -6,6 +6,8 @@ import type {
 import { PROJECTS_DATA } from "@/data/projects";
 import { validateCaseStudy } from "@/lib/content-check";
 
+export const projectHref = (id: string): string => `/projects/${id}/`;
+
 const hasCaseStudy = (project: Project): project is CaseStudyProject =>
   project.caseStudy !== undefined;
 
@@ -53,5 +55,5 @@ export const getArchiveRows = (
     description: project.description,
     company: project.company,
     techStack: getMainTech(project.techStack),
-    href: hasCaseStudy(project) ? `/projects/${project.id}/` : undefined,
+    href: hasCaseStudy(project) ? projectHref(project.id) : undefined,
   }));

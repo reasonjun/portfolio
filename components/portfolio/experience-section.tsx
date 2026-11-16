@@ -1,77 +1,91 @@
+import type { Experience } from "@/app/types/experience";
+import { keepLineStart } from "@/components/case-study/inline-code";
 import { EXPERIENCES_DATA } from "@/data/experiences";
 import { getTotalPeriod, splitPeriod } from "@/lib/period";
+import { revealDelay } from "@/lib/utils";
+import { ChipList } from "./chip-list";
+import { HOME_SECTION_CLASS, SectionHeading } from "./section-heading";
 
-const ExperienceSection = () => {
+const PeriodLabel = ({ experience }: { experience: Experience }) => {
+  const total = getTotalPeriod(experience.period);
+  const [start, end] = splitPeriod(experience.period);
+
   return (
-    <section
-      id="experience"
-      className="scroll-mt-3 space-y-10 py-16 lg:-scroll-mt-11 lg:py-[7.5rem]"
+    <p
+      className={`text-[0.9375rem] tabular-nums leading-relaxed md:pt-1 ${
+        experience.isActive ? "text-foreground" : "text-muted-foreground"
+      }`}
     >
-      <h2
-        data-reveal
-        className="text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.1] tracking-[-0.02em] text-balance"
-      >
-        경력
-      </h2>
+      <span className="md:block">
+        {start}
+        {/* 한 달짜리 경력은 끝이 없으므로 줄표와 끝을 그리지 않는다. */}
+        {end && <span aria-hidden="true"> –</span>}
+      </span>{" "}
+      {end && <span className="md:block">{end}</span>}
+      {total && <span className="ml-2 md:ml-0 md:block">({total})</span>}
+    </p>
+  );
+};
+
+const ExperienceItem = ({
+  experience,
+  index,
+}: {
+  experience: Experience;
+  index: number;
+}) => (
+  <li
+    data-reveal
+    style={revealDelay(index % 3)}
+    className="grid gap-2 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-x-10"
+  >
+    <PeriodLabel experience={experience} />
+
+    <div className="space-y-3">
+      <div className="space-y-1">
+        <h3 className="text-xl font-medium leading-snug">
+          {experience.company}
+          {experience.isActive && (
+            <span className="sr-only">(현재 재직 중)</span>
+          )}
+        </h3>
+        {experience.position && (
+          <p className="text-base font-medium">{experience.position}</p>
+        )}
+        <p className="text-[0.9375rem] text-muted-foreground">
+          {experience.jobs.join("·")}
+        </p>
+      </div>
+
+      <p className="text-base font-medium leading-snug">
+        {keepLineStart(experience.tagline)}
+      </p>
+      <ul className="space-y-2 text-base leading-relaxed">
+        {experience.duties.map((duty) => (
+          <li key={duty}>{keepLineStart(duty)}</li>
+        ))}
+      </ul>
+      {experience.techs && (
+        <ChipList items={experience.techs} label="사용 기술" className="pt-1" />
+      )}
+    </div>
+  </li>
+);
+
+export const ExperienceSection = () => {
+  return (
+    <section id="experience" className={`${HOME_SECTION_CLASS} space-y-10`}>
+      <SectionHeading>경력</SectionHeading>
 
       <ol className="space-y-12">
-        {EXPERIENCES_DATA.map((exp, index) => {
-          const total = getTotalPeriod(exp.period);
-          const [start, end] = splitPeriod(exp.period);
-
-          return (
-            <li
-              key={exp.id}
-              data-reveal
-              style={{ "--i": index % 3 } as React.CSSProperties}
-              className="grid gap-2 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-x-10"
-            >
-              <p
-                className={`text-[0.9375rem] tabular-nums leading-relaxed md:pt-1 ${
-                  exp.isActive ? "text-foreground" : "text-muted-foreground"
-                }`}
-              >
-                <span className="md:block">
-                  {start}
-                  <span aria-hidden="true"> –</span>
-                </span>{" "}
-                <span className="md:block">{end}</span>
-                {total && (
-                  <span className="ml-2 md:ml-0 md:block">({total})</span>
-                )}
-              </p>
-
-              <div className="space-y-3">
-                <div className="space-y-1">
-                  <h3 className="text-xl font-medium leading-snug">
-                    {exp.company}
-                    {exp.isActive && (
-                      <span className="sr-only">(현재 재직 중)</span>
-                    )}
-                  </h3>
-                  {exp.position && (
-                    <p className="text-base font-medium">{exp.position}</p>
-                  )}
-                  <p className="text-[0.9375rem] text-muted-foreground">
-                    {exp.jobs.join(" · ")}
-                  </p>
-                </div>
-
-                <p className="text-base font-medium leading-snug">
-                  {exp.tagline}
-                </p>
-                <ul className="space-y-2 text-base leading-relaxed">
-                  {exp.duties.map((duty) => (
-                    <li key={duty}>{duty}</li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          );
-        })}
+        {EXPERIENCES_DATA.map((experience, index) => (
+          <ExperienceItem
+            key={experience.id}
+            experience={experience}
+            index={index}
+          />
+        ))}
       </ol>
     </section>
   );
 };
-
-export default ExperienceSection;

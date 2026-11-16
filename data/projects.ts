@@ -6,16 +6,17 @@ export const PROJECTS_DATA: Project[] = [
     title: "계약 검토·관리 시스템 재구축",
     description:
       "현업 부서가 계약 검토를 요청하고 표준계약서·계약서를 찾는 시스템",
-    company: "㈜키다리스튜디오",
-    period: "2026.08. ~ 2026.10.",
+    company: "(주)키다리스튜디오",
+    period: "2026. 08.~2026. 10.",
     techStack: [
       "TypeScript 7",
-      "Next.js 16",
       "React 19",
-      "Ant Design 6",
+      "Next.js 16",
       "TanStack Query",
+      "react-hook-form",
       "iron-session",
       "Zod",
+      "Ant Design 6",
       "Feature-Sliced Design",
       "Docker",
       "Nginx",
@@ -25,7 +26,7 @@ export const PROJECTS_DATA: Project[] = [
     images: [],
     homeOrder: 1,
     caseStudy: {
-      team: "프런트엔드 1 · 백엔드 2",
+      team: "프론트엔드 1·백엔드 2",
       summary:
         "브라우저 스크립트에서 토큰을 분리한 BFF 인증과, 헬스체크를 통과한 버전만 전환하는 blue/green 배포를 설계·구현",
       background:
@@ -37,7 +38,7 @@ export const PROJECTS_DATA: Project[] = [
           problem:
             "신규 구축이라 배포 구조부터 정해야 했습니다. 업무 시간 중에도 배포해야 했고 여러 단계의 신청서나 긴 폼을 작성하는 화면이 많았습니다. 배포 때마다 작성 중인 내용이 사라지면 업무 중단과 문의로 이어질 위험이 있었습니다. 컨테이너를 내렸다가 다시 띄우는 방식에서는 교체하는 동안 들어온 요청이 실패하고 처리 중이던 요청도 끊깁니다. 새 버전이 뜨지 않거나 떠도 정상 동작하지 않으면 서비스가 멈출 위험도 있었습니다. 트래픽을 안전하게 넘긴 뒤에도 문제가 남는지 로컬에서 빌드를 교체해 재현해 보니 버전 스큐(version skew)가 생겼습니다. 배포 전에 열어 둔 탭(구버전 탭)이 이전 빌드의 코드로 새 서버를 호출하는 현상입니다. 링크 이동은 전체 새로고침으로 복구됐지만 Server Action은 빌드마다 바뀌는 액션 ID를 새 서버가 찾지 못해 404로 실패했습니다. 새로고침하면 입력 중이던 내용도 사라졌습니다.",
           solution:
-            "제공된 인프라가 EC2·ALB 구성이어서 ECR 이미지를 받아 인스턴스 안의 Nginx로 blue/green 전환을 구현했습니다. ALB가 백엔드 분기도 함께 맡고 있어 ALB 타깃 그룹을 바꾸는 방식으로는 배포마다 규칙을 바꿔야 하고 영향 범위가 백엔드까지 넓어지므로 전환과 검사·원복을 인스턴스 안에서 끝내도록 했습니다. 대기 슬롯에 새 컨테이너를 띄워 헬스체크를 통과해야 upstream을 전환합니다. 헬스체크에 실패하면 새 컨테이너를 중지하고 `nginx -t`나 reload가 실패하면 설정을 원복한 뒤 새 컨테이너를 중지합니다.\n\n버전 스큐는 Vercel Skew Protection과 같은 원리의 배포 단위 라우팅을 EC2 위 Nginx로 구현해 풀었습니다. Next.js `deploymentId`만 설정하는 방법은 문서상 배포별로 요청을 라우팅할 때만 버전 스큐를 피합니다. 모든 트래픽을 한 번에 새 슬롯으로 넘기는 구조에서는 재현해 봐도 404가 그대로여서 Nginx 라우팅과 함께 썼습니다. 빌드마다 `deploymentId`를 넣으면 Next.js가 Server Action·RSC 요청에는 `X-Deployment-Id` 헤더를, 정적 자산(`/_next/static`·폰트·`/_next/image`) 요청에는 `?dpl=` 쿼리를 붙입니다. Nginx map에서 두 값을 조합해 배포 ID를 꺼낸 뒤 이전 배포 ID의 요청은 이전 슬롯으로 보냅니다. 둘 다 없는 요청, 즉 URL 직접 진입·새로고침 같은 페이지 요청, public 파일 직접 참조, 직접 작성한 fetch 등은 현재 활성 슬롯으로 보냅니다.\n\n이전 컨테이너를 오래 남겨 두기만 해서는 전환 뒤 구버전 탭의 요청도 새 슬롯으로 갑니다. 그래서 유지 기간은 배포 ID 라우팅과 함께 둡니다. 이전 컨테이너는 새 컨테이너와 같은 EC2 인스턴스의 메모리를 나눠 쓰기 때문에 전환 후 30분만 남겨 둡니다. 유지 기간이 끝나면 먼저 그 배포 ID를 Nginx 만료 목록에 넣고 reload합니다. 이때부터 새 요청에는 `X-Deployment-Expired` 헤더를 붙인 410을 바로 반환합니다. 그다음 `SIGTERM`을 보내 최대 30초의 종료 유예 안에 기존 요청을 정리하고 내리도록 설정했습니다. 슬롯이 둘뿐이라 30분 안에 다시 배포하면 이전 슬롯을 비워야 합니다. 이때는 유지 타이머를 취소하고 같은 만료 절차를 바로 실행한 뒤, 비운 슬롯에 새 버전을 띄웁니다.\n\n프런트엔드는 `window.fetch`를 감싼 전역 래퍼로 Next.js 내부의 Server Action·RSC 요청까지 확인합니다. 백엔드 API의 410과 섞이지 않도록 `X-Deployment-Expired` 헤더가 붙은 410만 배포 만료로 보고 청크 로드 실패는 `ChunkLoadError`로 감지합니다. 실패할 때마다 무조건 새로고침하면 입력 중이던 내용이 사라지므로 폼이 수정된 상태(dirty)가 아닐 때만 바로 새로고침합니다. 수정된 상태라면 이전 화면에 머무르는 한 Server Action·RSC·청크 요청이 계속 410으로 실패하므로 닫을 수 없는 안내 모달로 새로고침을 유도합니다. 배포 만료(410)로 강제 새로고침이 필요한 상황에서 작성 중인 내용을 잃지 않도록 안전장치를 두었습니다. 검토요청 등록 같은 주요 등록 폼에는 민감 정보가 없어서 410을 감지하면 첨부 파일을 뺀 입력값을 `draft:{사용자ID}:{페이지경로}` 키로 `sessionStorage`에 백업합니다. 이 백업은 새로고침 복원 직후나 정상 제출·로그아웃 시 즉시 삭제하도록 했습니다.",
+            "제공된 인프라가 EC2·ALB 구성이어서 ECR 이미지를 받아 인스턴스 안의 Nginx로 blue/green 전환을 구현했습니다. ALB가 백엔드 분기도 함께 맡고 있어 ALB 타깃 그룹을 바꾸는 방식으로는 배포마다 규칙을 바꿔야 하고 영향 범위가 백엔드까지 넓어지므로 전환과 검사·원복을 인스턴스 안에서 끝내도록 했습니다. 대기 슬롯에 새 컨테이너를 띄워 헬스체크를 통과해야 upstream을 전환합니다. 헬스체크에 실패하면 새 컨테이너를 중지하고 `nginx -t`나 reload가 실패하면 설정을 원복한 뒤 새 컨테이너를 중지합니다.\n\n버전 스큐는 Vercel Skew Protection과 같은 원리의 배포 단위 라우팅을 EC2 위 Nginx로 구현해 풀었습니다. Next.js `deploymentId`만 설정하는 방법은 문서상 배포별로 요청을 라우팅할 때만 버전 스큐를 피합니다. 모든 트래픽을 한 번에 새 슬롯으로 넘기는 구조에서는 재현해 봐도 404가 그대로여서 Nginx 라우팅과 함께 썼습니다. 빌드마다 `deploymentId`를 넣으면 Next.js가 Server Action·RSC 요청에는 `X-Deployment-Id` 헤더를, 정적 자산(`/_next/static`·폰트·`/_next/image`) 요청에는 `?dpl=` 쿼리를 붙입니다. Nginx map에서 두 값을 조합해 배포 ID를 꺼낸 뒤 이전 배포 ID의 요청은 이전 슬롯으로 보냅니다. 둘 다 없는 요청, 즉 URL 직접 진입·새로고침 같은 페이지 요청, public 파일 직접 참조, 직접 작성한 fetch 등은 현재 활성 슬롯으로 보냅니다.\n\n이전 컨테이너를 오래 남겨 두기만 해서는 전환 뒤 구버전 탭의 요청도 새 슬롯으로 갑니다. 그래서 유지 기간은 배포 ID 라우팅과 함께 둡니다. 이전 컨테이너는 새 컨테이너와 같은 EC2 인스턴스의 메모리를 나눠 쓰기 때문에 전환 후 30분만 남겨 둡니다. 유지 기간이 끝나면 먼저 그 배포 ID를 Nginx 만료 목록에 넣고 reload합니다. 이때부터 새 요청에는 `X-Deployment-Expired` 헤더를 붙인 410을 바로 반환합니다. 그다음 `SIGTERM`을 보내 최대 30초의 종료 유예 안에 기존 요청을 정리하고 내리도록 설정했습니다. 슬롯이 둘뿐이라 30분 안에 다시 배포하면 이전 슬롯을 비워야 합니다. 이때는 유지 타이머를 취소하고 같은 만료 절차를 바로 실행한 뒤, 비운 슬롯에 새 버전을 띄웁니다.\n\n프론트엔드는 `window.fetch`를 감싼 전역 래퍼로 Next.js 내부의 Server Action·RSC 요청까지 확인합니다. 백엔드 API의 410과 섞이지 않도록 `X-Deployment-Expired` 헤더가 붙은 410만 배포 만료로 보고 청크 로드 실패는 `ChunkLoadError`로 감지합니다. 실패할 때마다 무조건 새로고침하면 입력 중이던 내용이 사라지므로 폼이 수정된 상태(dirty)가 아닐 때만 바로 새로고침합니다. 수정된 상태라면 이전 화면에 머무르는 한 Server Action·RSC·청크 요청이 계속 410으로 실패하므로 닫을 수 없는 안내 모달로 새로고침을 유도합니다. 배포 만료(410)로 강제 새로고침이 필요한 상황에서 작성 중인 내용을 잃지 않도록 안전장치를 두었습니다. 검토요청 등록 같은 주요 등록 폼에는 민감 정보가 없어서 410을 감지하면 첨부 파일을 뺀 입력값을 `draft:{사용자ID}:{페이지경로}` 키로 `sessionStorage`에 백업합니다. 이 백업은 새로고침 복원 직후나 정상 제출·로그아웃 시 즉시 삭제하도록 했습니다.",
           result:
             "새 버전은 헬스체크를 통과한 뒤에만 트래픽을 받고 전환 전 검증에 실패하면 기존 버전이 서비스를 유지합니다. 구버전 탭의 Server Action과 지연 로드 청크는 전환 후 최대 30분(그 사이 다시 배포하면 그 시점까지) 이전 버전이 처리하고 새로 연 탭은 처음부터 새 버전을 받습니다. 주요 등록 폼은 유지 기간이 지나도 첨부 파일 외의 입력을 잃지 않고 다시 제출할 수 있습니다. 로컬과 개발 환경에서 폼에 입력해 둔 탭을 연 채 슬롯을 전환했습니다. Nginx 액세스 로그에는 유지 기간 동안 이전 슬롯이 요청을 처리한 기록이 남았습니다. E2E 시나리오에서는 유지 시간을 단축해 만료 목록 반영과 Nginx reload까지 실행한 뒤 dirty 상태에 따른 모달·복원과 자동 새로고침을 확인했습니다. 전환 뒤 런타임 오류율 기반의 자동 롤백은 구현하지 않았고 헬스체크·설정 검증 실패 시의 중단과 원복까지만 자동화했습니다. 다만 이전 슬롯이 남아 있는 동안은 수동으로 바로 되돌릴 수 있습니다. 운영은 오픈 전이라 blue/green은 개발 환경까지 적용했습니다.",
           visual: {
@@ -53,7 +54,7 @@ export const PROJECTS_DATA: Project[] = [
           problem:
             "신규 구축이라 토큰을 어디에 둘지부터 정해야 했습니다. 브라우저 저장소에 두면 XSS로 탈취될 위험이 있었습니다. 쿠키로 옮기면 브라우저가 자동으로 전송하니 CSRF에 대비해야 했습니다. BFF 핸들러가 병렬로 호출되면 같은 토큰으로 refresh가 동시에 나가 토큰 회전 정책 때문에 일부 요청이 실패할 수 있었습니다.",
           solution:
-            "BFF가 백엔드 호출을 대신 맡고 액세스·리프레시 토큰은 iron-session으로 암호화한 HttpOnly 쿠키에 담았습니다. 브라우저는 백엔드를 직접 호출하지 않습니다. 로그인과 토큰 회전은 백엔드가 맡고 있어 프런트에는 토큰을 쿠키에 암호화해 담는 기능만 필요했습니다. 그래서 OAuth 중심의 인증 프레임워크인 NextAuth.js 대신 이 기능만 제공하는 iron-session을 선택했습니다.\n\n만료 5분 전부터 자동으로 갱신하고 진행 중인 refresh Promise를 토큰별로 공유해 같은 서버 모듈 안의 동시 요청을 하나로 합쳤습니다. 서버를 넘는 경합은 백엔드의 재사용 유예가 처리합니다.\n\n세션 쿠키는 `SameSite=Lax`로 설정하고 GET으로 동작하는 세션 파기 경로는 `Sec-Fetch-Site`를 허용 목록 방식으로 검사해 로그아웃 CSRF를 막았습니다.",
+            "BFF가 백엔드 호출을 대신 맡고 액세스·리프레시 토큰은 iron-session으로 암호화한 HttpOnly 쿠키에 담았습니다. 브라우저는 백엔드를 직접 호출하지 않습니다. 로그인과 토큰 회전은 백엔드가 맡고 있어 프론트에는 토큰을 쿠키에 암호화해 담는 기능만 필요했습니다. 그래서 OAuth 중심의 인증 프레임워크인 NextAuth.js 대신 이 기능만 제공하는 iron-session을 선택했습니다.\n\n만료 5분 전부터 자동으로 갱신하고 진행 중인 refresh Promise를 토큰별로 공유해 같은 서버 모듈 안의 동시 요청을 하나로 합쳤습니다. 서버를 넘는 경합은 백엔드의 재사용 유예가 처리합니다.\n\n세션 쿠키는 `SameSite=Lax`로 설정하고 GET으로 동작하는 세션 파기 경로는 `Sec-Fetch-Site`를 허용 목록 방식으로 검사해 로그아웃 CSRF를 막았습니다.",
           result:
             "토큰 값을 브라우저 스크립트에서 읽을 수 없게 했습니다. 로컬 프로덕션 빌드에서 만료 직전 세션으로 동시 요청 10건을 보내자 refresh 호출이 10회에서 1회로 줄었습니다.",
           visual: {
@@ -71,7 +72,7 @@ export const PROJECTS_DATA: Project[] = [
           solution:
             '세 가지 방식을 비교했습니다. 경로 allowlist 환경변수는 구현과 검증까지 마쳤지만 API가 나올 때마다 설정을 바꿔야 했고 catch-all 프록시는 mock 서버 동작을 직접 재현해 유지해야 했습니다. MSW는 표준 도구지만 Next.js App Router 서버 쪽 가로채기가 프로세스 분리 문제로 미해결 종료된 이슈(msw#1644)가 있었기 때문에 공통코드·부서 도메인으로 먼저 파일럿을 돌렸습니다. Next 16 + Turbopack에서 재현되지 않는 것을 확인한 뒤 Route Handler 72개를 리졸버 40개로 이관했습니다.\n\n`instrumentation.ts`에서 mock 모드일 때만 `server.listen({ onUnhandledRequest: "bypass" })`로 서버의 fetch를 가로챕니다. 핸들러가 있는 엔드포인트는 mock이 응답하고 없는 엔드포인트는 실API로 그대로 나갑니다. API가 나오면 해당 핸들러를 지우는 것으로 전환됩니다.\n\nmock 로그인은 아무 자격증명에나 JWT를 발급해서 운영 산출물에 실리면 안 됩니다. 리뷰에서 `NEXT_PUBLIC_*` 값은 빌드 시점에 변수가 있어야만 상수로 인라인된다는 것을 확인했습니다. 변수가 없으면 런타임 조회로 남아 mock 코드가 산출물에서 제거되지 않습니다. 이 때문에 운영·스테이징 빌드 스크립트에 `NEXT_PUBLIC_USE_MOCK=false`를 고정했습니다.\n\n같은 핸들러를 Vitest의 `setupServer`로 통합테스트에서도 재사용했습니다. async Server Component는 테스트에서 렌더링하기 어려워, 테스트 경계를 API 게이트웨이와 Server Action 계층에 뒀습니다. 화면에서 쓰는 zod 스키마로 mock 응답과 실API 응답을 모두 검증하는 계약 테스트를 뒀습니다. 백엔드 스펙이 바뀌면 mock과 실API 중 어긋난 쪽에서 테스트가 실패합니다. 가로채기 자체가 동작하는지 확인하는 스모크 테스트도 둬서 Next를 업그레이드할 때 msw#1644류 문제가 다시 생기면 바로 알 수 있게 했습니다.',
           result:
-            "인증·사용자·메뉴·대시보드·공통코드부터 실API로 순차 전환했습니다. 검토요청은 목록·엑셀 다운로드는 실API, 상세·수정·상태 전이는 mock으로 한 업무 흐름 안에서도 엔드포인트 단위로 섞어 썼습니다. API가 나오면 프런트엔드에서 할 일은 해당 핸들러 삭제와 계약 테스트 통과 확인뿐이었습니다. 운영 빌드 산출물을 검사한 결과 mock 시드와 `setupServer`는 0건이었습니다. 배포 이미지에 env 파일로 mock을 켜 봐도 서버 산출물에 MSW 코드가 없어 동작하지 않았습니다. mock 리졸버가 UI 배럴을 거치지 않도록 import를 바꿔 dev 서버 부팅도 약 1.3~1.7초에서 0.66초로 줄었습니다. dev 서버가 모듈을 다시 불러온 뒤 가로채기가 풀리는 현상은 근본 원인을 확정하지 못해 재시작으로 대응하고 있습니다. mock 코드 파일은 Docker 이미지에 포함된 채 빌드 값으로만 비활성화됩니다.",
+            "인증·사용자·메뉴·대시보드·공통코드부터 실API로 순차 전환했습니다. 검토요청은 목록·엑셀 다운로드는 실API, 상세·수정·상태 전이는 mock으로 한 업무 흐름 안에서도 엔드포인트 단위로 섞어 썼습니다. API가 나오면 프론트엔드에서 할 일은 해당 핸들러 삭제와 계약 테스트 통과 확인뿐이었습니다. 운영 빌드 산출물을 검사한 결과 mock 시드와 `setupServer`는 0건이었습니다. 배포 이미지에 env 파일로 mock을 켜 봐도 서버 산출물에 MSW 코드가 없어 동작하지 않았습니다. mock 리졸버가 UI 배럴을 거치지 않도록 import를 바꿔 dev 서버 부팅도 약 1.3~1.7초에서 0.66초로 줄었습니다. dev 서버가 모듈을 다시 불러온 뒤 가로채기가 풀리는 현상은 근본 원인을 확정하지 못해 재시작으로 대응하고 있습니다. mock 코드 파일은 Docker 이미지에 포함된 채 빌드 값으로만 비활성화됩니다.",
           visual: {
             type: "diagram",
             id: "msw-mock-switch",
@@ -87,23 +88,23 @@ export const PROJECTS_DATA: Project[] = [
     title: "저작권자용 외부정산 시스템 기능 확장",
     description:
       "저작권자가 정산을 조회하고 관리자가 정산서를 올리는 웹 페이지",
-    company: "㈜키다리스튜디오",
-    period: "2026.03. ~ 2026.04.",
+    company: "(주)키다리스튜디오",
+    period: "2026. 03.~2026. 04.",
     techStack: [
       "JavaScript",
       "TypeScript 6",
       "Vue 3",
-      "Vite 8",
       "Vue Router",
       "Pinia",
       "Vuetify 3",
       "RealGrid2",
+      "Vite 8",
       "AWS S3·CloudFront",
     ],
     images: [],
     homeOrder: 3,
     caseStudy: {
-      team: "프런트엔드 1 · 백엔드 1",
+      team: "프론트엔드 1·백엔드 1",
       summary:
         "양식이 다른 3개 정산 유형을 설정 추가 중심으로 늘릴 수 있게 정산 조회 화면을 설계",
       background:
@@ -149,25 +150,22 @@ export const PROJECTS_DATA: Project[] = [
     title: "콘텐츠 IP·계약 관리 시스템 개선",
     description:
       "사내 담당자가 콘텐츠 IP와 계약·정산 조건을 등록하는 업무 시스템",
-    company: "㈜키다리스튜디오",
-    period: "2025.10. ~ 2026.10.",
+    company: "(주)키다리스튜디오",
+    period: "2025. 10.~2026. 10.",
     techStack: [
       "TypeScript 6",
       "Vue 3",
-      "Vite 8",
       "Vue Router",
       "Pinia",
+      "Vuetify 3",
       "RealGrid2",
       "Playwright",
+      "Vite 8",
     ],
     images: [],
-    highlights: [
-      { value: "326", label: "E2E 기준선으로 고정한 정산 조합" },
-      { value: "10,374 → [실측]", label: "계약등록 화면 파일 줄 수" },
-    ],
     homeOrder: 2,
     caseStudy: {
-      team: "프런트엔드 1 · 백엔드 1",
+      team: "프론트엔드 1·백엔드 1",
       summary:
         "1만 줄 계약 화면을 326가지 조합 E2E로 검증하며 AI 에이전트로 리팩터링해 두 화면의 정산 규칙을 1곳으로 통합",
       background:
@@ -181,7 +179,7 @@ export const PROJECTS_DATA: Project[] = [
           solution:
             "리팩터링에 앞서 4개 축의 조합 중 분석상 도달 가능한 326가지의 현재 동작을 Playwright E2E로 고정해 기준선으로 삼았습니다. 결함까지 고치면 리팩터링 중에 바뀐 동작이 개선인지 회귀인지 기준선으로 가를 수 없어서 기준선을 만들며 찾은 결함도 고치지 않고 그대로 담았습니다.\n\n먼저 도달할 수 없던 일괄등록 코드를 지운 뒤 네 단계로 나눠 리팩터링했습니다. ① 입력·정산 규칙을 순수 함수 모듈 하나로 모으되 화면마다 달랐던 동작은 화면별 분기로 옮기고, ② 정산 입력표의 그리드 설정을 공유 composable로 통일하고, ③ 계약 조건별 화면 표시를 선언형으로 바꾸고, ④ 등록 화면을 단계·영역별 컴포넌트로 나눴습니다.\n\n구현은 AI 코딩 에이전트로 했습니다. 단계마다 같은 E2E를 다시 통과해야 다음 단계로 넘어갔습니다. 에이전트가 테스트를 바꿔 통과시키지 못하도록 셀렉터 같은 테스트 코드는 고칠 수 있어도 기존 단언은 바꾸지 않는다는 규칙도 두었습니다. 일괄등록 코드 제거와 ① 단계에서는 변경 전후 코드가 보내는 저장 요청도 비교했습니다.",
           result:
-            "정산 규칙이 정의된 곳은 계약등록·계약변경 2곳에서 1곳으로 줄었습니다. 계약등록 화면 파일은 10,374줄에서 [실측 필요]줄이 됐습니다. 일괄등록 코드 제거 단계에서는 에이전트가 사용처 검색 결과 0건을 근거로 상태값까지 지웠습니다. E2E가 이 값을 런타임에 직접 읽고 있어 단언 7건이 실패했습니다. 규칙대로 테스트가 아니라 삭제를 되돌렸습니다. 변경 전 저장 요청 291건은 새 코드에서도 모두 나왔습니다. ① 단계에서도 저장 요청을 보내는 테스트 305개의 요청이 모두 같았습니다. 네 단계를 모두 마친 코드는 같은 E2E(계약등록 171가지·계약변경 155가지 조합)를 통과했습니다. 두 화면이 다르게 동작하던 곳은 화면별 분기로 남아 있으며 이를 하나로 맞추는 일은 정책 판단이 필요한 별도 문제입니다. 기준선을 만들며 찾은 결함 6건은 버그인지 의도된 동작인지 기획·백엔드가 판단하도록 분리해 두었습니다. 이 E2E는 백엔드 응답을 mock으로 대체한 화면 검증이며 CI에서 상시 실행되지는 않습니다.",
+            "정산 규칙이 정의된 곳은 계약등록·계약변경 2곳에서 1곳으로 줄었습니다. 일괄등록 코드 제거 단계에서는 에이전트가 사용처 검색 결과 0건을 근거로 상태값까지 지웠습니다. E2E가 이 값을 런타임에 직접 읽고 있어 단언 7건이 실패했습니다. 규칙대로 테스트가 아니라 삭제를 되돌렸습니다. 변경 전 저장 요청 291건은 새 코드에서도 모두 나왔습니다. ① 단계에서도 저장 요청을 보내는 테스트 305개의 요청이 모두 같았습니다. 네 단계를 모두 마친 코드는 같은 E2E(계약등록 171가지·계약변경 155가지 조합)를 통과했습니다. 두 화면이 다르게 동작하던 곳은 화면별 분기로 남아 있으며 이를 하나로 맞추는 일은 정책 판단이 필요한 별도 문제입니다. 기준선을 만들며 찾은 결함 6건은 버그인지 의도된 동작인지 기획·백엔드가 판단하도록 분리해 두었습니다. 이 E2E는 백엔드 응답을 mock으로 대체한 화면 검증이며 CI에서 상시 실행되지는 않습니다.",
           visual: {
             type: "diagram",
             id: "e2e-regression-baseline",
@@ -202,7 +200,7 @@ export const PROJECTS_DATA: Project[] = [
             type: "diagram",
             id: "ai-agent-guardrails",
             caption:
-              "구현 전에 맥락(업무·작업 위키)과 명세(SDD)로 AI 에이전트의 판단을 걸러 낸 사례와 걸러 내지 못한 사례",
+              "맥락(업무·작업 위키)과 명세(SDD)로 AI 에이전트의 판단을 구현 전에 검증하고, 세션마다 남긴 결정·원인 조사가 다음 세션의 맥락이 되는 흐름",
           },
         },
         {
@@ -240,23 +238,23 @@ export const PROJECTS_DATA: Project[] = [
     },
   },
   {
-    id: "dyson-live-monorepo",
+    id: "promo-live-monorepo",
     title:
-      "다이슨 사전알림·혜택 프로모션 라이브 방송 페이지의 PHP → Next.js 모노레포 전환",
+      "글로벌 가전 브랜드 사전알림·혜택 프로모션 라이브 방송 페이지의 PHP → Next.js 모노레포 전환",
     description:
       "시청자가 알림을 신청하고 운영자가 백오피스에서 신청 내역을 보는 서비스",
     company: "프리랜서",
-    period: "2025.09.",
+    period: "2025. 09.",
     techStack: [
       "TypeScript 5",
       "React 19",
       "Next.js 15",
       "Ant Design 5",
       "Tailwind CSS 4",
-      "pnpm workspaces",
-      "Turborepo",
       "Spring Boot",
       "MySQL",
+      "pnpm workspaces",
+      "Turborepo",
       "Docker",
       "AWS ECR·ECS",
     ],
@@ -267,49 +265,27 @@ export const PROJECTS_DATA: Project[] = [
     title: "사람인 채용관리솔루션(리버스) 정부지원사업 모니터링 시스템 개발",
     description: "관리자가 지원사업 대시보드·리포트·설문을 관리하는 웹 시스템",
     company: "프리랜서",
-    period: "2025.05. ~ 2025.08.",
+    period: "2025. 05.~2025. 08.",
     techStack: ["TypeScript 5", "Next.js 15", "NextAuth.js", "Ant Design 5"],
     images: ["ats/image-1.webp"],
-    caseStudy: {
-      team: "프런트엔드 1 · 백엔드 1",
-      summary:
-        "정부지원사업 모니터링 웹 시스템의 Next.js 초기 환경과 개발 아키텍처를 설계하고 NextAuth.js 인증을 연동",
-      background:
-        "사람인 채용관리솔루션(리버스)의 정부지원사업 운영 현황을 모니터링하는 관리자용 웹 시스템입니다.",
-      problems: [
-        {
-          title: "Next.js 초기 환경과 폴더·레이어 구조, 데이터 페칭 방식, 공통 컴포넌트 설계",
-          problem: "",
-          solution:
-            "폴더·레이어 구조, 상태·데이터 페칭 방식, 공통 컴포넌트를 설계했습니다.",
-          result: "",
-        },
-        {
-          title: "NextAuth.js 기반 사용자 인증 연동",
-          problem: "",
-          solution: "NextAuth.js 기반 사용자 인증을 연동했습니다.",
-          result: "",
-        },
-      ],
-    },
-  },
-  {
-    id: "accessibility-ebook-viewer",
-    title: "웹 기반 접근성 전자책 뷰어",
-    description: "시각장애인이 음성과 점자 디스플레이로 책을 읽는 서비스",
-    company: "㈜닷",
-    period: "2024.11. ~ 2024.12.",
-    techStack: ["JavaScript", "Vue 3"],
-    images: ["ebook-reader-web/image-1.webp", "ebook-reader-web/image-2.webp"],
   },
   {
     id: "design-system",
     title: "디자인 시스템 구축",
     description:
-      "개발자와 디자이너가 함께 쓰는 버튼·입력창 같은 화면 부품 모음",
-    company: "㈜닷",
-    period: "2024.08. ~ 2024.10.",
-    techStack: ["TypeScript 5", "Vue 3", "Storybook", "Figma"],
+      "개발자가 화면마다 똑같은 모양으로 가져다 쓰는 버튼·입력창 같은 부품 모음",
+    company: "개인 프로젝트",
+    period: "2025. 04.~2025. 06.",
+    techStack: [
+      "TypeScript 5",
+      "React 19",
+      "Style Dictionary",
+      "Storybook",
+      "Chromatic",
+      "Figma",
+      "SCSS",
+      "GitHub Actions",
+    ],
     images: [
       "design-system/image-1.webp",
       "design-system/image-2.webp",
@@ -318,42 +294,62 @@ export const PROJECTS_DATA: Project[] = [
     ],
     homeOrder: 6,
     caseStudy: {
-      team: "프런트엔드 1",
+      team: "프론트엔드 1",
       summary:
-        "아토믹 디자인 기반 컴포넌트 라이브러리와 디자인 토큰, Storybook·Chromatic 시각적 회귀 테스트를 구축",
+        "Figma 토큰 JSON 한 곳에서 SCSS·TS 변수를 생성하고 push·PR마다 Chromatic으로 화면 변화를 검사하는 React 디자인 시스템",
       background:
-        "개발자와 디자이너가 함께 쓰는 컴포넌트 라이브러리와 디자인 토큰 시스템입니다.",
+        "(주)닷에서 서비스마다 달랐던 버튼·입력창을 통일하려던 디자인 시스템 프로젝트가 중단되었습니다. 그 디자인 시스템을 퇴사 후 혼자 React로 다시 만든 컴포넌트 라이브러리입니다. 화면 디자인과 토큰 값은 디자이너의 Figma를 바탕으로 했고 토큰을 코드로 옮기는 생성 구조와 컴포넌트 16개, 시각적 회귀 검사 CI는 혼자 설계·구현했습니다. 컴포넌트는 아토믹 디자인에 따라 원자·분자·유기체·템플릿 단계로 나눴습니다.",
       problems: [
         {
-          title: "아토믹 디자인 패턴으로 컴포넌트 구조 설계",
-          problem: "",
+          title:
+            "컴포넌트마다 디자인 값이 어긋나지 않도록 Figma 토큰 JSON 한 곳에서 SCSS·TS 변수를 생성해 브랜드 색 1곳 수정으로 용도 변수 4개를 함께 변경",
+          problem:
+            "(주)닷에서는 같은 버튼·입력창 컴포넌트를 서비스마다 따로 만들고 있어 같은 컴포넌트인데도 서비스마다 모양이 달랐습니다. 컴포넌트를 라이브러리 하나로 모아도 색상·간격·글꼴 값을 컴포넌트 스타일마다 직접 적으면 같은 문제가 남습니다. Figma 값이 바뀔 때마다 모든 스타일 파일을 찾아 고쳐야 하고 빠뜨린 곳은 예전 값으로 남아 다시 모양이 어긋납니다.",
           solution:
-            "아토믹 디자인 패턴으로 컴포넌트 구조를 설계하고, 컴포넌트마다 하나의 역할만 맡도록 나눴습니다.",
-          result: "",
+            "Figma의 색상·글꼴·간격 토큰을 `$value`·`$type` 형식의 JSON으로 내보내 값의 원본으로 두었습니다. 색상 토큰은 기본 팔레트 82개와 배경·테두리·글자·아이콘 용도 토큰 133개로 이뤄져 있어 용도 토큰의 팔레트 참조를 그대로 살려 내보냈습니다. 브랜드 색처럼 팔레트 값 하나만 고치면 그 색을 쓰는 용도 토큰이 함께 바뀝니다. Style Dictionary로 이 JSON에서 스타일용 SCSS 변수와 코드용 JS 상수·TS 타입 선언을 함께 생성하고 컴포넌트 스타일은 생성된 SCSS 변수를 가져다 씁니다. Style Dictionary는 생성할 때 참조를 실제 값으로 풀어 쓰므로, 생성 결과는 저장소에 커밋하지 않고 CI에서 Storybook을 빌드하기 전에 매번 다시 만들게 해 값을 고칠 곳이 토큰 JSON 하나만 남게 했습니다.",
+          result:
+            "스타일 파일 16개 중 13개가 생성된 토큰 변수를 102곳에서 참조합니다. 브랜드 기본색(`Brand/600`) 하나만 바꿔 다시 생성하자 이 색을 참조하는 배경·테두리·글자·아이콘 변수 4개가 함께 바뀌었고 이 변수를 쓰는 Button·IconButton·Checkbox·Radio 스타일에 그대로 반영됩니다. Toast·AlertDialog 스타일과 Form·Button 일부 색상은 아직 값이 직접 적혀 있어 토큰으로 옮기지 못했습니다.",
+          visual: {
+            type: "diagram",
+            id: "design-token-pipeline",
+            caption:
+              "Figma 변수의 참조 관계를 살려 내보낸 토큰 JSON 하나에서 SCSS 변수와 JS 상수·TS 타입을 생성하는 구조",
+          },
         },
         {
-          title: "색상·간격·타이포그래피 디자인 토큰을 정의하고 디자이너와 컴포넌트 기준 조율",
-          problem: "",
+          title:
+            "리뷰어 없이도 컴포넌트 수정의 화면 영향을 알 수 있게 push·PR마다 스토리 47개를 Chromatic으로 자동 비교",
+          problem:
+            "컴포넌트 하나를 고치면 그 컴포넌트를 조합한 상위 컴포넌트의 화면도 함께 바뀝니다. 혼자 만드는 라이브러리라 리뷰어가 없었고 고칠 때마다 모든 컴포넌트의 상태별 화면을 눈으로 확인할 수는 없었습니다.",
           solution:
-            "디자인 토큰(색상·간격·타이포그래피 등)을 정의하고 공통 스타일을 적용했습니다. 디자이너와 토큰·컴포넌트 기준을 조율했습니다.",
-          result: "",
-        },
-        {
-          title: "Storybook으로 컴포넌트를 문서화하고 Chromatic으로 시각적 회귀 테스트 자동화",
-          problem: "",
-          solution:
-            "Storybook으로 컴포넌트를 문서화하고 다른 개발자에게 사용법을 안내했습니다. Chromatic으로 시각적 회귀 테스트를 자동화했습니다.",
-          result: "",
+            "컴포넌트마다 기본·로딩·에러처럼 상태별로 Storybook 스토리를 작성했습니다. GitHub Actions에서 develop·main 브랜치에 push하거나 PR을 열면 토큰을 생성하고 Storybook을 빌드해 Chromatic에 올리도록 했습니다. Chromatic은 스토리마다 화면을 찍어 이전 빌드와 비교하고 달라진 화면은 승인해야 새 기준이 됩니다. Storybook 접근성 애드온으로 스토리별 접근성 위반도 확인합니다.",
+          result:
+            "37번째 빌드에서 컴포넌트 16개·스토리 47개의 화면을 이전 빌드와 비교했고 달라진 화면은 0건이었습니다. 접근성 검사는 위반을 Storybook 화면에 표시만 하고 빌드를 실패시키지는 않으며 스토리를 Vitest로 실행하는 테스트는 CI에 연결하지 않았습니다.",
+          visual: {
+            type: "diagram",
+            id: "chromatic-visual-test",
+            caption:
+              "push·PR마다 토큰 생성부터 Chromatic의 기준 화면 비교와 승인·거부까지 이어지는 시각적 회귀 검사 흐름",
+          },
         },
       ],
     },
   },
   {
+    id: "accessibility-ebook-viewer",
+    title: "웹 기반 접근성 전자책 뷰어",
+    description: "시각장애인이 음성과 점자 디스플레이로 책을 읽는 서비스",
+    company: "(주)닷",
+    period: "2024. 11.~2024. 12.",
+    techStack: ["JavaScript", "Vue 3"],
+    images: ["ebook-reader-web/image-1.webp", "ebook-reader-web/image-2.webp"],
+  },
+  {
     id: "customer-support-site",
     title: "고객지원 사이트 구축",
     description: "고객이 여러 언어로 문의를 남기고 담당자가 처리하는 지원 창구",
-    company: "㈜닷",
-    period: "2024.07.",
+    company: "(주)닷",
+    period: "2024. 07.",
     techStack: ["TypeScript 5", "Vue 3", "i18n", "Java", "Spring Boot"],
     images: [
       "support/image-1.webp",
@@ -363,10 +359,11 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: "frontend-framework-refactoring",
-    title: "프런트엔드 공통 프레임워크 아키텍처 리팩터링",
-    description: "오래 운영돼 온 사내 웹 서비스들이 공통으로 쓰는 화면 기반 코드",
-    company: "㈜닷",
-    period: "2024.05.",
+    title: "프론트엔드 공통 프레임워크 아키텍처 리팩터링",
+    description:
+      "오래 운영돼 온 사내 웹 서비스들이 공통으로 쓰는 화면 기반 코드",
+    company: "(주)닷",
+    period: "2024. 05.",
     techStack: ["TypeScript", "Vue 3", "Vuex", "Pinia", "gulp.js"],
     images: [],
   },
@@ -374,15 +371,14 @@ export const PROJECTS_DATA: Project[] = [
     id: "wysiwyg-editor",
     title: "점자 디스플레이용 웹 WYSIWYG 에디터 개발",
     description: "점자 기기로 읽을 문서를 보이는 그대로 편집하는 웹 도구",
-    company: "㈜닷",
-    period: "2023.09. ~ 2024.04.",
+    company: "(주)닷",
+    period: "2023. 09.~2024. 04.",
     techStack: ["JavaScript", "Vue 3", "CKEditor 5"],
     images: ["dot-editor/image-1.webp", "dot-editor/image-2.webp"],
     coverPosition: "left top",
-    highlights: [{ value: "20s → 1s", label: "대용량 문서 로딩" }],
     homeOrder: 4,
     caseStudy: {
-      team: "프런트엔드 2 · 백엔드 1",
+      team: "프론트엔드 2·백엔드 1",
       summary:
         "가상 스크롤로 대용량 문서 로딩을 20초에서 1초로 줄이고 CKEditor 5 기반 접근성 검사 기능을 구현",
       background:
@@ -402,7 +398,8 @@ export const PROJECTS_DATA: Project[] = [
           },
         },
         {
-          title: "CKEditor 5 기반 웹 접근성 검사(alt 텍스트·색상 대비) 기능 구현",
+          title:
+            "CKEditor 5 기반 웹 접근성 검사(alt 텍스트·색상 대비) 기능 구현",
           problem: "",
           solution:
             "CKEditor 5 기반으로 웹 접근성 검사(alt 텍스트·색상 대비 등) 기능을 구현했습니다.",
@@ -415,17 +412,17 @@ export const PROJECTS_DATA: Project[] = [
     id: "mobile-ebook-viewer",
     title: "모바일 기반 접근성 전자책 뷰어",
     description: "시각장애인이 휴대폰으로 디지털 음성 도서를 읽는 앱",
-    company: "㈜닷",
-    period: "2023.03. ~ 2023.08.",
-    techStack: ["Flutter", "Dart", "Swift"],
+    company: "(주)닷",
+    period: "2023. 03.~2023. 08.",
+    techStack: ["Dart", "Flutter", "Swift"],
     images: [],
   },
   {
     id: "cloud-file-management",
     title: "클라우드 기반 파일 관리 시스템",
     description: "권한에 따라 사용자별로 파일을 올리고 내려받는 저장 서비스",
-    company: "㈜닷",
-    period: "2023.01. ~ 2023.02.",
+    company: "(주)닷",
+    period: "2023. 01.~2023. 02.",
     techStack: [
       "JavaScript",
       "Vue 3",
@@ -440,8 +437,8 @@ export const PROJECTS_DATA: Project[] = [
     id: "tactile-graphics-editor",
     title: "시각장애인을 위한 웹 기반 촉각 그래픽 편집 도구",
     description: "이미지를 손끝으로 읽는 촉각 그림으로 바꿔 만드는 편집기",
-    company: "㈜닷",
-    period: "2022.12. ~ 2024.12.",
+    company: "(주)닷",
+    period: "2022. 12.~2024. 12.",
     techStack: [
       "JavaScript",
       "Vue 3",
@@ -458,21 +455,23 @@ export const PROJECTS_DATA: Project[] = [
     ],
     homeOrder: 5,
     caseStudy: {
-      team: "프런트엔드 1 · 백엔드 1 · SDK 1 · 점역엔진 1",
+      team: "프론트엔드 1·백엔드 1·SDK 1·점역엔진 1",
       summary:
         "CES 2024 접근성 부문 혁신상을 수상한 촉각 그래픽 편집 도구의 캔버스 에디터 개발과 하드웨어 SDK 연동",
       background:
         "시각장애인을 포함한 모든 사용자가 촉각 그래픽을 제작·편집·저장·공유할 수 있도록 설계된 웹 애플리케이션입니다.",
       problems: [
         {
-          title: "Fabric.js로 펜·지우개·도형 그리기를 제공하는 캔버스 그래픽 에디터 구현",
+          title:
+            "Fabric.js로 펜·지우개·도형 그리기를 제공하는 캔버스 그래픽 에디터 구현",
           problem: "",
           solution:
             "Fabric.js 기반으로 펜·지우개·도형 그리기 등을 제공하는 캔버스 그래픽 에디터를 구현했습니다. 캔버스 성능과 접근성도 개선했습니다.",
           result: "",
         },
         {
-          title: "하드웨어 장치 SDK를 캔버스 웹 에디터에 연동해 편집한 촉각 그래픽을 장치로 출력",
+          title:
+            "하드웨어 장치 SDK를 캔버스 웹 에디터에 연동해 편집한 촉각 그래픽을 장치로 출력",
           problem: "",
           solution:
             "SDK 개발자가 만든 하드웨어 장치 SDK를 캔버스 웹 에디터에 연동해 편집한 촉각 그래픽을 장치로 출력할 수 있게 했습니다.",
@@ -481,7 +480,8 @@ export const PROJECTS_DATA: Project[] = [
         {
           title: "PDF·이미지를 촉각 그래픽으로 변환하는 기능 개발",
           problem: "",
-          solution: "PDF·이미지를 촉각 그래픽으로 변환하는 기능을 개발했습니다.",
+          solution:
+            "PDF·이미지를 촉각 그래픽으로 변환하는 기능을 개발했습니다.",
           result: "",
         },
       ],
@@ -492,11 +492,11 @@ export const PROJECTS_DATA: Project[] = [
     title: "부안군 상수도시설 생애주기관리 시스템",
     description:
       "부안군 상수도 담당자가 지도·차트·그리드로 시설을 관리하고 엑셀 보고서를 만드는 시스템",
-    company: "이노데일㈜",
-    period: "2022.03. ~ 2022.07.",
+    company: "(주)이노데일",
+    period: "2022. 03.~2022. 07.",
     techStack: [
-      "AngularJS",
       "JavaScript",
+      "AngularJS",
       "Highcharts",
       "jqGrid",
       "OpenLayers",
@@ -510,11 +510,11 @@ export const PROJECTS_DATA: Project[] = [
     title: "인천광역시 상수도 운영관리 시스템 고도화",
     description:
       "인천시 상수도 담당자가 지도·차트·그리드로 시설을 관리하고 배관 연결도를 편집하는 시스템",
-    company: "이노데일㈜",
-    period: "2021.03. ~ 2022.02.",
+    company: "(주)이노데일",
+    period: "2021. 03.~2022. 02.",
     techStack: [
-      "JSP",
       "JavaScript",
+      "JSP",
       "Highcharts",
       "jqGrid",
       "OpenLayers",
@@ -527,12 +527,12 @@ export const PROJECTS_DATA: Project[] = [
     id: "web-based-mes",
     title: "제조 실행 시스템(MES)",
     description:
-      "㈜진성정밀이 생산 설비의 가동률·불량률·다운타임을 확인하는 관리 화면",
-    company: "이노데일㈜",
-    period: "2020.03. ~ 2021.02.",
+      "(주)진성정밀이 생산 설비의 가동률·불량률·다운타임을 확인하는 관리 화면",
+    company: "(주)이노데일",
+    period: "2020. 03.~2021. 02.",
     techStack: [
-      "JSP",
       "JavaScript",
+      "JSP",
       "Highcharts",
       "ParamQuery Grid",
       "Spring Framework",
@@ -544,18 +544,19 @@ export const PROJECTS_DATA: Project[] = [
     id: "elevator-complaint-system",
     title: "공공민원 모바일화 시스템 – 승강기민원24 고도화",
     description: "시민이 휴대폰으로 승강기 민원을 신청하는 모바일 웹 화면",
-    company: "이노데일㈜",
-    period: "2019.12. ~ 2020.02.",
-    techStack: ["JSP", "JavaScript", "jQuery", "NICE API"],
+    company: "(주)이노데일",
+    period: "2019. 12.~2020. 02.",
+    techStack: ["JavaScript", "JSP", "jQuery", "NICE API"],
     images: [],
   },
   {
     id: "uljin-sewage-management",
     title: "울진군 하수관로 운영관리 시스템",
-    description: "울진군 하수도 담당자가 하수 시설 데이터를 차트와 그리드로 모니터링하는 화면",
-    company: "이노데일㈜",
-    period: "2019.02. ~ 2019.11.",
-    techStack: ["AngularJS", "JavaScript", "Highcharts", "jqGrid"],
+    description:
+      "울진군 하수도 담당자가 하수 시설 데이터를 차트와 그리드로 모니터링하는 화면",
+    company: "(주)이노데일",
+    period: "2019. 02.~2019. 11.",
+    techStack: ["JavaScript", "AngularJS", "Highcharts", "jqGrid"],
     images: [],
   },
 ];

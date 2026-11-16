@@ -1,13 +1,14 @@
 import { describe, expect, it } from "vitest";
+import { paintOrder } from "@/components/portfolio/hero-lego/engine";
 import {
   BRICKS,
   CARD_A,
   CARD_B,
   EXTRA,
+  INITIAL_PLACEMENT,
   LARGE,
   OUT,
   PERIOD,
-  REST,
   SLOTS,
   SMALL,
   STATES,
@@ -59,9 +60,9 @@ describe("hero-lego 자리", () => {
   });
 
   it("처음 상태는 빈 칸을 빼고 모든 자리가 차 있다", () => {
-    expectValid(REST);
+    expectValid(INITIAL_PLACEMENT);
     SLOTS.forEach((_, slot) => {
-      expect(REST.includes(slot)).toBe(slot !== EXTRA);
+      expect(INITIAL_PLACEMENT.includes(slot)).toBe(slot !== EXTRA);
     });
   });
 
@@ -75,21 +76,23 @@ describe("hero-lego 자리", () => {
 
 describe("swapAt", () => {
   it("히어로를 표로 바꿔도 나머지 블록은 그대로다", () => {
-    const next = swapAt(REST, LARGE);
+    const next = swapAt(INITIAL_PLACEMENT, LARGE);
     expect(next[brickOf("hero")]).toBe(OUT);
     expect(next[brickOf("table")]).toBe(LARGE);
-    expect(changed(REST, next).sort()).toEqual(
+    expect(changed(INITIAL_PLACEMENT, next).sort()).toEqual(
       [brickOf("hero"), brickOf("table")].sort(),
     );
     expectValid(next);
   });
 
   it("두 번 바꾸면 처음으로 돌아온다", () => {
-    expect(swapAt(swapAt(REST, LARGE), LARGE)).toEqual([...REST]);
+    expect(swapAt(swapAt(INITIAL_PLACEMENT, LARGE), LARGE)).toEqual([
+      ...INITIAL_PLACEMENT,
+    ]);
   });
 
   it("카드는 쉬고 있는 카드로 바뀐다", () => {
-    const next = swapAt(REST, CARD_A);
+    const next = swapAt(INITIAL_PLACEMENT, CARD_A);
     expect(next[brickOf("profile")]).toBe(OUT);
     expect(next[brickOf("donut")]).toBe(CARD_A);
     expect(next[brickOf("chart")]).toBe(CARD_B);
@@ -97,26 +100,29 @@ describe("swapAt", () => {
   });
 
   it("카드 칸을 계속 눌러도 항상 올바른 배치다", () => {
-    let map: readonly number[] = REST;
+    let map: readonly number[] = INITIAL_PLACEMENT;
     for (let turn = 0; turn < 9; turn += 1) {
       map = swapAt(map, turn % 2 ? CARD_B : CARD_A);
       expectValid(map);
       expect(map.filter((slot) => slot === OUT).length).toBe(
-        REST.filter((slot) => slot === OUT).length,
+        INITIAL_PLACEMENT.filter((slot) => slot === OUT).length,
       );
     }
   });
 
   it("빈 칸은 눌러서 채우고 다시 눌러서 비운다", () => {
-    const filled = swapAt(REST, EXTRA);
+    const filled = swapAt(INITIAL_PLACEMENT, EXTRA);
     expect(filled[brickOf("tabs")]).toBe(EXTRA);
-    expect(changed(REST, filled)).toEqual([brickOf("tabs")]);
-    expect(swapAt(filled, EXTRA)).toEqual([...REST]);
+    expect(changed(INITIAL_PLACEMENT, filled)).toEqual([brickOf("tabs")]);
+    expect(swapAt(filled, EXTRA)).toEqual([...INITIAL_PLACEMENT]);
   });
 
   it("고정된 자리는 바뀌지 않는다", () => {
     SLOTS.forEach((slot, index) => {
-      if (slot.family === null) expect(swapAt(REST, index)).toEqual([...REST]);
+      if (slot.family === null)
+        expect(swapAt(INITIAL_PLACEMENT, index)).toEqual([
+          ...INITIAL_PLACEMENT,
+        ]);
     });
   });
 });
@@ -126,14 +132,15 @@ describe("자동 시연", () => {
     for (const state of STATES) {
       expectValid(state);
       BRICKS.forEach((brick, id) => {
-        if (brick.family === null) expect(state[id]).toBe(REST[id]);
+        if (brick.family === null)
+          expect(state[id]).toBe(INITIAL_PLACEMENT[id]);
       });
     }
   });
 
   it("처음과 끝이 같아 이음매 없이 반복된다", () => {
-    expect(STATES[0]).toEqual([...REST]);
-    expect(STATES[STATES.length - 1]).toEqual([...REST]);
+    expect(STATES[0]).toEqual([...INITIAL_PLACEMENT]);
+    expect(STATES[STATES.length - 1]).toEqual([...INITIAL_PLACEMENT]);
   });
 
   it("교체, 맞바꿈, 빈 칸 채우기를 순서대로 보여 준다", () => {
@@ -177,5 +184,11 @@ describe("swapPose", () => {
       expect(pose.scale).toBeLessThanOrEqual(previous.scale);
       previous = pose;
     }
+  });
+});
+
+describe("paintOrder", () => {
+  it("앞으로 나온 블록을 뒤에, 같은 깊이는 자리 순서로 그린다", () => {
+    expect(paintOrder([0, 5, 0, 2], [3, 0, 1, 2])).toEqual([2, 0, 3, 1]);
   });
 });

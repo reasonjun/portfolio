@@ -1,3 +1,7 @@
+import { revealDelay } from "@/lib/utils";
+import { ChipList } from "./chip-list";
+import { SectionHeading } from "./section-heading";
+
 const skills = [
   {
     category: "언어·프레임워크",
@@ -6,10 +10,10 @@ const skills = [
       "React",
       "Next.js",
       "Vue",
+      "Flutter",
       "Java",
       "Spring Boot",
       "SQL",
-      "Flutter",
     ],
   },
   { category: "상태·데이터", items: ["TanStack Query", "Pinia", "Zod"] },
@@ -27,42 +31,27 @@ const skills = [
   },
 ];
 
-const SkillsSection = () => {
+export const SkillsSection = () => {
   return (
     <section
       id="skills"
       className="scroll-mt-7 space-y-10 py-12 lg:scroll-mt-3 lg:py-16"
     >
-      <h2
-        data-reveal
-        className="text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.1] tracking-[-0.02em] text-balance"
-      >
-        기술
-      </h2>
+      <SectionHeading>기술</SectionHeading>
 
       <dl className="space-y-8">
         {skills.map((group, index) => (
           <div
             key={group.category}
             data-reveal
-            style={{ "--i": index % 3 } as React.CSSProperties}
+            style={revealDelay(index % 3)}
             className="grid gap-2 sm:grid-cols-[11rem_1fr] sm:gap-8"
           >
             <dt className="text-base text-muted-foreground">
               {group.category}
             </dt>
             <dd>
-              <ul className="flex flex-wrap gap-2 text-sm font-medium">
-                {group.items.map((item) => (
-                  <li
-                    key={item}
-                    translate="no"
-                    className="whitespace-nowrap rounded-full border border-foreground/25 px-3 py-0.5"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <ChipList items={group.items} />
             </dd>
           </div>
         ))}
@@ -70,5 +59,3 @@ const SkillsSection = () => {
     </section>
   );
 };
-
-export default SkillsSection;

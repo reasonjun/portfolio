@@ -1,32 +1,31 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { getHomeProjects } from "@/lib/projects";
+import { getHomeProjects, projectHref } from "@/lib/projects";
+import { joinMeta } from "@/lib/utils";
 import { ProjectCard } from "./project-card";
+import { HOME_SECTION_CLASS, SectionHeading } from "./section-heading";
 
-const CaseStudiesSection = () => {
+export const CaseStudiesSection = () => {
   return (
     <section
       id="case-studies"
       aria-labelledby="case-studies-heading"
-      className="scroll-mt-3 py-16 lg:-scroll-mt-11 lg:py-[7.5rem]"
+      className={HOME_SECTION_CLASS}
     >
-      <h2
-        id="case-studies-heading"
-        data-reveal
-        className="text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.1] tracking-[-0.02em] text-balance"
-      >
-        대표 프로젝트
-      </h2>
+      <SectionHeading id="case-studies-heading">대표 프로젝트</SectionHeading>
 
       <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {getHomeProjects().map((project, index) => (
           <ProjectCard
             key={project.id}
-            id={project.id}
+            href={projectHref(project.id)}
             title={project.title}
             summary={project.caseStudy.summary}
             // 기간 안에서는 줄이 꺾이지 않게 공백을 NBSP로 바꾼다. 좁으면 기간 전체가 아래 줄로 내려간다.
-            meta={`${project.company} · ${project.period.replaceAll(" ", "\u00A0")}`}
+            meta={joinMeta(
+              project.company,
+              project.period.replaceAll(" ", " "),
+            )}
             image={project.images[0] ?? null}
             imagePosition={project.coverPosition}
             index={index}
@@ -44,5 +43,3 @@ const CaseStudiesSection = () => {
     </section>
   );
 };
-
-export default CaseStudiesSection;

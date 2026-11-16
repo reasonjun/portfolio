@@ -14,21 +14,21 @@ import {
 import { BRICKS, SLOTS, type Slot } from "./model";
 import {
   BASE,
-  BASE_H,
-  BEZEL,
-  BRICK_D,
-  CHROME,
-  FOOT_H,
+  BASE_HEIGHT,
+  BRICK_DEPTH,
+  FOOT_HEIGHT,
+  FRAME_WIDTH,
   faceAt,
-  PITCH,
   PROJECTION,
-  STUD_H,
-  STUD_R,
-  VW,
-  WALL_R,
-  WALL_T,
-  WIN_H,
-  WIN_X0,
+  STUD_HEIGHT,
+  STUD_PITCH,
+  STUD_RADIUS,
+  TITLE_BAR_HEIGHT,
+  WALL_RADIUS,
+  WALL_THICKNESS,
+  WINDOW_HEIGHT,
+  WINDOW_LEFT,
+  WINDOW_WIDTH,
 } from "./view";
 
 const solid = (plan: Plan, z: number, h: number, steps = 4, bevel = 0) =>
@@ -43,32 +43,38 @@ const cyl = (
 ) => cylinder(cx, cy, r, z, h, PROJECTION, steps);
 
 export const WALL = slabOf(
-  { x: WIN_X0, y: -WALL_T, w: VW, d: WALL_T, r: WALL_R },
+  {
+    x: WINDOW_LEFT,
+    y: -WALL_THICKNESS,
+    w: WINDOW_WIDTH,
+    d: WALL_THICKNESS,
+    r: WALL_RADIUS,
+  },
   0,
-  WIN_H,
+  WINDOW_HEIGHT,
   PROJECTION,
   3,
   0.6,
 );
-export const WALL_FACE = faceAt(WIN_X0, 0, WIN_H);
+export const WALL_FACE = faceAt(WINDOW_LEFT, 0, WINDOW_HEIGHT);
 
 const FEET = corners(BASE, 10);
 const SCREWS = corners(BASE, 8);
 const SLOT: Plan = {
-  x: WIN_X0 - 3,
-  y: -WALL_T - 3,
-  w: VW + 6,
-  d: WALL_T + 6,
+  x: WINDOW_LEFT - 3,
+  y: -WALL_THICKNESS - 3,
+  w: WINDOW_WIDTH + 6,
+  d: WALL_THICKNESS + 6,
   r: 2,
 };
 
 export const BASE_ART = {
-  halo: haloOf(BASE, -BASE_H - FOOT_H, BASE_H, PROJECTION),
+  halo: haloOf(BASE, -BASE_HEIGHT - FOOT_HEIGHT, BASE_HEIGHT, PROJECTION),
   feet: FEET.map(([x, y]) => [
-    cyl(x, y, 7, -BASE_H - FOOT_H, 1.6),
-    cyl(x, y, 5.4, -BASE_H - FOOT_H + 1.6, FOOT_H - 1.6),
+    cyl(x, y, 7, -BASE_HEIGHT - FOOT_HEIGHT, 1.6),
+    cyl(x, y, 5.4, -BASE_HEIGHT - FOOT_HEIGHT + 1.6, FOOT_HEIGHT - 1.6),
   ]),
-  slab: solid(BASE, -BASE_H, BASE_H, 8, 1.6),
+  slab: solid(BASE, -BASE_HEIGHT, BASE_HEIGHT, 8, 1.6),
   groove: planOutline(insetPlan(BASE, 4.5), 0, PROJECTION),
   slot: planOutline(SLOT, 0, PROJECTION, 3),
   screwRings: joinPaths(
@@ -83,13 +89,13 @@ export const PLATE_FACE = faceAt(BASE.x + 16, BASE.y + BASE.d, -2);
 const SEAM_STEP = 8;
 
 export const BRICK_ART = BRICKS.map((brick) => {
-  const plan: Plan = { x: 0, y: 0, w: brick.w, d: BRICK_D, r: 1 };
-  const count = Math.round(brick.w / PITCH);
+  const plan: Plan = { x: 0, y: 0, w: brick.w, d: BRICK_DEPTH, r: 1 };
+  const count = Math.round(brick.w / STUD_PITCH);
   const seams = joinPaths(
     Array.from({ length: Math.floor((brick.h - 1) / SEAM_STEP) }, (_, k) =>
       segment(
         [brick.w, 0, (k + 1) * SEAM_STEP],
-        [brick.w, BRICK_D, (k + 1) * SEAM_STEP],
+        [brick.w, BRICK_DEPTH, (k + 1) * SEAM_STEP],
         PROJECTION,
       ),
     ),
@@ -98,11 +104,18 @@ export const BRICK_ART = BRICKS.map((brick) => {
     body: solid(plan, 0, brick.h, 3, 0.5),
     seams,
     studs: Array.from({ length: count }, (_, k) =>
-      cyl(PITCH / 2 + k * PITCH, BRICK_D / 2, STUD_R, brick.h, STUD_H, 14),
+      cyl(
+        STUD_PITCH / 2 + k * STUD_PITCH,
+        BRICK_DEPTH / 2,
+        STUD_RADIUS,
+        brick.h,
+        STUD_HEIGHT,
+        14,
+      ),
     ),
     // 앞면에 인쇄된 화면. 지역 좌표의 원점은 앞면의 왼쪽 위다.
-    face: faceAt(0, BRICK_D, brick.h),
-    center: iso([brick.w / 2, BRICK_D / 2, brick.h / 2], PROJECTION),
+    face: faceAt(0, BRICK_DEPTH, brick.h),
+    center: iso([brick.w / 2, BRICK_DEPTH / 2, brick.h / 2], PROJECTION),
   };
 });
 
@@ -115,15 +128,15 @@ export const shadowOf = (w: number, h: number) => ({
 
 // 누름 영역은 칸마다 블록 앞면 평면의 사각형 하나다. 블록의 윗면과 옆면은 앞면의 위쪽과 오른쪽에 보이므로,
 // 칸 사이 간격을 그쪽으로 모두 넓힌다. 이웃 칸과는 겹치지 않고, 맨 아랫줄은 아래에 이웃이 없으니 터치용으로 더 넓힌다.
-export const HIT_FACE = faceAt(WIN_X0, BRICK_D, WIN_H);
+export const HIT_FACE = faceAt(WINDOW_LEFT, BRICK_DEPTH, WINDOW_HEIGHT);
 const HIT_RIGHT = 4; // 칸 사이 간격
 const HIT_UP = 6; // 줄 사이 간격
 const HIT_BELOW = 10;
 const LAST_ROW = Math.max(...SLOTS.map((slot) => slot.top));
 
 export const hitOf = (slot: Slot) => ({
-  x: BEZEL + slot.x,
-  y: CHROME + slot.top - HIT_UP,
+  x: FRAME_WIDTH + slot.x,
+  y: TITLE_BAR_HEIGHT + slot.top - HIT_UP,
   width: slot.w + HIT_RIGHT,
   height: slot.h + HIT_UP + (slot.top === LAST_ROW ? HIT_BELOW : 0),
 });

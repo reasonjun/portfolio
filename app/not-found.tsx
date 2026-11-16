@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PROFILE } from "@/data/profile";
 import { TEXT_LINK_CLASS } from "@/lib/utils";
 
+// 루트 세그먼트라 레이아웃의 title.template이 적용되지 않아 사이트 이름을 직접 붙인다.
 export const metadata: Metadata = {
-  title: "페이지를 찾을 수 없습니다 | 이성준 포트폴리오",
+  title: { absolute: `페이지를 찾을 수 없습니다 | ${PROFILE.siteName}` },
 };
 
 // 네비·푸터는 루트 레이아웃이 그린다. 여기서는 본문만 채운다.

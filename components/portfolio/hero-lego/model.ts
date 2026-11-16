@@ -16,7 +16,7 @@ export type Kind =
   | "toggle"
   | "tabs";
 
-// 같은 묶음의 블록은 크기가 같아서 서로의 자리에 끼워진다. null은 갈아 끼우지 않는 고정 부품이다.
+// 같은 묶음의 블록은 크기가 같아서 서로의 자리에 끼워진다.
 type Family = "large" | "card" | "small" | "extra";
 
 export interface Slot {
@@ -24,7 +24,7 @@ export interface Slot {
   top: number; // 뷰포트 안쪽 위에서
   w: number;
   h: number;
-  family: Family | null;
+  family: Family | null; // null은 갈아 끼우지 않는 고정 부품의 자리다
 }
 
 interface Brick {
@@ -41,9 +41,13 @@ export const OUT = -1; // 어느 자리에도 끼워져 있지 않은 블록
 
 export const VIEW_HEIGHT = 66; // 뷰포트 안쪽 높이
 
+const LOGO_SLOT = 0;
+const MENU_SLOT = 1;
+const ACTIONS_SLOT = 2;
 export const LARGE = 3;
 export const CARD_A = 4;
 export const CARD_B = 5;
+const INPUT_SLOT = 6;
 export const SMALL = 7;
 export const EXTRA = 8;
 
@@ -73,28 +77,28 @@ const brick = (kind: Kind, tint: Tint, home: number, spare = false): Brick => {
 };
 
 export const BRICKS: readonly Brick[] = [
-  brick("logo", "ink", 0),
-  brick("menu", "paper", 1),
-  brick("actions", "paper", 2),
+  brick("logo", "ink", LOGO_SLOT),
+  brick("menu", "paper", MENU_SLOT),
+  brick("actions", "paper", ACTIONS_SLOT),
   brick("hero", "blue", LARGE),
   brick("table", "blue", LARGE, true),
   brick("profile", "paper", CARD_A),
   brick("chart", "blue", CARD_B),
   brick("donut", "paper", CARD_A, true),
-  brick("input", "paper", 6),
+  brick("input", "paper", INPUT_SLOT),
   brick("button", "green", SMALL),
   brick("toggle", "green", SMALL, true),
   brick("tabs", "paper", EXTRA, true),
 ];
 
-// 블록마다 끼워진 자리. 끼워져 있지 않으면 OUT이다.
-export const REST: readonly number[] = BRICKS.map((brick) =>
+// 처음 배치: 블록마다 끼워진 자리. 끼워져 있지 않으면 OUT이다.
+export const INITIAL_PLACEMENT: readonly number[] = BRICKS.map((brick) =>
   brick.spare ? OUT : brick.home,
 );
 
 // 한 자리를 같은 묶음의 다음 여분 블록으로 바꾼다. 여분이 없으면 그 자리를 비운다(빈 칸의 탭 블록).
-export function swapAt(map: readonly number[], slot: number): number[] {
-  const next = [...map];
+export function swapAt(placement: readonly number[], slot: number): number[] {
+  const next = [...placement];
   const family = SLOTS[slot]?.family ?? null;
   if (family === null) return next;
   const members = BRICKS.flatMap((brick, id) =>
@@ -181,7 +185,7 @@ export const STATES: readonly (readonly number[])[] = STEPS.reduce<number[][]>(
     states.push(next);
     return states;
   },
-  [[...REST]],
+  [[...INITIAL_PLACEMENT]],
 );
 
 // 주기 안의 시각에 몇 번째 단계까지 지났는가

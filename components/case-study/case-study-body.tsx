@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 import type { CaseProblem, CaseStudyProject } from "@/app/types/project";
 import { Badge } from "@/components/ui/badge";
-import { cn, hasText } from "@/lib/utils";
+import { cn, hasText, joinMeta, splitParagraphs } from "@/lib/utils";
 import { CaseGallery } from "./case-gallery";
 import { CaseVisual } from "./case-visual";
-import { renderInlineCode } from "./inline-code";
+import { keepLineStart, renderInlineCode } from "./inline-code";
 
 const Section = ({
   title,
@@ -26,8 +26,9 @@ const Labeled = ({
   label: string;
   children: ReactNode;
 }) => (
-  <div className="space-y-1 leading-[1.75]">
-    <h4 className="text-sm font-semibold text-muted-foreground break-after-avoid">
+  // 인쇄본에서는 소제목 위를 문단 간격보다 넓게 띄우고, 소제목을 캡션과 구분되게 본문색으로 키운다.
+  <div className="space-y-1 leading-[1.75] print:pt-3 print:leading-[1.7]">
+    <h4 className="text-sm font-semibold text-muted-foreground break-after-avoid print:text-[12pt] print:text-foreground">
       {label}
     </h4>
     {children}
@@ -54,15 +55,13 @@ const ProblemBlock = ({ problem }: { problem: CaseProblem }) => {
         keepTogether && "break-inside-avoid",
       )}
     >
-      <h3 className="text-lg font-semibold break-after-avoid">
-        {problem.title}
-      </h3>
-      {problem.visual && (
-        // 인쇄 시 그림·지표·코드가 페이지 경계에서 잘리지 않게 한 덩어리로 둔다.
-        <div className="break-inside-avoid">
-          <CaseVisual visual={problem.visual} />
-        </div>
-      )}
+      {/* 인쇄 시 제목과 그림을 한 덩어리로 둔다. 따로 두면 그림이 넘어갈 때 여러 줄 제목이 페이지 사이에서 갈린다. */}
+      <div className="space-y-4 break-inside-avoid">
+        <h3 className="text-lg font-semibold break-after-avoid">
+          {keepLineStart(problem.title)}
+        </h3>
+        {problem.visual && <CaseVisual visual={problem.visual} />}
+      </div>
       {hasText(problem.problem) && (
         <Labeled label="문제 확인">
           <p>{renderInlineCode(problem.problem)}</p>
@@ -70,9 +69,14 @@ const ProblemBlock = ({ problem }: { problem: CaseProblem }) => {
       )}
       {hasText(problem.solution) && (
         <Labeled label="해결 과정">
-          <p className="whitespace-pre-line">
-            {renderInlineCode(problem.solution)}
-          </p>
+          {/* 빈 줄로 나눈 문단을 따로 렌더링한다. 화면에서는 한 줄, 인쇄본에서는 반 줄을 띄운다. */}
+          <div className="space-y-[1lh] print:space-y-[0.5lh]">
+            {splitParagraphs(problem.solution).map((paragraph) => (
+              <p key={paragraph} className="whitespace-pre-line">
+                {renderInlineCode(paragraph)}
+              </p>
+            ))}
+          </div>
         </Labeled>
       )}
       {hasText(problem.result) && (
@@ -96,7 +100,7 @@ export const CaseStudyBody = ({ project }: CaseStudyBodyProps) => {
       <header className="space-y-3">
         <h1 className="text-3xl font-bold">{project.title}</h1>
         <p className="text-sm text-muted-foreground">
-          {project.company} | {project.period} | {caseStudy.team}
+          {joinMeta(project.company, project.period, caseStudy.team)}
         </p>
         <div className="flex flex-wrap gap-2">
           {project.techStack.map((tech) => (
@@ -111,7 +115,7 @@ export const CaseStudyBody = ({ project }: CaseStudyBodyProps) => {
 
       {hasText(caseStudy.background) && (
         <Section title="배경">
-          <p className="leading-[1.75] text-muted-foreground">
+          <p className="leading-[1.75] text-muted-foreground print:text-foreground print:leading-[1.7]">
             {renderInlineCode(caseStudy.background)}
           </p>
         </Section>

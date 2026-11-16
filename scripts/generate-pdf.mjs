@@ -29,7 +29,11 @@ try {
     path: OUTPUT_PATH,
     format: "A4",
     printBackground: true,
+    // 쪽 번호와 프로젝트 이름은 export 페이지의 @page 여백 상자가 아래 여백에 찍는다.
     margin: { top: "16mm", bottom: "16mm", left: "14mm", right: "14mm" },
+    // 제목 요소로 책갈피를 만든다. 책갈피는 태그가 있어야 만들어진다.
+    tagged: true,
+    outline: true,
   });
   console.log(`generated ${OUTPUT_PATH}`);
 } finally {

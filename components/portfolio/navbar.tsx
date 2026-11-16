@@ -1,5 +1,5 @@
 import Link from "next/link";
-import MobileNav from "@/components/mobile-nav";
+import { MobileNav } from "@/components/mobile-nav";
 import { SheetClose } from "@/components/ui/sheet";
 import { PROFILE } from "@/data/profile";
 
@@ -36,7 +36,7 @@ const DesktopNav = () => (
   </div>
 );
 
-const Navbar = () => {
+export const Navbar = () => {
   return (
     <nav
       aria-label="주 메뉴"
@@ -61,5 +61,3 @@ const Navbar = () => {
     </nav>
   );
 };
-
-export default Navbar;

@@ -90,7 +90,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* @theme inline의 --font-sans는 프리플라이트 기본 폰트에 연결되지 않아 직접 지정한다. */
+    /* 글꼴 변수는 <html>에 있다(layout.tsx). 웹 글꼴을 못 불러올 때 쓸 시스템 글꼴을 뒤에 붙인다. */
     font-family:
       var(--font-archivo), var(--font-noto-sans-kr), ui-sans-serif, system-ui,
       sans-serif;
@@ -156,7 +156,8 @@
     --accent-foreground: #141a33;
     --primary: #141a33;
     --primary-foreground: #ffffff;
-    --border: oklch(0.25 0.06 270 / 20%);
+    /* 흑백 인쇄에서도 카드 테두리와 태그가 보이게 화면보다 진하게 둔다. */
+    --border: #b5b8c4;
   }
 }
 
@@ -180,5 +181,33 @@
 
   figure {
     break-inside: avoid;
+  }
+
+  /* 화면용 17px은 A4에서 크다. 본문만 줄이고 제목·캡션처럼 크기를 직접 준 곳은 그대로 둔다. */
+  body {
+    font-size: 11pt;
+  }
+
+  figcaption {
+    font-size: 9.5pt;
+  }
+
+  /* 헤더 이름 같은 코드 식별자가 하이픈에서 끊기지 않게 한다(종이 폭에서는 가장 긴 인라인 코드도 한 줄에 들어간다).
+     고정폭 글꼴은 같은 크기에서 본문보다 커 보여 줄이고, 옅은 바탕으로 본문과 구분한다.
+     renderInlineCode가 만드는 인라인 코드는 본문과 캡션 모두에 있어 코드 블록(pre)만 뺀다. */
+  :not(pre) > code {
+    white-space: nowrap;
+    font-size: 0.88em;
+    padding: 0 2px;
+    border-radius: 2px;
+    background: var(--muted);
+  }
+
+  /* orphans·widows: 문단 끝 한두 줄만 다음 쪽으로 넘어가지 않게 한다. 한 줄짜리 h3에는 영향이 없다. */
+  p,
+  h3 {
+    text-wrap: pretty;
+    orphans: 3;
+    widows: 3;
   }
 }

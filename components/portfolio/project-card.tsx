@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { keepLineStart } from "@/components/case-study/inline-code";
 import { withBasePath } from "@/lib/base-path";
+import { revealDelay } from "@/lib/utils";
 
 interface ProjectCardProps {
-  id: string;
+  href: string;
   title: string;
   summary: string;
   meta: string;
@@ -17,7 +19,7 @@ interface ProjectCardProps {
  * 이미지가 없는 프로젝트는 썸네일 영역 없이 텍스트 카드로 둔다.
  */
 export const ProjectCard = ({
-  id,
+  href,
   title,
   summary,
   meta,
@@ -27,7 +29,7 @@ export const ProjectCard = ({
 }: ProjectCardProps) => (
   <li
     data-reveal
-    style={{ "--i": index % 3 } as React.CSSProperties}
+    style={revealDelay(index % 3)}
     className="group relative flex flex-col bg-card transition-colors duration-200 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary hover:bg-accent motion-reduce:transition-none"
   >
     {image && (
@@ -45,15 +47,12 @@ export const ProjectCard = ({
 
     <div className="flex flex-1 flex-col p-5">
       <h3 className="text-lg font-medium leading-snug">
-        <Link
-          href={`/projects/${id}/`}
-          className="outline-none after:absolute after:inset-0"
-        >
-          {title}
+        <Link href={href} className="outline-none after:absolute after:inset-0">
+          {keepLineStart(title)}
         </Link>
       </h3>
       <p className="mt-2 line-clamp-3 text-[0.9375rem] leading-relaxed">
-        {summary}
+        {keepLineStart(summary)}
       </p>
       <p className="mt-auto pt-4 text-[0.9375rem] tabular-nums text-muted-foreground">
         {meta}

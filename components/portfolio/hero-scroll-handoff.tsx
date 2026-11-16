@@ -11,6 +11,12 @@ const GLIDE_MS = 900;
 // 트랙패드 관성 꼬리를 삼키려고, 마지막 휠 이벤트 후 이만큼 조용해질 때까지 잠근다.
 const QUIET_MS = 100;
 
+// scrollIntoView가 멈추는 자리의 target 상단 위치(scroll-padding + scroll-margin).
+const getArrivedTop = (target: HTMLElement) =>
+  Number.parseFloat(
+    getComputedStyle(document.documentElement).scrollPaddingTop,
+  ) + Number.parseFloat(getComputedStyle(target).scrollMarginTop);
+
 /**
  * 히어로 ↔ #case-studies 사이를 휠 한 번으로 smooth scroll 한다.
  * 모션 줄이기 설정, 터치·키보드 스크롤, 두 지점에서 벗어난 스크롤은 건드리지 않는다.
@@ -43,13 +49,10 @@ export const HeroScrollHandoff = () => {
       }
 
       if (event.deltaY < 0 && window.scrollY > TOP_ZONE) {
-        // scrollIntoView가 멈추는 자리의 #case-studies 상단 위치(scroll-padding + scroll-margin).
-        const arrivedTop =
-          Number.parseFloat(
-            getComputedStyle(document.documentElement).scrollPaddingTop,
-          ) + Number.parseFloat(getComputedStyle(target).scrollMarginTop);
         // 시작선에서 BACK_ZONE 안쪽까지 내려온 상태에서만 되돌린다. 더 읽고 있으면 그대로 둔다.
-        if (arrivedTop - target.getBoundingClientRect().top <= BACK_ZONE) {
+        const scrolledPast =
+          getArrivedTop(target) - target.getBoundingClientRect().top;
+        if (scrolledPast <= BACK_ZONE) {
           event.preventDefault();
           lockedUntil = event.timeStamp + GLIDE_MS;
           window.scrollTo({ top: 0, behavior: "smooth" });

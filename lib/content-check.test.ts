@@ -13,7 +13,7 @@ const makeProblem = (overrides: Partial<CaseProblem> = {}): CaseProblem => ({
 const makeCaseStudy = (overrides: Partial<CaseStudy> = {}): CaseStudy => ({
   summary: "요약",
   background: "배경",
-  team: "프런트엔드 1",
+  team: "프론트엔드 1",
   problems: [makeProblem(), makeProblem()],
   ...overrides,
 });
@@ -43,6 +43,16 @@ describe("validateCaseStudy", () => {
         makeProblem({ solution: "`X-Id` 헤더와 `?dpl= 쿼리" }),
         makeProblem(),
       ],
+    });
+    expect(validateCaseStudy("x", cs)).toEqual([
+      "x: problems[0].solution 백틱 짝 안 맞음",
+    ]);
+  });
+
+  it("해결 과정은 빈 줄로 나눈 문단마다 백틱 짝을 본다", () => {
+    // 전체로는 2개라 짝이 맞아 보이지만, 문단마다 따로 렌더링하면 두 문단 모두 끝까지 코드가 된다.
+    const cs = makeCaseStudy({
+      problems: [makeProblem({ solution: "첫 문단 `a\n\n둘째 문단 b`" })],
     });
     expect(validateCaseStudy("x", cs)).toEqual([
       "x: problems[0].solution 백틱 짝 안 맞음",

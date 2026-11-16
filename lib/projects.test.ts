@@ -11,7 +11,7 @@ import {
 const caseStudy: CaseStudy = {
   summary: "요약",
   background: "배경",
-  team: "프런트엔드 1",
+  team: "프론트엔드 1",
   problems: [],
 };
 
@@ -20,7 +20,7 @@ const makeProject = (overrides: Partial<Project>): Project => ({
   title: "제목",
   description: "설명",
   company: "회사",
-  period: "2024.07.",
+  period: "2024. 07.",
   techStack: ["TypeScript"],
   images: [],
   ...overrides,
@@ -31,12 +31,12 @@ const fixtures: Project[] = [
     id: "case-a",
     title: "사례 A",
     company: "회사 A",
-    period: "2026.07. ~ 진행 중",
+    period: "2026. 07.~진행 중",
     techStack: ["Next.js", "React"],
     caseStudy,
   }),
-  makeProject({ id: "plain-b", period: "2024.07." }),
-  makeProject({ id: "plain-c", period: "2019.02. ~ 2019.11." }),
+  makeProject({ id: "plain-b", period: "2024. 07." }),
+  makeProject({ id: "plain-c", period: "2019. 02.~2019. 11." }),
 ];
 
 describe("getMainTech", () => {
@@ -94,7 +94,7 @@ describe("getArchiveRows", () => {
 
   it("행에 기간·제목·부제·회사·기술을 담는다", () => {
     expect(getArchiveRows(fixtures)[0]).toMatchObject({
-      period: "2026.07. ~ 진행 중",
+      period: "2026. 07.~진행 중",
       title: "사례 A",
       description: "설명",
       company: "회사 A",

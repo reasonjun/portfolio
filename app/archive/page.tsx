@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BackLink } from "@/components/back-link";
+import { keepLineStart } from "@/components/case-study/inline-code";
 import { getArchiveRows } from "@/lib/projects";
 import { TEXT_LINK_CLASS } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "전체 프로젝트 | 이성준 포트폴리오",
+  title: "전체 프로젝트",
 };
 
 const COLUMNS = ["기간", "프로젝트", "회사", "기술"];
@@ -58,14 +59,14 @@ export default function ArchivePage() {
                 >
                   {row.href ? (
                     <Link href={row.href} className={TEXT_LINK_CLASS}>
-                      {row.title}
+                      {keepLineStart(row.title)}
                     </Link>
                   ) : (
-                    row.title
+                    keepLineStart(row.title)
                   )}
                   {/* 부제는 링크 밖에 둔다. 링크 안에 넣으면 스크린리더가 링크마다 긴 문장을 읽는다. */}
                   <p className="mt-1 text-xs font-normal text-muted-foreground">
-                    {row.description}
+                    {keepLineStart(row.description)}
                   </p>
                 </th>
                 <td className="px-4 py-3 text-sm text-muted-foreground whitespace-nowrap">

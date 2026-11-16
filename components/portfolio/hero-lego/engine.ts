@@ -3,9 +3,9 @@ import { BRICK_ART } from "./geometry";
 import {
   BRICKS,
   CURSOR_HOME,
+  INITIAL_PLACEMENT,
   OUT,
   PERIOD,
-  REST,
   SLOTS,
   STATES,
   SWAP_ORDER,
@@ -15,7 +15,7 @@ import {
   tourCursor,
   tourPress,
 } from "./model";
-import { brickAt, cursorAt, onFace, PULL, shrunk } from "./view";
+import { brickAt, cursorAt, onFace, PULL_DISTANCE, shrunk } from "./view";
 
 // 그림의 움직임을 맡는 엔진. React는 한 번 그리고, 이후 모든 변화는 속성 쓰기로만 일어난다.
 // 블록을 갈아 끼울 때는 있던 블록이 앞으로 뽑혀 작아져 사라지고, 그다음 같은 크기의 다른 블록이 나타나 끼워진다.
@@ -40,28 +40,38 @@ const writer = (apply: (value: string) => void) => {
   };
 };
 
+// 그리는 순서(뒤에서 앞으로)의 블록 번호. 앞으로 나온 거리(depth)가 작은 것부터, 같으면 자리 순서대로다.
+export const paintOrder = (
+  depths: readonly number[],
+  placement: readonly number[],
+): number[] =>
+  depths
+    .map((_, id) => id)
+    .sort((a, b) => depths[a] - depths[b] || placement[a] - placement[b]);
+
 export interface Lego {
-  // 더 그릴 것이 있으면 true. calm이면 움직임 없이 결과만 바로 보여 준다.
-  tick: (dt: number, calm: boolean) => boolean;
+  // 더 그릴 것이 있으면 true. reducedMotion이면 움직임 없이 결과만 바로 보여 준다.
+  tick: (dt: number, reducedMotion: boolean) => boolean;
   // 사용자가 처음 블록을 바꾸면 자동 시연은 영구히 멈춘다(다시 불러오기 전까지).
   swap: (slot: number) => void;
   cycle: () => void;
 }
 
 export function createLego(root: HTMLElement): Lego {
-  const one = (selector: string) => root.querySelector(selector) as SVGElement;
+  const query = (selector: string) =>
+    root.querySelector(selector) as SVGElement;
 
-  const cursorTip = one("[data-cursor-tip]");
-  const container = one("[data-bricks]");
-  const map = [...REST]; // 블록마다 끼워진 자리
+  const cursorTip = query("[data-cursor-tip]");
+  const container = query("[data-bricks]");
+  const placement = [...INITIAL_PLACEMENT]; // 블록마다 끼워진 자리
 
   const parts = BRICKS.map((brick, id) => {
-    const node = one(`[data-brick="${id}"]`);
-    const shadow = one(`[data-shadow="${id}"]`);
+    const node = query(`[data-brick="${id}"]`);
+    const shadow = query(`[data-shadow="${id}"]`);
     const home = SLOTS[brick.home];
     return {
       node,
-      h: brick.h,
+      height: brick.h,
       center: BRICK_ART[id].center,
       x: home.x,
       top: home.top,
@@ -97,12 +107,12 @@ export function createLego(root: HTMLElement): Lego {
 
   // 새 배치를 받는다. 다른 블록이 비우는 자리로 들어가는 블록은 그 블록이 빠질 시간을 기다린다.
   const commit = (next: readonly number[]) => {
-    const taken = new Set(map);
+    const taken = new Set(placement);
     next.forEach((slot, id) => {
-      if (map[id] === OUT && slot !== OUT) {
+      if (placement[id] === OUT && slot !== OUT) {
         parts[id].wait = taken.has(slot) ? OUT_TIME : 0;
       }
-      map[id] = slot;
+      placement[id] = slot;
     });
   };
 
@@ -154,9 +164,13 @@ export function createLego(root: HTMLElement): Lego {
 
   const paint = (part: Part) => {
     const { pull, scale } = swapPose(part.away);
-    const forward = part.lift + pull * PULL;
+    const forward = part.lift + pull * PULL_DISTANCE;
     part.place(
-      shrunk(brickAt(part.x, part.top, part.h, forward), part.center, scale),
+      shrunk(
+        brickAt(part.x, part.top, part.height, forward),
+        part.center,
+        scale,
+      ),
     );
     part.depth = scale > 0 ? Math.round(forward) : 0;
     // 그림자는 블록이 끼워진 자리에 남고, 블록이 떠오르거나 빠지면 옅어진다.
@@ -169,9 +183,10 @@ export function createLego(root: HTMLElement): Lego {
   // 앞으로 나온 블록만 맨 뒤로 옮기고 나머지는 어긋난 것만 옮겨서, DOM을 거의 건드리지 않는다.
   let order = "";
   const reorder = () => {
-    const sorted = parts
-      .map((_, id) => id)
-      .sort((a, b) => parts[a].depth - parts[b].depth || map[a] - map[b]);
+    const sorted = paintOrder(
+      parts.map((part) => part.depth),
+      placement,
+    );
     const key = sorted.join();
     if (key === order) return;
     order = key;
@@ -186,17 +201,17 @@ export function createLego(root: HTMLElement): Lego {
     }
   };
 
-  const tick = (dt: number, calm: boolean) => {
-    const touring = !calm && !stopped;
+  const tick = (dt: number, reducedMotion: boolean) => {
+    const touring = !reducedMotion && !stopped;
     if (touring) playTour(dt);
 
     // 모션을 줄이는 설정에서는 시간이 한 번에 흘러 모든 값이 바로 목표에 닿는다.
-    const elapsed = calm ? Number.POSITIVE_INFINITY : dt;
+    const elapsed = reducedMotion ? Number.POSITIVE_INFINITY : dt;
     let busy = false;
     for (const [id, part] of parts.entries()) {
-      if (settled(part, map[id])) continue;
+      if (settled(part, placement[id])) continue;
       busy = true;
-      advance(part, map[id], elapsed);
+      advance(part, placement[id], elapsed);
       paint(part);
     }
     if (busy) reorder();
@@ -209,7 +224,7 @@ export function createLego(root: HTMLElement): Lego {
       root.setAttribute("data-still", "");
       setPress(false);
     }
-    commit(swapAt(map, slot));
+    commit(swapAt(placement, slot));
   };
 
   return {

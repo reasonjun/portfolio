@@ -5,12 +5,11 @@ import { PROJECTS_DATA } from "@/data/projects";
 import { getArchiveRows, getCaseStudies, getHomeProjects } from "./projects";
 
 describe("대표 프로젝트 데이터", () => {
-  it("대표 프로젝트 7개가 데이터 순서대로 지정되어 있다", () => {
+  it("대표 프로젝트 6개가 데이터 순서대로 지정되어 있다", () => {
     expect(getCaseStudies().map((project) => project.id)).toEqual([
       "enterprise-legal-management",
       "external-settlement-system",
       "ip-management-system",
-      "ats-monitoring-system",
       "design-system",
       "wysiwyg-editor",
       "tactile-graphics-editor",
@@ -64,12 +63,6 @@ describe("대표 프로젝트 데이터", () => {
   });
 });
 
-describe("프로필 데이터", () => {
-  it("Hero 핵심 수치는 정확히 3개다", () => {
-    expect(PROFILE.metrics).toHaveLength(3);
-  });
-});
-
 describe("경력 데이터", () => {
   it("모든 경력에 직무, 한 줄 소개, 한 일 목록이 있다", () => {
     const incomplete = EXPERIENCES_DATA.filter(
@@ -85,11 +78,13 @@ describe("경력 데이터", () => {
     const jobs = new Set(
       EXPERIENCES_DATA.flatMap((experience) => experience.jobs),
     );
-    expect([...jobs].sort()).toEqual(["백엔드 개발", "프런트엔드 개발"]);
+    expect([...jobs].sort()).toEqual(["QA", "백엔드 개발", "프론트엔드 개발"]);
   });
 
-  it("경력 문구는 '프런트엔드'로 표기한다", () => {
-    expect(JSON.stringify(EXPERIENCES_DATA)).not.toContain("프론트엔드");
+  it("경력·프로젝트·프로필 문구는 '프론트엔드'로 표기한다", () => {
+    expect(
+      JSON.stringify([EXPERIENCES_DATA, PROJECTS_DATA, PROFILE]),
+    ).not.toContain("프런트엔드");
   });
 
   it("닷 경력에 초기 로딩 60초 → 1초와 측정 조건이 있다", () => {
@@ -99,7 +94,7 @@ describe("경력 데이터", () => {
     expect(loading).toContain("운영 환경 기준");
   });
 
-  it("닷은 백엔드 개발 직무를 뒷받침하는 풀스택 문장이 있다", () => {
+  it("닷은 백엔드 개발 직무를 뒷받침하는 Java/Spring Boot 문장이 있다", () => {
     const dot = EXPERIENCES_DATA.find((experience) => experience.id === "dot");
     expect(dot?.jobs).toContain("백엔드 개발");
     expect(dot?.duties.some((duty) => duty.includes("Java/Spring Boot"))).toBe(

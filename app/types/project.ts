@@ -7,7 +7,9 @@ export type DiagramId =
   | "e2e-regression-baseline"
   | "ai-agent-guardrails"
   | "vite-rolldown-chunks"
-  | "content-form-unify";
+  | "content-form-unify"
+  | "design-token-pipeline"
+  | "chromatic-visual-test";
 
 export type CaseVisual =
   | { type: "diagram"; id: DiagramId; caption: string }
@@ -30,15 +32,9 @@ export interface CaseProblem {
 export interface CaseStudy {
   summary: string;
   background: string;
-  // 상세 페이지 메타 줄에 붙일 팀 구성("프런트엔드 1 · 백엔드 2")
+  // 상세 페이지 메타 줄에 붙일 팀 구성("프론트엔드 1 · 백엔드 2")
   team: string;
   problems: CaseProblem[];
-}
-
-/** 프로젝트 결과를 한눈에 보여 주는 수치. 본문의 결과와 같은 값만 적는다. */
-export interface Highlight {
-  value: string;
-  label: string;
 }
 
 export interface Project {
@@ -54,7 +50,6 @@ export interface Project {
   coverPosition?: string;
   // 홈 대표 프로젝트 카드와 PDF(export 페이지)의 표시 순서(1부터). 없으면 둘 다에 나오지 않는다.
   homeOrder?: number;
-  highlights?: Highlight[];
   caseStudy?: CaseStudy;
 }
 

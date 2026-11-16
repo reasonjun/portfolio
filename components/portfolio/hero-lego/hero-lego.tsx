@@ -21,7 +21,7 @@ export const HeroLego = () => {
   const lego = React.useRef<Lego | null>(null);
   const helpId = React.useId();
   const inView = useInView(root);
-  const calm = useStillness();
+  const reducedMotion = useStillness();
 
   React.useEffect(() => {
     if (!root.current) return;
@@ -32,14 +32,14 @@ export const HeroLego = () => {
   }, []);
 
   const kick = useLoop(
-    (dt, still) => lego.current?.tick(dt, still) ?? false,
-    inView && !calm,
+    (dt, reducedMotion) => lego.current?.tick(dt, reducedMotion) ?? false,
+    inView && !reducedMotion,
   );
 
   // 모션 줄이기가 켜지면 루프가 멈추므로, 움직이던 블록을 한 번에 제자리로 보낸다.
   React.useEffect(() => {
-    if (calm) kick();
-  }, [calm, kick]);
+    if (reducedMotion) kick();
+  }, [reducedMotion, kick]);
 
   // 시연이 끝나고 블록이 모두 멈추면 루프도 쉰다. 입력이 오면 다시 깨운다.
   const run = (action: (engine: Lego) => void) => {

@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { withBasePath } from "@/lib/base-path";
-import { cn } from "@/lib/utils";
+import { cn, restoreFocusWithoutScroll } from "@/lib/utils";
 
 // 좁은 화면에서 모달에 띄울 최소 폭. 폭에 맞추면 본문과 크기가 같아 확대 의미가 없다.
 const MIN_ZOOM_WIDTH = 960;
@@ -91,11 +91,7 @@ export const ZoomableImage = ({
       </DialogTrigger>
       <DialogContent
         aria-describedby={undefined}
-        // 기본 복귀 포커스(focus())는 트리거가 일부만 보이면 페이지를 스크롤해 읽던 위치가 튄다. 스크롤 없이 돌려준다.
-        onCloseAutoFocus={(event) => {
-          event.preventDefault();
-          triggerRef.current?.focus({ preventScroll: true });
-        }}
+        onCloseAutoFocus={restoreFocusWithoutScroll(triggerRef)}
         className="w-full bg-white p-4 pt-12"
         // 화면 폭과 띄울 폭(+p-4 좌우 여백 2rem, 테두리 2px) 중 작은 쪽. 안쪽 스크롤 상자는 폭을 스스로 정하지 못해 여기서 정한다.
         style={{

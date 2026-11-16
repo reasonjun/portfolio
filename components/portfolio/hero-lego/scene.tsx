@@ -12,19 +12,19 @@ import {
 import { BRICKS, CURSOR_HOME, SLOTS, SWAP_ORDER } from "./model";
 import { PRINTS } from "./prints";
 import {
-  BEZEL,
   brickAt,
-  CHROME,
   cursorAt,
+  FRAME_WIDTH,
   HEIGHT,
   onFace,
-  PITCH,
-  PULL,
+  PULL_DISTANCE,
+  STUD_PITCH,
   shrunk,
-  VW,
-  WALL_R,
+  TITLE_BAR_HEIGHT,
+  WALL_RADIUS,
   WIDTH,
-  WIN_H,
+  WINDOW_HEIGHT,
+  WINDOW_WIDTH,
 } from "./view";
 
 // 엔진(engine.ts)이 data-bricks, data-brick, data-shadow, data-cursor-tip으로 이 마크업을 찾는다. 이름을 바꾸면 함께 바꾼다.
@@ -68,10 +68,10 @@ const WINDOW_PART = (
     <g transform={WALL_FACE}>
       <rect
         className="ch-view"
-        x={BEZEL}
-        y={CHROME}
-        width={VW - BEZEL * 2}
-        height={WIN_H - CHROME - BEZEL}
+        x={FRAME_WIDTH}
+        y={TITLE_BAR_HEIGHT}
+        width={WINDOW_WIDTH - FRAME_WIDTH * 2}
+        height={WINDOW_HEIGHT - TITLE_BAR_HEIGHT - FRAME_WIDTH}
       />
       {/* 규격 홈: 블록을 뽑으면 드러난다. 스터드와 같은 간격의 핀이 "같은 규격이면 끼워진다"를 보여 준다. */}
       {SWAP_ORDER.map((id) => {
@@ -86,12 +86,12 @@ const WINDOW_PART = (
               height={slot.h - 1.2}
               rx={1.4}
             />
-            {Array.from({ length: Math.round(slot.w / PITCH) }, (_, k) => (
+            {Array.from({ length: Math.round(slot.w / STUD_PITCH) }, (_, k) => (
               <circle
                 // biome-ignore lint/suspicious/noArrayIndexKey: 고정된 배열이다.
                 key={k}
                 className="lg-pin"
-                cx={PITCH / 2 + k * PITCH}
+                cx={STUD_PITCH / 2 + k * STUD_PITCH}
                 cy={slot.h / 2}
                 r={1.1}
               />
@@ -131,12 +131,15 @@ const WINDOW_PART = (
       })}
       <rect
         className="ch-bar"
-        x={WALL_R}
+        x={WALL_RADIUS}
         y={0}
-        width={VW - WALL_R * 2}
-        height={CHROME}
+        width={WINDOW_WIDTH - WALL_RADIUS * 2}
+        height={TITLE_BAR_HEIGHT}
       />
-      <Line d={`M${WALL_R} ${CHROME}H${VW - WALL_R}`} tone="lo" />
+      <Line
+        d={`M${WALL_RADIUS} ${TITLE_BAR_HEIGHT}H${WINDOW_WIDTH - WALL_RADIUS}`}
+        tone="lo"
+      />
       <circle className="ch-d1" cx={6} cy={7} r={2.1} />
       <circle className="ch-d2" cx={12.4} cy={7} r={2.1} />
       <circle className="ch-d3" cx={18.8} cy={7} r={2.1} />
@@ -144,7 +147,7 @@ const WINDOW_PART = (
         className="ch-pill"
         x={28}
         y={3.2}
-        width={VW - 36}
+        width={WINDOW_WIDTH - 36}
         height={7.6}
         rx={3.8}
       />
@@ -171,7 +174,11 @@ const BRICK_PARTS = BRICKS.map((brick, id) => {
       className={`bt-${brick.tint}`}
       transform={
         brick.spare
-          ? shrunk(brickAt(home.x, home.top, brick.h, PULL), art.center, 0)
+          ? shrunk(
+              brickAt(home.x, home.top, brick.h, PULL_DISTANCE),
+              art.center,
+              0,
+            )
           : brickAt(home.x, home.top, brick.h)
       }
     >

@@ -17,7 +17,7 @@ const LINK_CLASS =
   "flex items-center gap-2 py-3 text-base font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary";
 
 // 페이지의 끝. 메뉴의 "연락하기"(모바일)가 이곳으로 이동한다.
-const Footer = () => {
+export const Footer = () => {
   return (
     <footer id="contact" className="scroll-mt-3 print:hidden">
       <div className="mx-auto max-w-5xl px-6">
@@ -41,5 +41,3 @@ const Footer = () => {
     </footer>
   );
 };
-
-export default Footer;

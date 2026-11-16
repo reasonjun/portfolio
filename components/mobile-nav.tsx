@@ -10,12 +10,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { restoreFocusWithoutScroll } from "@/lib/utils";
 
 interface MobileNavProps {
   children: ReactNode;
 }
 
-const MobileNav = ({ children }: MobileNavProps) => {
+export const MobileNav = ({ children }: MobileNavProps) => {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -43,11 +44,7 @@ const MobileNav = ({ children }: MobileNavProps) => {
         <SheetContent
           side="left"
           className="w-64"
-          onCloseAutoFocus={(event) => {
-            // 기본 복귀 포커스는 앵커 이동 직후 페이지를 되돌리므로 스크롤 없이 직접 복귀시킨다.
-            event.preventDefault();
-            triggerRef.current?.focus({ preventScroll: true });
-          }}
+          onCloseAutoFocus={restoreFocusWithoutScroll(triggerRef)}
         >
           <SheetHeader>
             <SheetTitle>메뉴</SheetTitle>
@@ -58,5 +55,3 @@ const MobileNav = ({ children }: MobileNavProps) => {
     </div>
   );
 };
-
-export default MobileNav;
