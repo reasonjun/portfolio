@@ -1,14 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { EXPERIENCES_DATA } from "@/data/experiences";
 import { PROFILE } from "@/data/profile";
-import { HOME_PROJECT_IDS, PDF_PROJECT_IDS } from "@/data/project-lists";
+import { HOME_PROJECT_IDS, PDF_CHUNK_IDS } from "@/data/project-lists";
 import { PROJECTS_DATA } from "@/data/projects";
-import { validateCaseStudy } from "@/lib/content-check";
 import {
   getArchiveRows,
   getCaseStudies,
   getHomeProjects,
-  getPdfProjects,
+  getPdfChunks,
 } from "./projects";
 
 describe("프로젝트 데이터", () => {
@@ -24,31 +23,16 @@ describe("프로젝트 데이터", () => {
     ]);
   });
 
-  it("홈·PDF 목록은 사례가 있는 프로젝트만 중복 없이 가리킨다", () => {
-    expect(() => [getHomeProjects(), getPdfProjects()]).not.toThrow();
-    for (const ids of [HOME_PROJECT_IDS, PDF_PROJECT_IDS]) {
-      expect(new Set(ids).size, ids.join(", ")).toBe(ids.length);
-    }
-  });
-
-  it("PDF 목록의 사례는 빈칸 없이 다 쓴 것이다", () => {
-    const issues = getPdfProjects().flatMap((project) =>
-      validateCaseStudy(project.id, project.caseStudy),
+  it("홈 목록은 사례가 있는 프로젝트만 중복 없이 가리킨다", () => {
+    expect(() => getHomeProjects()).not.toThrow();
+    expect(new Set(HOME_PROJECT_IDS).size, HOME_PROJECT_IDS.join(", ")).toBe(
+      HOME_PROJECT_IDS.length,
     );
-    expect(issues, issues.join("\n")).toEqual([]);
   });
 
-  // 사례를 다 쓰면 이 테스트가 깨진다. PDF에 실으려면 data/project-lists.ts의 PDF_PROJECT_IDS에 넣고,
-  // 웹(상세 페이지·아카이브)에만 두려면 아래 목록에 적는다.
-  it("다 쓴 사례 중 PDF에 없는 것은 웹 전용으로 정한 사례뿐이다", () => {
-    const webOnly = getCaseStudies()
-      .filter(
-        (project) =>
-          validateCaseStudy(project.id, project.caseStudy).length === 0,
-      )
-      .filter((project) => !PDF_PROJECT_IDS.includes(project.id))
-      .map((project) => project.id);
-    expect(webOnly).toEqual(["ats-monitoring-system"]);
+  it("PDF 목록의 덩어리는 모두 실을 수 있다", () => {
+    expect(() => getPdfChunks()).not.toThrow();
+    expect(getPdfChunks().map(({ chunk }) => chunk.id)).toEqual(PDF_CHUNK_IDS);
   });
 
   it("아카이브는 전체 프로젝트 18개를 담는다", () => {

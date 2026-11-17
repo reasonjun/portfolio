@@ -40,7 +40,7 @@ interface ZoomableImageProps {
 }
 
 // 본문에서는 폭에 맞춰 보여 주고, 클릭하면 모달로 크게 띄운다.
-// 화면보다 크면 모달 안쪽 상자에서 스크롤된다. 인쇄본에서는 확대 아이콘을 숨긴다.
+// 화면보다 크면 모달 안쪽 상자에서 스크롤된다.
 export const ZoomableImage = ({
   src,
   alt,
@@ -81,7 +81,7 @@ export const ZoomableImage = ({
           />
           <span
             aria-hidden="true"
-            className="absolute top-2 right-2 rounded-md border bg-background/90 p-1.5 text-muted-foreground shadow-sm transition-colors group-hover:text-foreground print:hidden"
+            className="absolute top-2 right-2 rounded-md border bg-background/90 p-1.5 text-muted-foreground shadow-sm transition-colors group-hover:text-foreground"
           >
             <Maximize2 className="size-4" />
           </span>

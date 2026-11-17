@@ -1,0 +1,171 @@
+/* PDF 문서 전용. 화면과 인쇄에서 똑같이 보이도록 @media print에 기대지 않는다. */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+/* 종이 범위: 흰 종이에 남색 잉크. 흑백 인쇄에서도 테두리가 보이게 화면보다 진하게 둔다. */
+.paper {
+  --background: #ffffff;
+  --foreground: #141a33;
+  --card: #ffffff;
+  --card-foreground: #141a33;
+  --muted: #f1f3f9;
+  --muted-foreground: #444d70;
+  --secondary: #f1f3f9;
+  --secondary-foreground: #141a33;
+  --accent: #f1f3f9;
+  --accent-foreground: #141a33;
+  --primary: #141a33;
+  --primary-foreground: #ffffff;
+  --border: #b5b8c4;
+  color: var(--foreground);
+  font-size: 11pt;
+  line-height: 1.6;
+}
+
+/* 문서 바탕은 흰 종이다. 사이트 바탕색이 쪽 상자 밑에 깔리면 쪽 끝에 옅은 선으로 비칠 수 있다. */
+body:has(.paper) {
+  background: #ffffff;
+}
+
+/* 코드 식별자가 하이픈에서 끊기지 않게 하고, 옅은 바탕으로 본문과 구분한다. */
+.paper code {
+  white-space: nowrap;
+  font-size: 0.88em;
+  padding: 0 2px;
+  border-radius: 2px;
+  background: var(--muted);
+}
+
+/* 쪽 상자. 높이가 고정이라 글이 넘쳐도 쪽 수는 늘지 않고 넘친 부분이 PDF에서 잘린다.
+   넘침은 숨기지 않는다(미리보기에서 보여야 한다). scripts/generate-pdf.mjs가 넘침이 있으면 PDF를 만들지 않는다. */
+.sheet {
+  box-sizing: border-box;
+  width: 210mm;
+  height: 297mm;
+  padding: 15mm 14mm 11mm;
+  display: flex;
+  flex-direction: column;
+  gap: 4mm;
+  background: var(--background);
+  break-after: page;
+}
+
+.sheet:last-child {
+  break-after: auto;
+}
+
+/* 머리말: 어느 쪽을 펼쳐도 어느 프로젝트의 덩어리인지 알 수 있게 쪽마다 반복한다. */
+.sheet-meta {
+  font-size: 9pt;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2mm;
+}
+
+.sheet-title {
+  /* 줄바꿈 자리의 띄어쓰기를 글에 남긴다. 기본값에서는 크롬이 PDF 책갈피 제목에서 줄 끝 공백을 버려 "배포 ID라우팅"처럼 붙는다. pre-wrap은 keep-all과 함께면 듣지 않는다. */
+  white-space: break-spaces;
+  font-size: 15pt;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* 제목은 사이트의 그 덩어리로 가는 링크지만 겉모습은 보통 제목이다. */
+.sheet-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 그림은 원래 비율(인라인 aspect-ratio)로 놓고, 자리가 모자랄 때만 줄어든다. 남는 높이는 요점과 꼬리말 사이에 모인다. */
+.sheet-figure {
+  flex: 0 1 auto;
+  min-height: 0;
+  width: 100%;
+}
+
+.sheet-figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sheet-caption {
+  font-size: 9pt;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.chunk-points {
+  display: grid;
+  gap: 2.5mm;
+}
+
+.chunk-points > div {
+  display: grid;
+  grid-template-columns: 19mm 1fr;
+}
+
+.chunk-points dt {
+  font-weight: 600;
+}
+
+.chunk-points ul {
+  list-style: disc;
+  padding-left: 1.1em;
+}
+
+/* 바닥글은 쪽 번호뿐이다. 누구 문서인지는 표지와 파일 이름이 알려 준다. */
+.sheet-foot {
+  margin-top: auto;
+  text-align: center;
+  font-size: 8pt;
+  color: var(--muted-foreground);
+}
+
+/* 표지 */
+.sheet-cover {
+  justify-content: center;
+  gap: 3mm;
+  padding-left: 24mm;
+}
+
+.cover-name {
+  font-size: 40pt;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.cover-role {
+  font-size: 16pt;
+}
+
+.cover-lego {
+  position: relative;
+  width: 84mm;
+  aspect-ratio: 540 / 520;
+  margin: 10mm 0 8mm;
+}
+
+.cover-site {
+  font-size: 11pt;
+  color: var(--muted-foreground);
+}
+
+/* 화면 미리보기에서만 낱장처럼 띄운다. */
+@media screen {
+  .paper {
+    display: grid;
+    justify-content: center;
+    gap: 8mm;
+    padding: 8mm 0;
+  }
+
+  .sheet {
+    box-shadow: 0 0 0 1px var(--border);
+  }
+}

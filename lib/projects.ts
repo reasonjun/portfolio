@@ -1,10 +1,13 @@
 import type {
   ArchiveRow,
   CaseStudyProject,
+  Chunk,
+  ChunkFigure,
   ChunkId,
+  ChunkSection,
   Project,
 } from "@/app/types/project";
-import { HOME_PROJECT_IDS, PDF_PROJECT_IDS } from "@/data/project-lists";
+import { HOME_PROJECT_IDS, PDF_CHUNK_IDS } from "@/data/project-lists";
 import { PROJECTS_DATA } from "@/data/projects";
 
 export const projectHref = (id: string): string => `/projects/${id}/`;
@@ -55,9 +58,39 @@ export const getCaseStudiesByIds = (
 export const getHomeProjects = (): CaseStudyProject[] =>
   getCaseStudiesByIds(HOME_PROJECT_IDS);
 
-// PDF(export 페이지)는 목록에 적힌 그대로 싣는다. 빈칸이 없는지는 lib/data.test.ts가 검사한다.
-export const getPdfProjects = (): CaseStudyProject[] =>
-  getCaseStudiesByIds(PDF_PROJECT_IDS);
+type PdfSection = ChunkSection & { points: string[] };
+
+// PDF에 실을 수 있는 덩어리. 그림과 세 섹션의 요점이 반드시 있다.
+export type PdfChunk = Chunk & {
+  figure: ChunkFigure;
+  problem: PdfSection;
+  solution: PdfSection;
+  result: PdfSection;
+};
+
+const isPdfChunk = (chunk: Chunk): chunk is PdfChunk =>
+  chunk.figure !== undefined &&
+  [chunk.problem, chunk.solution, chunk.result].every(
+    (section) => section.points !== undefined && section.points.length > 0,
+  );
+
+// PDF에 싣는 덩어리를 목록(data/project-lists.ts) 순서대로, 속한 프로젝트와 함께 돌려준다.
+// 없는 id나 그릴 수 없는 덩어리는 거르지 않고 던진다. 목록의 실수가 PDF에서 몰래 빠지지 않고 빌드가 멈춘다.
+export const getPdfChunks = (
+  ids: ChunkId[] = PDF_CHUNK_IDS,
+  projects: Project[] = PROJECTS_DATA,
+): { project: CaseStudyProject; chunk: PdfChunk }[] =>
+  ids.map((id) => {
+    for (const project of getCaseStudies(projects)) {
+      const chunk = project.caseStudy.chunks.find((item) => item.id === id);
+      if (!chunk) continue;
+      if (!isPdfChunk(chunk)) {
+        throw new Error(`${id}: 그림이나 요점이 없어 PDF에 실을 수 없음`);
+      }
+      return { project, chunk };
+    }
+    throw new Error(`${id}: 덩어리가 없음`);
+  });
 
 export const getArchiveRows = (
   projects: Project[] = PROJECTS_DATA,

@@ -45,7 +45,7 @@ export const EXPERIENCES_DATA: Experience[] = [
     tagline:
       "에이전시 외주로 글로벌 가전 브랜드 프로모션 라이브 방송 페이지 개발",
     duties: [
-      "방송마다 PHP 페이지를 복사해 쓰던 구조를 Next.js 모노레포(앱 6개·공유 패키지 4개)로 전환",
+      "방송마다 PHP 페이지를 복사해 쓰던 구조를 Next.js 모노레포(앱 여섯 개·공유 패키지 네 개)로 전환",
       "사전알림·기대평을 운영자가 직접 확인하는 백오피스 화면 개발",
       "Docker·AWS ECS 롤링 배포 구성",
     ],

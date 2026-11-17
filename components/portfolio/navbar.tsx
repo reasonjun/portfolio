@@ -40,7 +40,7 @@ export const Navbar = () => {
   return (
     <nav
       aria-label="주 메뉴"
-      className="sticky top-0 z-50 h-[var(--navbar-height)] bg-background print:hidden"
+      className="sticky top-0 z-50 h-[var(--navbar-height)] bg-background"
     >
       <div className="mx-auto grid h-full max-w-5xl grid-cols-[1fr_auto_1fr] items-center px-6">
         <DesktopNav />

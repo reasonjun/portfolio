@@ -1,4 +1,4 @@
-import { mkdir } from "node:fs/promises";
+import { mkdir, rm } from "node:fs/promises";
 import { chromium } from "@playwright/test";
 import { startServer } from "./serve-out.mjs";
 
@@ -10,6 +10,9 @@ const server = await startServer(PORT);
 const browser = await chromium.launch();
 
 try {
+  // 실패했을 때 예전 PDF가 남아 배포되지 않게 먼저 지운다.
+  await rm(OUTPUT_PATH, { force: true });
+
   const page = await browser.newPage();
   await page.goto(EXPORT_URL, { waitUntil: "networkidle" });
   await page.emulateMedia({ media: "print", colorScheme: "light" });
@@ -24,13 +27,28 @@ try {
     await document.fonts.ready;
   });
 
+  // 쪽 상자(app/export/page.tsx의 data-sheet)는 높이가 고정이라 글이 넘쳐도 쪽 수가 늘지 않고 넘친 부분이 잘린다.
+  // 잘린 PDF가 소리 없이 배포되지 않게, 넘친 쪽이 있으면 만들지 않는다.
+  const overflowing = await page.$$eval("[data-sheet]", (sheets) =>
+    sheets
+      .filter((sheet) => sheet.scrollHeight > sheet.clientHeight + 1)
+      .map(
+        (sheet) =>
+          `${sheet.dataset.sheet}: ${sheet.scrollHeight - sheet.clientHeight}px 넘침`,
+      ),
+  );
+  if (overflowing.length > 0) {
+    throw new Error(
+      `쪽 상자를 넘친 내용이 있어 PDF를 만들지 않음\n${overflowing.join("\n")}`,
+    );
+  }
+
   await mkdir("out", { recursive: true });
   await page.pdf({
     path: OUTPUT_PATH,
-    format: "A4",
+    // 쪽 크기와 여백은 app/export/paper.css의 @page와 쪽 상자가 정한다.
+    preferCSSPageSize: true,
     printBackground: true,
-    // 쪽 번호와 프로젝트 이름은 export 페이지의 @page 여백 상자가 아래 여백에 찍는다.
-    margin: { top: "16mm", bottom: "16mm", left: "14mm", right: "14mm" },
     // 제목 요소로 책갈피를 만든다. 책갈피는 태그가 있어야 만들어진다.
     tagged: true,
     outline: true,

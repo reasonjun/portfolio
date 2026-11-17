@@ -14,13 +14,13 @@ export const DiagramView = ({ id, figure }: DiagramViewProps) => {
 
   return (
     <figure className="space-y-2">
-      <div className="rounded-lg border p-4 print:p-2">
+      <div className="rounded-lg border p-4">
         <ZoomableImage
           src={src}
           alt={figure.alt}
           {...getPublicImageSize(src)}
           title={stripInlineCode(figure.caption)}
-          className="rounded bg-white p-2 print:p-0"
+          className="rounded bg-white p-2"
         />
       </div>
       <figcaption className="text-sm text-muted-foreground">

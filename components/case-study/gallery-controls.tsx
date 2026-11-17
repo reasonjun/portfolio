@@ -60,7 +60,7 @@ export const GalleryControls = ({ count }: { count: number }) => {
   if (count < 2) return null;
 
   return (
-    <div className="mt-3 flex items-center justify-center gap-4 print:hidden">
+    <div className="mt-3 flex items-center justify-center gap-4">
       {/* 프리미티브의 숨김 문구가 영어("Previous slide")라 한국어 이름으로 덮는다. */}
       <CarouselPrevious
         aria-label="이전 이미지"
