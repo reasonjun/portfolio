@@ -3,8 +3,8 @@ import type { CaseStudy, Project } from "@/app/types/project";
 import {
   getArchiveRows,
   getCaseStudies,
+  getCaseStudiesByIds,
   getCaseStudyById,
-  getExportProjects,
   getMainTech,
 } from "./projects";
 
@@ -109,26 +109,25 @@ describe("getArchiveRows", () => {
   });
 });
 
-describe("getExportProjects", () => {
-  it("홈 대표 사례를 homeOrder 순으로 먼저, homeOrder가 없는 사례를 뒤에 싣고 콘텐츠 검사를 통과한 것만 반환한다", () => {
+describe("getCaseStudiesByIds", () => {
+  it("목록의 id 순서대로 사례를 반환한다", () => {
     const projects = [
-      makeProject({ id: "third", homeOrder: 3, caseStudy }),
-      makeProject({
-        id: "blank",
-        homeOrder: 1,
-        caseStudy: { ...caseStudy, summary: "" },
-      }),
-      makeProject({ id: "second", homeOrder: 2, caseStudy }),
-      makeProject({ id: "unranked", caseStudy }),
-      makeProject({
-        id: "unranked-blank",
-        caseStudy: { ...caseStudy, background: "" },
-      }),
+      makeProject({ id: "first", caseStudy }),
+      makeProject({ id: "second", caseStudy }),
     ];
-    expect(getExportProjects(projects).map((project) => project.id)).toEqual([
-      "second",
-      "third",
-      "unranked",
-    ]);
+    expect(
+      getCaseStudiesByIds(["second", "first"], projects).map(
+        (project) => project.id,
+      ),
+    ).toEqual(["second", "first"]);
+  });
+
+  it("없는 id나 사례가 없는 프로젝트 id가 있으면 던진다", () => {
+    expect(() => getCaseStudiesByIds(["unknown"], fixtures)).toThrow(
+      "unknown: 사례가 있는 프로젝트가 아님",
+    );
+    expect(() => getCaseStudiesByIds(["plain-b"], fixtures)).toThrow(
+      "plain-b: 사례가 있는 프로젝트가 아님",
+    );
   });
 });

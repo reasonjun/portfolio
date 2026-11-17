@@ -3,8 +3,8 @@ import type {
   CaseStudyProject,
   Project,
 } from "@/app/types/project";
+import { HOME_PROJECT_IDS, PDF_PROJECT_IDS } from "@/data/project-lists";
 import { PROJECTS_DATA } from "@/data/projects";
-import { validateCaseStudy } from "@/lib/content-check";
 
 export const projectHref = (id: string): string => `/projects/${id}/`;
 
@@ -24,32 +24,30 @@ export const getCaseStudies = (
   projects: Project[] = PROJECTS_DATA,
 ): CaseStudyProject[] => projects.filter(hasCaseStudy);
 
-export const getHomeProjects = (
-  projects: Project[] = PROJECTS_DATA,
-): CaseStudyProject[] =>
-  getCaseStudies(projects)
-    .filter((project) => project.homeOrder !== undefined)
-    .sort((a, b) => (a.homeOrder ?? 0) - (b.homeOrder ?? 0));
-
-// PDF(export 페이지)는 홈 대표 사례를 같은 순서로 먼저 싣고, 홈에 없는(homeOrder가 없는) 사례를 데이터 순서대로 뒤에 붙인다.
-// 콘텐츠 검사를 통과하지 못한(빈칸이 남은) 사례는 채울 때까지 뺀다.
-export const getExportProjects = (
-  projects: Project[] = PROJECTS_DATA,
-): CaseStudyProject[] =>
-  [
-    ...getHomeProjects(projects),
-    ...getCaseStudies(projects).filter(
-      (project) => project.homeOrder === undefined,
-    ),
-  ].filter(
-    (project) => validateCaseStudy(project.id, project.caseStudy).length === 0,
-  );
-
 export const getCaseStudyById = (
   id: string,
   projects: Project[] = PROJECTS_DATA,
 ): CaseStudyProject | undefined =>
   getCaseStudies(projects).find((project) => project.id === id);
+
+// 목록(data/project-lists.ts)의 id 순서대로 사례를 돌려준다.
+// 없는 id나 사례가 없는 프로젝트 id는 거르지 않고 던진다. 목록의 오타나 지운 프로젝트가 화면에서 몰래 빠지지 않고 빌드·테스트가 멈춘다.
+export const getCaseStudiesByIds = (
+  ids: string[],
+  projects: Project[] = PROJECTS_DATA,
+): CaseStudyProject[] =>
+  ids.map((id) => {
+    const project = getCaseStudyById(id, projects);
+    if (!project) throw new Error(`${id}: 사례가 있는 프로젝트가 아님`);
+    return project;
+  });
+
+export const getHomeProjects = (): CaseStudyProject[] =>
+  getCaseStudiesByIds(HOME_PROJECT_IDS);
+
+// PDF(export 페이지)는 목록에 적힌 그대로 싣는다. 빈칸이 없는지는 lib/data.test.ts가 검사한다.
+export const getPdfProjects = (): CaseStudyProject[] =>
+  getCaseStudiesByIds(PDF_PROJECT_IDS);
 
 export const getArchiveRows = (
   projects: Project[] = PROJECTS_DATA,

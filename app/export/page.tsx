@@ -3,7 +3,7 @@ import { CaseStudyBody } from "@/components/case-study/case-study-body";
 import { Positioning } from "@/components/portfolio/positioning";
 import { EXPERIENCES_DATA } from "@/data/experiences";
 import { PROFILE } from "@/data/profile";
-import { getExportProjects } from "@/lib/projects";
+import { getPdfProjects } from "@/lib/projects";
 
 // PDF 생성 스크립트(scripts/generate-pdf.mjs)가 이 페이지를 인쇄한다. 메뉴에는 노출하지 않는다.
 // PDF 문서 제목이 되므로 레이아웃의 제목 템플릿을 붙이지 않는다.
@@ -54,7 +54,7 @@ const Cover = () => (
 );
 
 export default function ExportPage() {
-  const projects = getExportProjects();
+  const projects = getPdfProjects();
 
   return (
     <div className="py-8">

@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { EXPERIENCES_DATA } from "@/data/experiences";
 import { PROFILE } from "@/data/profile";
+import { HOME_PROJECT_IDS, PDF_PROJECT_IDS } from "@/data/project-lists";
 import { PROJECTS_DATA } from "@/data/projects";
+import { validateCaseStudy } from "@/lib/content-check";
 import {
   getArchiveRows,
   getCaseStudies,
-  getExportProjects,
   getHomeProjects,
+  getPdfProjects,
 } from "./projects";
 
 describe("프로젝트 데이터", () => {
@@ -22,19 +24,31 @@ describe("프로젝트 데이터", () => {
     ]);
   });
 
-  it("홈 대표 프로젝트 6개가 임팩트순으로 나온다", () => {
-    expect(getHomeProjects().map((project) => project.id)).toEqual([
-      "enterprise-legal-management",
-      "ip-management-system",
-      "external-settlement-system",
-      "wysiwyg-editor",
-      "tactile-graphics-editor",
-      "design-system",
-    ]);
+  it("홈·PDF 목록은 사례가 있는 프로젝트만 중복 없이 가리킨다", () => {
+    expect(() => [getHomeProjects(), getPdfProjects()]).not.toThrow();
+    for (const ids of [HOME_PROJECT_IDS, PDF_PROJECT_IDS]) {
+      expect(new Set(ids).size, ids.join(", ")).toBe(ids.length);
+    }
   });
 
-  it("사람인 사례는 homeOrder가 없어 홈에는 없고 PDF에는 마지막으로 실린다", () => {
-    expect(getExportProjects().at(-1)?.id).toBe("ats-monitoring-system");
+  it("PDF 목록의 사례는 빈칸 없이 다 쓴 것이다", () => {
+    const issues = getPdfProjects().flatMap((project) =>
+      validateCaseStudy(project.id, project.caseStudy),
+    );
+    expect(issues, issues.join("\n")).toEqual([]);
+  });
+
+  // 사례를 다 쓰면 이 테스트가 깨진다. PDF에 실으려면 data/project-lists.ts의 PDF_PROJECT_IDS에 넣고,
+  // 웹(상세 페이지·아카이브)에만 두려면 아래 목록에 적는다.
+  it("다 쓴 사례 중 PDF에 없는 것은 웹 전용으로 정한 사례뿐이다", () => {
+    const webOnly = getCaseStudies()
+      .filter(
+        (project) =>
+          validateCaseStudy(project.id, project.caseStudy).length === 0,
+      )
+      .filter((project) => !PDF_PROJECT_IDS.includes(project.id))
+      .map((project) => project.id);
+    expect(webOnly).toEqual(["ats-monitoring-system"]);
   });
 
   it("아카이브는 전체 프로젝트 18개를 담는다", () => {
@@ -97,9 +111,9 @@ describe("경력 데이터", () => {
     ).not.toContain("프런트엔드");
   });
 
-  it("닷 경력에 초기 로딩 60초 → 1초와 측정 조건이 있다", () => {
+  it("닷 경력에 초기 로딩 1분 이상 → 1초와 측정 조건이 있다", () => {
     const dot = EXPERIENCES_DATA.find((experience) => experience.id === "dot");
-    const loading = dot?.duties.find((duty) => duty.includes("60초 → 1초"));
+    const loading = dot?.duties.find((duty) => duty.includes("1분 이상 → 1초"));
     expect(loading).toContain("캐시 비운 첫 접속");
     expect(loading).toContain("운영 환경 기준");
   });

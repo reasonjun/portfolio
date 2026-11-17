@@ -29,6 +29,7 @@ export const EXPERIENCES_DATA: Experience[] = [
       "TypeScript",
       "React",
       "Next.js",
+      "Vue 3",
       "TanStack Query",
       "Docker",
       "Nginx",
@@ -74,7 +75,7 @@ export const EXPERIENCES_DATA: Experience[] = [
     tagline: "시각장애인을 위한 점자 디스플레이·접근성 서비스를 만드는 회사",
     duties: [
       "Vue 3 / TypeScript 기반 사내 웹 서비스 프론트엔드 아키텍처 설계",
-      "초기 로딩 60초 → 1초 단축(번들 분할·컴포넌트 지연 로딩·CDN/인프라 개선, 캐시 비운 첫 접속·운영 환경 기준)",
+      "초기 로딩 1분 이상 → 1초 단축(운영 빌드 설정 수정·번들 분할·컴포넌트 지연 로딩·CDN/인프라 개선, 캐시 비운 첫 접속·운영 환경 기준)",
       "다국어(i18n) 지원 구조 설계·운영과 웹 접근성(WCAG) 대응",
       "코드 컨벤션·리뷰 프로세스, Git 브랜치 전략 운영",
       "일부 프로젝트에서 Java/Spring Boot 기반 API 개발까지 담당",
