@@ -4,7 +4,6 @@ import type {
   Chunk,
   ChunkFigure,
   ChunkId,
-  ChunkSection,
   Project,
 } from "@/app/types/project";
 import { HOME_PROJECT_IDS, PDF_CHUNK_IDS } from "@/data/project-lists";
@@ -58,24 +57,18 @@ export const getCaseStudiesByIds = (
 export const getHomeProjects = (): CaseStudyProject[] =>
   getCaseStudiesByIds(HOME_PROJECT_IDS);
 
-type PdfSection = ChunkSection & { points: string[] };
+// 덩어리 블록의 자세한 글이 이 id로 시작한다. PDF의 제목 링크가 가리키는 곳이다.
+// 앵커 대상을 품은 닫힌 <details>는 브라우저가 스스로 연다. <details> 자체를 가리키면 열리지 않으므로 안쪽 요소에 둔다.
+export const chunkDetailAnchor = (id: ChunkId): string => `${id}-detail`;
 
-// PDF에 실을 수 있는 덩어리. 그림과 세 섹션의 요점이 반드시 있다.
-export type PdfChunk = Chunk & {
-  figure: ChunkFigure;
-  problem: PdfSection;
-  solution: PdfSection;
-  result: PdfSection;
-};
+// PDF에 실을 수 있는 덩어리. 그림이 반드시 있다.
+export type PdfChunk = Chunk & { figure: ChunkFigure };
 
 const isPdfChunk = (chunk: Chunk): chunk is PdfChunk =>
-  chunk.figure !== undefined &&
-  [chunk.problem, chunk.solution, chunk.result].every(
-    (section) => section.points !== undefined && section.points.length > 0,
-  );
+  chunk.figure !== undefined;
 
 // PDF에 싣는 덩어리를 목록(data/project-lists.ts) 순서대로, 속한 프로젝트와 함께 돌려준다.
-// 없는 id나 그릴 수 없는 덩어리는 거르지 않고 던진다. 목록의 실수가 PDF에서 몰래 빠지지 않고 빌드가 멈춘다.
+// 없는 id나 그림이 없는 덩어리는 거르지 않고 던진다. 목록의 실수가 PDF에서 몰래 빠지지 않고 빌드가 멈춘다.
 export const getPdfChunks = (
   ids: ChunkId[] = PDF_CHUNK_IDS,
   projects: Project[] = PROJECTS_DATA,
@@ -85,7 +78,7 @@ export const getPdfChunks = (
       const chunk = project.caseStudy.chunks.find((item) => item.id === id);
       if (!chunk) continue;
       if (!isPdfChunk(chunk)) {
-        throw new Error(`${id}: 그림이나 요점이 없어 PDF에 실을 수 없음`);
+        throw new Error(`${id}: 그림이 없어 PDF에 실을 수 없음`);
       }
       return { project, chunk };
     }

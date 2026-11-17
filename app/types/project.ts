@@ -18,8 +18,8 @@ export type ChunkId =
   | "fabric-group-batch-add";
 
 export interface ChunkSection {
-  // PDF에 나오는 짧은 글. 섹션마다 3개 이상 쓴다. 웹은 2단계부터 쓴다.
-  points?: string[];
+  // 짧은 글. PDF와 웹 사례 페이지가 같이 쓴다. 3개 이상을 기본으로 쓴다. 자세한 글에 근거가 모자란 칸은 예외다.
+  points: string[];
   // 자세한 글. 문단마다 한 항목이다.
   detail: string[];
 }

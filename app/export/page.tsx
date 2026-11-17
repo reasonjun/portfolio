@@ -9,7 +9,12 @@ import { HeroLegoStill } from "@/components/portfolio/hero-lego/hero-lego-still"
 import { PROFILE } from "@/data/profile";
 import { withBasePath } from "@/lib/base-path";
 import { getPublicImageSize } from "@/lib/image-size";
-import { chunkFigureSrc, getMainTech, getPdfChunks } from "@/lib/projects";
+import {
+  chunkDetailAnchor,
+  chunkFigureSrc,
+  getMainTech,
+  getPdfChunks,
+} from "@/lib/projects";
 import { joinMeta } from "@/lib/utils";
 import "./paper.css";
 
@@ -64,7 +69,9 @@ export default function ExportPage() {
               <p>{getMainTech(project.techStack).join(" · ")}</p>
             </header>
             <h2 className="sheet-title">
-              <a href={`${PROFILE.siteUrl}projects/${project.id}/#${chunk.id}`}>
+              <a
+                href={`${PROFILE.siteUrl}projects/${project.id}/#${chunkDetailAnchor(chunk.id)}`}
+              >
                 {keepLineStart(chunk.title)}
               </a>
             </h2>

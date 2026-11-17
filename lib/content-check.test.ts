@@ -5,9 +5,9 @@ import { validateCaseStudy } from "./content-check";
 const makeChunk = (overrides: Partial<Chunk> = {}): Chunk => ({
   id: "blue-green-deploy",
   title: "문제 제목",
-  problem: { detail: ["무엇이 위험했는가"] },
-  solution: { detail: ["해결 과정"] },
-  result: { detail: ["결과"] },
+  problem: { points: ["요점"], detail: ["무엇이 위험했는가"] },
+  solution: { points: ["요점"], detail: ["해결 과정"] },
+  result: { points: ["요점"], detail: ["결과"] },
   ...overrides,
 });
 
@@ -28,9 +28,9 @@ describe("validateCaseStudy", () => {
     const cs = makeCaseStudy({
       chunks: [
         makeChunk({
-          problem: { detail: [] },
-          solution: { detail: [""] },
-          result: { detail: ["  "] },
+          problem: { points: ["요점"], detail: [] },
+          solution: { points: ["요점"], detail: [""] },
+          result: { points: ["요점"], detail: ["  "] },
         }),
         makeChunk(),
       ],
@@ -45,7 +45,9 @@ describe("validateCaseStudy", () => {
   it("백틱 짝이 안 맞으면 알린다", () => {
     const cs = makeCaseStudy({
       chunks: [
-        makeChunk({ solution: { detail: ["`X-Id` 헤더와 `?dpl= 쿼리"] } }),
+        makeChunk({
+          solution: { points: ["요점"], detail: ["`X-Id` 헤더와 `?dpl= 쿼리"] },
+        }),
         makeChunk(),
       ],
     });
@@ -58,7 +60,12 @@ describe("validateCaseStudy", () => {
     // 전체로는 2개라 짝이 맞아 보이지만, 문단마다 따로 렌더링하면 두 문단 모두 끝까지 코드가 된다.
     const cs = makeCaseStudy({
       chunks: [
-        makeChunk({ solution: { detail: ["첫 문단 `a", "둘째 문단 b`"] } }),
+        makeChunk({
+          solution: {
+            points: ["요점"],
+            detail: ["첫 문단 `a", "둘째 문단 b`"],
+          },
+        }),
       ],
     });
     expect(validateCaseStudy("x", cs)).toEqual([

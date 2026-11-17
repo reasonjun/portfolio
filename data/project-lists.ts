@@ -14,7 +14,7 @@ export const HOME_PROJECT_IDS = [
 ];
 
 // 이력서와 함께 내는 PDF에 싣는 덩어리. 적힌 순서가 PDF의 쪽 순서다.
-// 그림과 세 섹션의 요점이 있는 덩어리만 넣을 수 있다. 없으면 getPdfChunks가 던져 빌드가 멈춘다.
+// 그림이 있는 덩어리만 넣을 수 있다. 없으면 getPdfChunks가 던져 빌드가 멈춘다.
 export const PDF_CHUNK_IDS: ChunkId[] = [
   "blue-green-deploy",
   "bff-auth-flow",
