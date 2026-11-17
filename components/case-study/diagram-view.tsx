@@ -1,29 +1,30 @@
-import type { DiagramId } from "@/app/types/project";
+import type { ChunkFigure, ChunkId } from "@/app/types/project";
 import { getPublicImageSize } from "@/lib/image-size";
-import { DIAGRAMS } from "./diagrams";
+import { chunkFigureSrc } from "@/lib/projects";
 import { renderInlineCode, stripInlineCode } from "./inline-code";
 import { ZoomableImage } from "./zoomable-image";
 
 interface DiagramViewProps {
-  id: DiagramId;
-  caption: string;
+  id: ChunkId;
+  figure: ChunkFigure;
 }
 
-export const DiagramView = ({ id, caption }: DiagramViewProps) => {
-  const diagram = DIAGRAMS[id];
+export const DiagramView = ({ id, figure }: DiagramViewProps) => {
+  const src = chunkFigureSrc(id);
 
   return (
     <figure className="space-y-2">
       <div className="rounded-lg border p-4 print:p-2">
         <ZoomableImage
-          {...diagram}
-          {...getPublicImageSize(diagram.src)}
-          title={stripInlineCode(caption)}
+          src={src}
+          alt={figure.alt}
+          {...getPublicImageSize(src)}
+          title={stripInlineCode(figure.caption)}
           className="rounded bg-white p-2 print:p-0"
         />
       </div>
       <figcaption className="text-sm text-muted-foreground">
-        {renderInlineCode(caption)}
+        {renderInlineCode(figure.caption)}
       </figcaption>
     </figure>
   );

@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import type { CaseProblem, CaseStudyProject } from "@/app/types/project";
+import type { CaseStudyProject, Chunk } from "@/app/types/project";
 import { Badge } from "@/components/ui/badge";
-import { cn, hasText, joinMeta, splitParagraphs } from "@/lib/utils";
+import { cn, hasText, joinMeta } from "@/lib/utils";
 import { CaseGallery } from "./case-gallery";
-import { CaseVisual } from "./case-visual";
+import { DiagramView } from "./diagram-view";
 import { keepLineStart, renderInlineCode } from "./inline-code";
 
 const Section = ({
@@ -39,13 +39,20 @@ const Labeled = ({
 // 긴 카드까지 통째로 넘기면 앞 페이지에 제목만 남고 넘긴 페이지에서도 결국 쪼개진다.
 const KEEP_TOGETHER_MAX_CHARS = 700;
 
-const ProblemBlock = ({ problem }: { problem: CaseProblem }) => {
-  const textLength = [problem.problem, problem.solution, problem.result].reduce(
-    (sum, text) => sum + text.length,
+// 화면의 세 칸. 덩어리의 섹션과 1:1로 대응한다.
+const SECTIONS = [
+  { key: "problem", label: "문제 확인" },
+  { key: "solution", label: "해결 과정" },
+  { key: "result", label: "결과" },
+] as const;
+
+const ChunkBlock = ({ chunk }: { chunk: Chunk }) => {
+  const textLength = SECTIONS.reduce(
+    (sum, { key }) => sum + chunk[key].detail.join("\n\n").length,
     0,
   );
   // 그림이 있는 카드는 그림만으로 페이지 절반을 넘기 쉬워, 제목·그림만 붙여 두고 본문은 이어서 흐르게 한다.
-  const keepTogether = !problem.visual && textLength <= KEEP_TOGETHER_MAX_CHARS;
+  const keepTogether = !chunk.figure && textLength <= KEEP_TOGETHER_MAX_CHARS;
 
   return (
     <section
@@ -58,32 +65,26 @@ const ProblemBlock = ({ problem }: { problem: CaseProblem }) => {
       {/* 인쇄 시 제목과 그림을 한 덩어리로 둔다. 따로 두면 그림이 넘어갈 때 여러 줄 제목이 페이지 사이에서 갈린다. */}
       <div className="space-y-4 break-inside-avoid">
         <h3 className="text-lg font-semibold break-after-avoid">
-          {keepLineStart(problem.title)}
+          {keepLineStart(chunk.title)}
         </h3>
-        {problem.visual && <CaseVisual visual={problem.visual} />}
+        {chunk.figure && <DiagramView id={chunk.id} figure={chunk.figure} />}
       </div>
-      {hasText(problem.problem) && (
-        <Labeled label="문제 확인">
-          <p>{renderInlineCode(problem.problem)}</p>
-        </Labeled>
-      )}
-      {hasText(problem.solution) && (
-        <Labeled label="해결 과정">
-          {/* 빈 줄로 나눈 문단을 따로 렌더링한다. 화면에서는 한 줄, 인쇄본에서는 반 줄을 띄운다. */}
-          <div className="space-y-[1lh] print:space-y-[0.5lh]">
-            {splitParagraphs(problem.solution).map((paragraph) => (
-              <p key={paragraph} className="whitespace-pre-line">
-                {renderInlineCode(paragraph)}
-              </p>
-            ))}
-          </div>
-        </Labeled>
-      )}
-      {hasText(problem.result) && (
-        <Labeled label="결과">
-          <p>{renderInlineCode(problem.result)}</p>
-        </Labeled>
-      )}
+      {SECTIONS.map(({ key, label }) => {
+        const paragraphs = chunk[key].detail.filter(hasText);
+        if (paragraphs.length === 0) return null;
+        return (
+          <Labeled key={key} label={label}>
+            {/* 문단을 따로 렌더링한다. 화면에서는 한 줄, 인쇄본에서는 반 줄을 띄운다. */}
+            <div className="space-y-[1lh] print:space-y-[0.5lh]">
+              {paragraphs.map((paragraph) => (
+                <p key={paragraph} className="whitespace-pre-line">
+                  {renderInlineCode(paragraph)}
+                </p>
+              ))}
+            </div>
+          </Labeled>
+        );
+      })}
     </section>
   );
 };
@@ -121,11 +122,11 @@ export const CaseStudyBody = ({ project }: CaseStudyBodyProps) => {
         </Section>
       )}
 
-      {caseStudy.problems.length > 0 && (
+      {caseStudy.chunks.length > 0 && (
         <Section title="핵심 문제">
           <div className="space-y-6">
-            {caseStudy.problems.map((problem) => (
-              <ProblemBlock key={problem.title} problem={problem} />
+            {caseStudy.chunks.map((chunk) => (
+              <ChunkBlock key={chunk.id} chunk={chunk} />
             ))}
           </div>
         </Section>

@@ -15,26 +15,28 @@ export const validateCaseStudy = (
   }
 
   // 백틱은 <code> 표시라 짝이 안 맞으면 뒤 문장 전체가 코드로 바뀐다.
-  // 해결 과정은 문단마다 따로 렌더링하므로 문단마다 짝이 맞아야 한다.
-  const checkBackticks = (path: string, value: string) => {
+  // 자세한 글은 문단마다 따로 렌더링하므로 문단마다 짝이 맞아야 한다.
+  const checkBackticks = (path: string, paragraphs: string[]) => {
     const isUnpaired = (part: string) =>
       (part.match(/`/g)?.length ?? 0) % 2 === 1;
-    if (splitParagraphs(value).some(isUnpaired)) {
+    if (paragraphs.some(isUnpaired)) {
       issues.push(`${id}: ${path} 백틱 짝 안 맞음`);
     }
   };
-  checkBackticks("background", caseStudy.background);
+  checkBackticks("background", splitParagraphs(caseStudy.background));
 
-  caseStudy.problems.forEach((problem, index) => {
-    const path = `problems[${index}]`;
-    const caption =
-      problem.visual && "caption" in problem.visual
-        ? problem.visual.caption
-        : undefined;
-    if (caption) checkBackticks(`${path}.visual.caption`, caption);
+  caseStudy.chunks.forEach((chunk, index) => {
+    const path = `chunks[${index}]`;
+    if (chunk.figure) {
+      checkBackticks(
+        `${path}.figure.caption`,
+        splitParagraphs(chunk.figure.caption),
+      );
+    }
     for (const field of ["problem", "solution", "result"] as const) {
-      if (!hasText(problem[field])) reportEmpty(`${path}.${field}`);
-      checkBackticks(`${path}.${field}`, problem[field]);
+      const { detail } = chunk[field];
+      if (!detail.some(hasText)) reportEmpty(`${path}.${field}`);
+      checkBackticks(`${path}.${field}`, detail);
     }
   });
 

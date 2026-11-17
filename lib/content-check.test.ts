@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
-import type { CaseProblem, CaseStudy } from "@/app/types/project";
+import type { CaseStudy, Chunk } from "@/app/types/project";
 import { validateCaseStudy } from "./content-check";
 
-const makeProblem = (overrides: Partial<CaseProblem> = {}): CaseProblem => ({
+const makeChunk = (overrides: Partial<Chunk> = {}): Chunk => ({
+  id: "blue-green-deploy",
   title: "문제 제목",
-  problem: "무엇이 위험했는가",
-  solution: "해결 과정",
-  result: "결과",
+  problem: { detail: ["무엇이 위험했는가"] },
+  solution: { detail: ["해결 과정"] },
+  result: { detail: ["결과"] },
   ...overrides,
 });
 
@@ -14,7 +15,7 @@ const makeCaseStudy = (overrides: Partial<CaseStudy> = {}): CaseStudy => ({
   summary: "요약",
   background: "배경",
   team: "프론트엔드 1",
-  problems: [makeProblem(), makeProblem()],
+  chunks: [makeChunk(), makeChunk()],
   ...overrides,
 });
 
@@ -25,37 +26,43 @@ describe("validateCaseStudy", () => {
 
   it("문제 확인·해결 과정·결과가 비어 있으면 각각 알린다", () => {
     const cs = makeCaseStudy({
-      problems: [
-        makeProblem({ problem: "", solution: "", result: "" }),
-        makeProblem(),
+      chunks: [
+        makeChunk({
+          problem: { detail: [] },
+          solution: { detail: [""] },
+          result: { detail: ["  "] },
+        }),
+        makeChunk(),
       ],
     });
     expect(validateCaseStudy("x", cs)).toEqual([
-      "x: problems[0].problem 비어 있음",
-      "x: problems[0].solution 비어 있음",
-      "x: problems[0].result 비어 있음",
+      "x: chunks[0].problem 비어 있음",
+      "x: chunks[0].solution 비어 있음",
+      "x: chunks[0].result 비어 있음",
     ]);
   });
 
   it("백틱 짝이 안 맞으면 알린다", () => {
     const cs = makeCaseStudy({
-      problems: [
-        makeProblem({ solution: "`X-Id` 헤더와 `?dpl= 쿼리" }),
-        makeProblem(),
+      chunks: [
+        makeChunk({ solution: { detail: ["`X-Id` 헤더와 `?dpl= 쿼리"] } }),
+        makeChunk(),
       ],
     });
     expect(validateCaseStudy("x", cs)).toEqual([
-      "x: problems[0].solution 백틱 짝 안 맞음",
+      "x: chunks[0].solution 백틱 짝 안 맞음",
     ]);
   });
 
-  it("해결 과정은 빈 줄로 나눈 문단마다 백틱 짝을 본다", () => {
+  it("해결 과정은 문단마다 백틱 짝을 본다", () => {
     // 전체로는 2개라 짝이 맞아 보이지만, 문단마다 따로 렌더링하면 두 문단 모두 끝까지 코드가 된다.
     const cs = makeCaseStudy({
-      problems: [makeProblem({ solution: "첫 문단 `a\n\n둘째 문단 b`" })],
+      chunks: [
+        makeChunk({ solution: { detail: ["첫 문단 `a", "둘째 문단 b`"] } }),
+      ],
     });
     expect(validateCaseStudy("x", cs)).toEqual([
-      "x: problems[0].solution 백틱 짝 안 맞음",
+      "x: chunks[0].solution 백틱 짝 안 맞음",
     ]);
   });
 

@@ -1,6 +1,7 @@
-export type DiagramId =
-  | "bff-auth-flow"
+// 덩어리 id. 그림 파일 이름(public/diagrams/<id>.drawio.svg), 웹 앵커(#id), PDF 목록이 모두 이 값을 쓴다.
+export type ChunkId =
   | "blue-green-deploy"
+  | "bff-auth-flow"
   | "msw-mock-switch"
   | "settlement-domain-config"
   | "s3-cache-policy"
@@ -8,29 +9,36 @@ export type DiagramId =
   | "ai-agent-guardrails"
   | "vite-rolldown-chunks"
   | "content-form-unify"
+  | "nextauth-token-refresh"
   | "design-token-pipeline"
   | "chromatic-visual-test"
-  | "nextauth-token-refresh"
   | "ckeditor-virtual-scroll"
   | "a11y-export-check"
+  | "first-load-lcp"
   | "fabric-group-batch-add";
 
-export type CaseVisual =
-  | { type: "diagram"; id: DiagramId; caption: string }
-  | { type: "code"; lang: string; code: string; caption?: string }
-  | {
-      type: "metrics";
-      items: { label: string; before: string; after: string }[];
-    };
+export interface ChunkSection {
+  // PDF에 나오는 짧은 글. 섹션마다 3개 이상 쓴다. 웹은 2단계부터 쓴다.
+  points?: string[];
+  // 자세한 글. 문단마다 한 항목이다.
+  detail: string[];
+}
 
-// 사례 카드의 세 칸(문제 확인 → 해결 과정 → 결과)과 1:1로 대응한다.
-// 검토했다가 제외한 방법은 solution 문단 안에 문장으로 쓴다.
-export interface CaseProblem {
+export interface ChunkFigure {
+  alt: string;
+  caption: string;
+}
+
+// 문제 해결 사례 하나. 웹 사례 카드와 PDF의 한 쪽이 이 단위다.
+// 세 섹션은 화면의 세 칸(문제 확인 → 해결 과정 → 결과)과 1:1로 대응한다.
+// 검토했다가 제외한 방법은 solution의 문단 안에 문장으로 쓴다.
+export interface Chunk {
+  id: ChunkId;
   title: string;
-  problem: string;
-  solution: string;
-  result: string;
-  visual?: CaseVisual;
+  figure?: ChunkFigure;
+  problem: ChunkSection;
+  solution: ChunkSection;
+  result: ChunkSection;
 }
 
 export interface CaseStudy {
@@ -38,7 +46,7 @@ export interface CaseStudy {
   background: string;
   // 상세 페이지 메타 줄에 붙일 팀 구성("프론트엔드 1 · 백엔드 2")
   team: string;
-  problems: CaseProblem[];
+  chunks: Chunk[];
 }
 
 export interface Project {

@@ -67,14 +67,14 @@ describe("프로젝트 데이터", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it("법무관리 프로젝트의 문제에 배포와 인증 흐름 도식이 연결되어 있다", () => {
+  it("법무관리 프로젝트의 덩어리에 배포와 인증 흐름 도식이 연결되어 있다", () => {
     const legal = getCaseStudies().find(
       (project) => project.id === "enterprise-legal-management",
     );
-    const diagramIds = legal?.caseStudy.problems.flatMap((problem) =>
-      problem.visual?.type === "diagram" ? [problem.visual.id] : [],
+    const figureIds = legal?.caseStudy.chunks.flatMap((chunk) =>
+      chunk.figure ? [chunk.id] : [],
     );
-    expect(diagramIds).toEqual([
+    expect(figureIds).toEqual([
       "blue-green-deploy",
       "bff-auth-flow",
       "msw-mock-switch",

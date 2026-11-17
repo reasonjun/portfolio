@@ -12,7 +12,7 @@ const caseStudy: CaseStudy = {
   summary: "요약",
   background: "배경",
   team: "프론트엔드 1",
-  problems: [],
+  chunks: [],
 };
 
 const makeProject = (overrides: Partial<Project>): Project => ({

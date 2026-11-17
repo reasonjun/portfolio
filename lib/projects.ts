@@ -1,12 +1,22 @@
 import type {
   ArchiveRow,
   CaseStudyProject,
+  ChunkId,
   Project,
 } from "@/app/types/project";
 import { HOME_PROJECT_IDS, PDF_PROJECT_IDS } from "@/data/project-lists";
 import { PROJECTS_DATA } from "@/data/projects";
 
 export const projectHref = (id: string): string => `/projects/${id}/`;
+
+// 덩어리의 그림 파일. 그림 경로를 만드는 곳은 여기 하나다.
+// 원본은 draw.io로 다시 열어 편집할 수 있는 SVG다(public/diagrams). 사이트에 다크 모드가 없어
+// `--theme light`로 내보내 색을 라이트로 고정했고, 그래서 흰 배경에 둔다.
+// CLI는 라벨마다 foreignObject 미지원 뷰어용 PNG 폴백(<switch> 안의 base64 <image>)을 넣어 파일이 수백 KB가 된다.
+// 브라우저는 foreignObject를 그리므로 내보낸 뒤 그 <image>를 지운다.
+// 크기는 적지 않는다. 빌드 시 SVG 파일에서 읽는다(getPublicImageSize). 다시 내보내도 어긋나지 않게 하기 위함이다.
+export const chunkFigureSrc = (id: ChunkId): string =>
+  `/diagrams/${id}.drawio.svg`;
 
 const hasCaseStudy = (project: Project): project is CaseStudyProject =>
   project.caseStudy !== undefined;
