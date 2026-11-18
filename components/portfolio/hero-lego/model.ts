@@ -39,7 +39,7 @@ interface Brick {
 
 export const OUT = -1; // 어느 자리에도 끼워져 있지 않은 블록
 
-export const VIEW_HEIGHT = 66; // 뷰포트 안쪽 높이
+export const VIEW_HEIGHT = 66;
 
 const LOGO_SLOT = 0;
 const MENU_SLOT = 1;
@@ -91,7 +91,6 @@ export const BRICKS: readonly Brick[] = [
   brick("tabs", "paper", EXTRA, true),
 ];
 
-// 처음 배치: 블록마다 끼워진 자리. 끼워져 있지 않으면 OUT이다.
 export const INITIAL_PLACEMENT: readonly number[] = BRICKS.map((brick) =>
   brick.spare ? OUT : brick.home,
 );
@@ -188,7 +187,6 @@ export const STATES: readonly (readonly number[])[] = STEPS.reduce<number[][]>(
   [[...INITIAL_PLACEMENT]],
 );
 
-// 주기 안의 시각에 몇 번째 단계까지 지났는가
 export function stepAt(cycleTime: number) {
   return STEPS.filter((step) => cycleTime >= step.at).length;
 }

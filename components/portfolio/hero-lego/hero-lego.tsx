@@ -8,7 +8,6 @@ import "./hero-lego.css";
 import { SWAP_ORDER } from "./model";
 import { SCENE } from "./scene";
 
-// 브라우저 창과 레고 블록. 같은 크기의 블록끼리 갈아 끼울 수 있고, 갈아 끼워도 나머지 블록은 움직이지 않는다.
 // 사용자가 한 번 만지면 자동 시연은 멈춘다.
 // 보조 기술에는 짧은 이름을 가진 버튼 하나로 알리고, 그림과 조작법은 숨긴 글을 aria-describedby로 읽어 준다.
 // 모션을 줄이는 설정에서는 멈춘 그림에서 결과만 바로 바뀐다.

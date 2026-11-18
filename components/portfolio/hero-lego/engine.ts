@@ -18,8 +18,6 @@ import {
 import { brickAt, cursorAt, onFace, PULL_DISTANCE, shrunk } from "./view";
 
 // 그림의 움직임을 맡는 엔진. React는 한 번 그리고, 이후 모든 변화는 속성 쓰기로만 일어난다.
-// 블록을 갈아 끼울 때는 있던 블록이 앞으로 뽑혀 작아져 사라지고, 그다음 같은 크기의 다른 블록이 나타나 끼워진다.
-// 블록은 언제나 불투명하다. 반투명한 고체는 물건처럼 보이지 않는다.
 
 const OUT_TIME = 0.36; // 블록이 뽑혀 사라지는 시간(초). 이 시간이 지나야 새 블록이 들어온다.
 const IN_TIME = 0.38; // 블록이 나타나 끼워지는 시간(초)
@@ -63,7 +61,7 @@ export function createLego(root: HTMLElement): Lego {
 
   const cursorTip = query("[data-cursor-tip]");
   const container = query("[data-bricks]");
-  const placement = [...INITIAL_PLACEMENT]; // 블록마다 끼워진 자리
+  const placement = [...INITIAL_PLACEMENT];
 
   const parts = BRICKS.map((brick, id) => {
     const node = query(`[data-brick="${id}"]`);
@@ -75,7 +73,7 @@ export function createLego(root: HTMLElement): Lego {
       center: BRICK_ART[id].center,
       x: home.x,
       top: home.top,
-      away: brick.spare ? 1 : 0, // 0 끼워짐, 1 사라짐
+      away: brick.spare ? 1 : 0,
       wait: 0, // 들어올 차례를 기다리는 남은 시간(초)
       lift: 0,
       depth: 0, // 벽에서 앞으로 나온 거리. 그리는 순서를 정한다.
@@ -143,7 +141,6 @@ export function createLego(root: HTMLElement): Lego {
     part.lift = 0;
     if (slot !== OUT) {
       const place = SLOTS[slot];
-      // 보이지 않는 블록은 들어갈 자리로 바로 옮겨 둔다.
       if (part.away === 1) {
         part.x = place.x;
         part.top = place.top;
@@ -230,7 +227,6 @@ export function createLego(root: HTMLElement): Lego {
   return {
     tick,
     swap,
-    // Enter와 Space는 갈아 끼울 수 있는 자리를 차례로 바꾼다.
     cycle: () => {
       swap(SWAP_ORDER[nextSwap]);
       nextSwap = (nextSwap + 1) % SWAP_ORDER.length;

@@ -22,7 +22,7 @@ const syncTabIndex = (api: Api) => {
 };
 
 // 화살표 키로 넘기면 포커스가 화면 밖으로 밀려난 이전 슬라이드의 확대 버튼에 남아, Enter가 보이지 않는 이미지를 연다.
-// 포커스가 다른 슬라이드 안에 있었다면 새로 보이는 슬라이드의 확대 버튼으로 옮긴다(슬라이드 하나가 한 칸이다).
+// 포커스가 다른 슬라이드 안에 있었다면 새로 보이는 슬라이드의 확대 버튼으로 옮긴다.
 const moveFocusToSelected = (api: Api) => {
   const slides = api.slideNodes();
   const selected = slides[api.selectedScrollSnap()];
@@ -33,7 +33,7 @@ const moveFocusToSelected = (api: Api) => {
 };
 
 // 화살표를 이미지 위가 아니라 아래 줄로 빼서, 화살표 옆을 누르다 확대가 열리는 일을 막는다.
-// 44px은 Apple HIG의 최소 터치 영역이다. 몇 번째 이미지인지도 함께 보여 준다.
+// 44px은 Apple HIG의 최소 터치 영역이다.
 export const GalleryControls = ({ count }: { count: number }) => {
   const { api } = useCarousel();
   const [current, setCurrent] = useState(1);

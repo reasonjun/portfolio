@@ -26,7 +26,7 @@ export const FOOT_HEIGHT = 5;
 export const WINDOW_LEFT = -62;
 export const WALL_THICKNESS = 6;
 export const WALL_RADIUS = 2; // 앞면에 붙는 그림은 이만큼 안쪽에서 시작해야 벽 밖으로 나가지 않는다.
-export const WINDOW_WIDTH = 114; // 시연 내내 변하지 않는다.
+export const WINDOW_WIDTH = 114;
 export const TITLE_BAR_HEIGHT = 14;
 export const FRAME_WIDTH = 2;
 const BOTTOM_FRAME_HEIGHT = 3;
@@ -37,8 +37,8 @@ export const BRICK_DEPTH = 6; // 깊으면 아랫줄 스터드가 윗줄을 가�
 export const STUD_PITCH = 8;
 export const STUD_RADIUS = 2.4;
 export const STUD_HEIGHT = 2;
-export const PULL_DISTANCE = 16; // 블록을 뽑을 때 벽 앞으로 당겨 나온다
-const CURSOR_Y = BRICK_DEPTH + 3; // 커서는 블록 앞면보다 조금 앞에 있다
+export const PULL_DISTANCE = 16;
+const CURSOR_Y = BRICK_DEPTH + 3;
 
 // 카메라는 바닥 판 전체(발까지)와 창을 한 장면에 맞춘다. 아무것도 패널 밖으로 잘리지 않는다.
 const FIT: Point3[] = [
@@ -58,7 +58,7 @@ const FIT: Point3[] = [
 
 export const PROJECTION = fitProjection(FIT, WIDTH, HEIGHT, {
   pad: 8,
-  headroom: 14, // 창이 패널 윗변에 붙지 않게 위를 비운다
+  headroom: 14,
   azimuth: AZIMUTH,
   elevation: ELEVATION,
 });
@@ -90,7 +90,6 @@ export const cursorAt = (x: number, top: number) => {
   return `translate(${u.toFixed(2)} ${v.toFixed(2)})`;
 };
 
-// 창 앞면의 지역 좌표로 옮기는 이동. x, top은 뷰포트 안쪽 기준이다.
 export const onFace = (x: number, top: number) =>
   `translate(${(FRAME_WIDTH + x).toFixed(2)} ${(TITLE_BAR_HEIGHT + top).toFixed(2)})`;
 
