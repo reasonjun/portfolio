@@ -131,23 +131,23 @@ export const PROJECTS_DATA: Project[] = [
           },
           problem: {
             points: [
-              "백엔드 API는 화면 개발보다 늦게 도메인별로 나오는데, mock 72개는 환경변수 하나로 전체를 켜거나 끄는 구조",
+              "백엔드 API는 화면 개발보다 늦게 도메인별로 나오는데, mock은 환경변수 하나로 전체를 켜거나 끄는 구조",
               "mock 로그인이 발급한 가짜 JWT로는 실API가 모두 401. 인증부터 실API로 넘겨야 나머지도 전환 가능",
               "백엔드 호출을 RSC·Server Action·BFF가 서버에서 해서 브라우저 Service Worker 방식의 mock으로는 가로채기 불가",
             ],
             detail: [
-              "백엔드 API는 화면 개발보다 늦게, 도메인별로 나눠서 나왔습니다. API를 기다리지 않도록 mock 72개로 화면을 먼저 만들었지만 mock은 환경변수 하나로 전체를 켜거나 끄는 구조였습니다. 먼저 나온 API만 골라 실서버에 붙일 방법이 없었습니다. mock 로그인이 발급한 가짜 JWT로는 실API가 모두 401을 반환했습니다. 인증부터 실API로 넘겨야 나머지도 전환할 수 있었습니다. 또 이 앱에서는 브라우저가 백엔드를 직접 부르지 않고 RSC·Server Action·BFF가 서버에서 호출해서 브라우저 Service Worker 방식의 mock으로는 요청을 가로채지 못했습니다.",
+              "백엔드 API는 화면 개발보다 늦게, 도메인별로 나눠서 나왔습니다. API를 기다리지 않도록 mock으로 화면을 먼저 만들었지만 mock은 환경변수 하나로 전체를 켜거나 끄는 구조였습니다. 먼저 나온 API만 골라 실서버에 붙일 방법이 없었습니다. mock 로그인이 발급한 가짜 JWT로는 실API가 모두 401을 반환했습니다. 인증부터 실API로 넘겨야 나머지도 전환할 수 있었습니다. 또 이 앱에서는 브라우저가 백엔드를 직접 부르지 않고 RSC·Server Action·BFF가 서버에서 호출해서 브라우저 Service Worker 방식의 mock으로는 요청을 가로채지 못했습니다.",
             ],
           },
           solution: {
             points: [
               "세 가지 방식을 비교. 경로 allowlist 환경변수는 API가 나올 때마다 설정 변경이, catch-all 프록시는 mock 서버 동작의 재현·유지가 필요해 제외",
-              "MSW의 App Router 서버 쪽 가로채기 이슈(msw#1644)는 공통코드·부서 도메인 파일럿으로 Next 16 + Turbopack에서 재현되지 않음을 확인",
+              "MSW의 App Router 서버 쪽 가로채기는 파일럿으로 Next 16 + Turbopack에서 동작함을 확인",
               "Route Handler 72개를 리졸버 40개로 이관. `instrumentation.ts`에서 mock 모드일 때만 서버의 fetch를 가로채고 핸들러가 없는 엔드포인트는 실API로 통과",
               "운영·스테이징 빌드 스크립트에 `NEXT_PUBLIC_USE_MOCK=false`를 고정해 mock 코드를 산출물에서 제거",
             ],
             detail: [
-              "세 가지 방식을 비교했습니다. 경로 allowlist 환경변수는 구현과 검증까지 마쳤지만 API가 나올 때마다 설정을 바꿔야 했고 catch-all 프록시는 mock 서버 동작을 직접 재현해 유지해야 했습니다. MSW는 표준 도구지만 Next.js App Router 서버 쪽 가로채기 이슈(msw#1644)가 프로세스 분리 문제로 미해결 종료됐기 때문에 공통코드·부서 도메인으로 먼저 파일럿을 돌렸습니다. Next 16 + Turbopack에서 재현되지 않는 것을 확인한 뒤 Route Handler 72개를 리졸버 40개로 이관했습니다.",
+              "세 가지 방식을 비교했습니다. 경로 allowlist 환경변수는 구현과 검증까지 마쳤지만 API가 나올 때마다 설정을 바꿔야 했고 catch-all 프록시는 mock 서버 동작을 직접 재현해 유지해야 했습니다. MSW는 표준 도구지만 Next.js App Router에서 서버가 호출하는 요청도 가로챌 수 있는지 먼저 확인해야 했습니다. 그래서 공통코드·부서 도메인으로 파일럿을 돌렸고 Next 16 + Turbopack에서 서버가 호출하는 요청이 가로채지는 것을 확인한 뒤 Route Handler 72개를 리졸버 40개로 이관했습니다.",
               '`instrumentation.ts`에서 mock 모드일 때만 `server.listen({ onUnhandledRequest: "bypass" })`로 서버의 fetch를 가로챕니다. 핸들러가 있는 엔드포인트는 mock이 응답하고 없는 엔드포인트는 실API로 그대로 나갑니다. API가 나오면 해당 핸들러를 지우는 것으로 전환됩니다.',
               "mock 로그인은 아무 자격증명에나 JWT를 발급해서 운영 산출물에 실리면 안 됩니다. 리뷰에서 `NEXT_PUBLIC_*` 값은 빌드 시점에 변수가 있어야만 상수로 인라인된다는 것을 확인했습니다. 변수가 없으면 런타임 조회로 남아 mock 코드가 산출물에서 제거되지 않습니다. 이 때문에 운영·스테이징 빌드 스크립트에 `NEXT_PUBLIC_USE_MOCK=false`를 고정했습니다.",
             ],
