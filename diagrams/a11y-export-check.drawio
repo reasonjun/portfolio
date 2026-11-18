@@ -1,0 +1,137 @@
+<mxfile host="Electron">
+  <diagram id="d" name="Page-1">
+    <mxGraphModel grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="l1" parent="1" style="swimlane;startSize=34;html=1;fontSize=16;fontColor=#111111;strokeColor=#BBBBBB;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;rounded=0;fontFamily=Noto Sans KR;" value="&lt;b&gt;내보내기 전 검사&lt;/b&gt;: 오류를 고치거나 무시를 골라야 내보냄" vertex="1">
+          <mxGeometry height="214" width="750" as="geometry" />
+        </mxCell>
+        <mxCell id="b1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;내보내기&lt;/b&gt;&lt;br&gt;클릭" vertex="1">
+          <mxGeometry height="72" width="84" x="12" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="b2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;접근성 검사&lt;/b&gt;&lt;br&gt;검사 중 버튼 잠금" vertex="1">
+          <mxGeometry height="72" width="150" x="122" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="b3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;오류 목록&lt;/b&gt;&lt;br&gt;오류마다 빠른 수정·무시&lt;br&gt;모두 무시하고 내보내기" vertex="1">
+          <mxGeometry height="72" width="196" x="368" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="b4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;내보내기&lt;/b&gt;" vertex="1">
+          <mxGeometry height="72" width="94" x="644" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="eb1" edge="1" parent="1" source="b1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="b2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eb2" edge="1" parent="1" source="b2" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="b3" value="오류 있음">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eb3" edge="1" parent="1" source="b3" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="b4" value="모두 처리">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eb4" edge="1" parent="1" source="b2" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=0;entryX=0.5;entryY=0;fontFamily=Noto Sans KR;" target="b4" value="오류 없음">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="197" y="50" />
+              <mxPoint x="691" y="50" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rules" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;align=left;spacingLeft=10;fontSize=15;fontFamily=Noto Sans KR;" value="&lt;div style=&quot;word-break:keep-all&quot;&gt;&lt;b&gt;검사 규칙&lt;/b&gt;: 이미지 대체 텍스트(빈 값 포함)&amp;nbsp;· 제목 문단 유무&amp;nbsp;· 글자·배경 명도 대비 4.5:1(WCAG AA)&amp;nbsp;·&lt;br&gt;&lt;span style=&quot;white-space:nowrap&quot;&gt;링크 텍스트·URL&lt;/span&gt;&amp;nbsp;· 이미지의 촉각 그래픽 데이터&lt;/div&gt;" vertex="1">
+          <mxGeometry height="52" width="726" x="12" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="l2b" parent="1" style="swimlane;startSize=34;html=1;fontSize=16;fontColor=#111111;strokeColor=#BBBBBB;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;rounded=0;fontFamily=Noto Sans KR;" value="&lt;b&gt;변경 전&lt;/b&gt;: 에디터 문서를 검사" vertex="1">
+          <mxGeometry height="254" width="280" y="226" as="geometry" />
+        </mxCell>
+        <mxCell id="l2a" parent="1" style="swimlane;startSize=34;html=1;fontSize=16;fontColor=#111111;strokeColor=#BBBBBB;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;rounded=0;fontFamily=Noto Sans KR;" value="&lt;b&gt;변경 후&lt;/b&gt;: 원본 문단 배열을 검사" vertex="1">
+          <mxGeometry height="254" width="450" x="300" y="226" as="geometry" />
+        </mxCell>
+        <mxCell id="s0" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#555555;strokeColor=#888888;dashed=1;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="빈 문단" vertex="1">
+          <mxGeometry height="40" width="112" x="12" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#E8E8E8;arcSize=12;fontFamily=Noto Sans KR;" value="실제 내용" vertex="1">
+          <mxGeometry height="40" width="112" x="12" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#555555;strokeColor=#888888;dashed=1;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="빈 문단" vertex="1">
+          <mxGeometry height="40" width="112" x="12" y="368" as="geometry" />
+        </mxCell>
+        <mxCell id="sl0" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontColor=#444444;fontFamily=Noto Sans KR;" value="&lt;div style=&quot;word-break:keep-all&quot;&gt;화면 밖:&lt;br&gt;검사할 내용 없음&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="134" x="134" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="sl1" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontColor=#444444;fontFamily=Noto Sans KR;" value="화면 근처: 검사됨" vertex="1">
+          <mxGeometry height="40" width="134" x="134" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="sl2" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=15;fontColor=#444444;fontFamily=Noto Sans KR;" value="&lt;div style=&quot;word-break:keep-all&quot;&gt;화면 밖:&lt;br&gt;검사할 내용 없음&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="134" x="134" y="368" as="geometry" />
+        </mxCell>
+        <mxCell id="snote" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=15;fontColor=#444444;fontFamily=Noto Sans KR;" value="&lt;div style=&quot;word-break:keep-all&quot;&gt;가상 스크롤 뒤에는 화면 밖 문단의 오류를 찾지 못함&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="256" x="12" y="418" as="geometry" />
+        </mxCell>
+        <mxCell id="p1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;에디터 현재 내용&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="190" x="312" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;원본 문단 배열&lt;/b&gt;&lt;br&gt;문서 전체 문단" vertex="1">
+          <mxGeometry height="56" width="190" x="312" y="338" as="geometry" />
+        </mxCell>
+        <mxCell id="p3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;DOMParser&lt;/b&gt;로 파싱" vertex="1">
+          <mxGeometry height="40" width="190" x="312" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="q1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;같은 규칙으로 검사&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="200" x="538" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="q2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;오류 위치 저장&lt;/b&gt;&lt;br&gt;DOM 참조 대신&lt;br&gt;자식 순번 경로&lt;br&gt;예: [42, 0, 1]" vertex="1">
+          <mxGeometry height="92" width="200" x="538" y="332" as="geometry" />
+        </mxCell>
+        <mxCell id="qnote" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=15;fontColor=#444444;fontFamily=Noto Sans KR;" value="&lt;div style=&quot;word-break:keep-all&quot;&gt;화면 밖 DOM은 스크롤할 때마다 다시 만들어짐&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="200" x="538" y="432" as="geometry" />
+        </mxCell>
+        <mxCell id="ep1" edge="1" parent="1" source="p1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=Noto Sans KR;" target="p2" value="배열에 반영">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ep2" edge="1" parent="1" source="p2" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=Noto Sans KR;" target="p3" value="이어 붙인 HTML">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ep3" edge="1" parent="1" source="p3" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="q1" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="440" />
+              <mxPoint x="520" y="292" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eq1" edge="1" parent="1" source="q1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=Noto Sans KR;" target="q2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="l3" parent="1" style="swimlane;startSize=34;html=1;fontSize=16;fontColor=#111111;strokeColor=#BBBBBB;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;rounded=0;fontFamily=Noto Sans KR;" value="&lt;b&gt;오류로 이동&lt;/b&gt;: 화면 밖 문단도 그 위치로 가서 고침" vertex="1">
+          <mxGeometry height="130" width="750" y="492" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;div style=&quot;word-break:keep-all&quot;&gt;&lt;b&gt;문단으로 스크롤&lt;/b&gt;&lt;br&gt;오류가 있는 문단&lt;/div&gt;" vertex="1">
+          <mxGeometry height="72" width="120" x="12" y="538" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;div style=&quot;word-break:keep-all&quot;&gt;&lt;b&gt;최대 2초 대기&lt;/b&gt;&lt;br&gt;빈 문단 →&lt;br&gt;실제 내용&lt;/div&gt;" vertex="1">
+          <mxGeometry height="72" width="130" x="146" y="538" as="geometry" />
+        </mxCell>
+        <mxCell id="ec1" edge="1" parent="1" source="c1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="c2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;div style=&quot;word-break:keep-all&quot;&gt;&lt;b&gt;요소 강조&lt;/b&gt;&lt;br&gt;순번 경로로&lt;br&gt;요소를 찾음&lt;/div&gt;" vertex="1">
+          <mxGeometry height="72" width="120" x="290" y="538" as="geometry" />
+        </mxCell>
+        <mxCell id="ec2" edge="1" parent="1" source="c2" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="c3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;div style=&quot;word-break:keep-all&quot;&gt;&lt;b&gt;빠른 수정&lt;/b&gt;&lt;br&gt;대체 텍스트 입력&lt;br&gt;링크 수정&lt;/div&gt;" vertex="1">
+          <mxGeometry height="72" width="130" x="424" y="538" as="geometry" />
+        </mxCell>
+        <mxCell id="ec3" edge="1" parent="1" source="c3" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="c4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;div style=&quot;word-break:keep-all&quot;&gt;&lt;b&gt;원본 배열에 반영&lt;/b&gt;&lt;br&gt;순번이 밀리면&lt;br&gt;남은 오류 경로 재계산&lt;/div&gt;" vertex="1">
+          <mxGeometry height="72" width="170" x="568" y="538" as="geometry" />
+        </mxCell>
+        <mxCell id="ec4" edge="1" parent="1" source="c4" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="c5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

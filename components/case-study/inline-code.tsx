@@ -21,7 +21,10 @@ export const keepLineStart = (text: string): ReactNode =>
     );
   });
 
-/** 백틱으로 감싼 부분을 <code>로 렌더링한다. 코드 밖 글에는 줄머리 금칙(keepLineStart)을 적용한다. */
+/**
+ * 백틱으로 감싼 부분을 <code>로 렌더링한다. 코드 밖 글에는 줄머리 금칙(keepLineStart)을 적용한다.
+ * 이 함수를 쓰는 페이지는 바깥 요소에 codeFont.variable(app/fonts.ts)을 달아야 코드가 D2Coding으로 그려진다.
+ */
 export const renderInlineCode = (text: string): ReactNode =>
   text.split("`").map((part, i) => {
     const isCode = i % 2 === 1;

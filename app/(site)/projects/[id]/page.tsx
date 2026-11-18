@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { codeFont } from "@/app/fonts";
 import { BackLink } from "@/components/back-link";
 import { CaseStudyBody } from "@/components/case-study/case-study-body";
 import { PROFILE } from "@/data/profile";
@@ -44,7 +45,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   if (!project) notFound();
 
   return (
-    <div className="py-12 space-y-10">
+    <div className={`${codeFont.variable} py-12 space-y-10`}>
       <BackLink href="/archive/">전체 프로젝트</BackLink>
       <CaseStudyBody project={project} />
       <BackLink href="/archive/">전체 프로젝트</BackLink>

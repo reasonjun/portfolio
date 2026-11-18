@@ -7,6 +7,7 @@
     "build:site": "next build --turbopack",
     "build:pdf": "node scripts/generate-pdf.mjs",
     "build": "pnpm build:site && pnpm build:pdf",
+    "diagrams": "node scripts/bake-diagrams.mjs",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",
