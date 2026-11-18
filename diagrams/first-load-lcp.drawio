@@ -19,10 +19,10 @@
         <mxCell id="e0" edge="1" parent="1" source="b0" style="endArrow=classic;html=1;strokeColor=#111111;strokeWidth=1.5;fontFamily=Noto Sans KR;" target="a0">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="b1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#555555;strokeColor=#888888;dashed=1;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;필요 없는 코드까지 처음에 받음&lt;/b&gt;&lt;br&gt;Bootstrap 2회·미사용 Konva&lt;br&gt;지연 로딩·청크 분리 없음" vertex="1">
+        <mxCell id="b1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#555555;strokeColor=#888888;dashed=1;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;필요 없는 코드까지 처음에 받음&lt;/b&gt;&lt;br&gt;중복·미사용 라이브러리&lt;br&gt;지연 로딩·청크 분리 없음" vertex="1">
           <mxGeometry height="84" width="328" x="8" y="110" as="geometry" />
         </mxCell>
-        <mxCell id="a1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;필요한 코드만 처음에 받음&lt;/b&gt;&lt;br&gt;11곳 지연 로딩·splitChunks&lt;br&gt;Bootstrap 1회·Konva 제거" vertex="1">
+        <mxCell id="a1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;필요한 코드만 처음에 받음&lt;/b&gt;&lt;br&gt;11곳 지연 로딩·splitChunks&lt;br&gt;중복·미사용 라이브러리 정리" vertex="1">
           <mxGeometry height="84" width="328" x="392" y="110" as="geometry" />
         </mxCell>
         <mxCell id="e1" edge="1" parent="1" source="b1" style="endArrow=classic;html=1;strokeColor=#111111;strokeWidth=1.5;fontFamily=Noto Sans KR;" target="a1">
