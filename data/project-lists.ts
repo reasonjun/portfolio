@@ -21,7 +21,7 @@ export const PDF_CHUNK_IDS: ChunkId[] = [
   "e2e-regression-baseline",
   "content-form-unify",
   "settlement-domain-config",
-  "design-token-pipeline",
+  "design-system-architecture",
   "ckeditor-virtual-scroll",
   "first-load-lcp",
   "fabric-group-batch-add",
