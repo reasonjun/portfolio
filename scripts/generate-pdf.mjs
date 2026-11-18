@@ -7,7 +7,11 @@ const EXPORT_URL = `http://localhost:${PORT}/portfolio/export/`;
 const OUTPUT_PATH = "out/portfolio.pdf";
 
 const server = await startServer(PORT);
-const browser = await chromium.launch();
+// 리눅스(배포 빌드)의 headless Chromium은 글자 폭을 정수 픽셀로 맞춰, 같은 글꼴 파일인데도 영문·숫자가 맥보다 넓게 찍힌다.
+// 힌팅을 끄면 글꼴에 적힌 폭 그대로 배치해, PDF를 어느 컴퓨터에서 만들어도 글자 간격이 같다.
+const browser = await chromium.launch({
+  args: ["--font-render-hinting=none"],
+});
 
 try {
   // 실패했을 때 예전 PDF가 남아 배포되지 않게 먼저 지운다.
@@ -17,7 +21,6 @@ try {
   await page.goto(EXPORT_URL, { waitUntil: "networkidle" });
   await page.emulateMedia({ media: "print", colorScheme: "light" });
 
-  // lazy 이미지를 모두 불러오고, 한글 글꼴 조각이 로드될 때까지 기다린다.
   await page.evaluate(async () => {
     const images = [...document.images];
     for (const image of images) image.loading = "eager";

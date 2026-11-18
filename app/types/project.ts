@@ -1,4 +1,4 @@
-// 덩어리 id. 그림 파일 이름(public/diagrams/<id>.drawio.svg), 웹 앵커(#id), PDF 목록이 모두 이 값을 쓴다.
+// 덩어리 id. 그림 파일 이름(원본 diagrams/<id>.drawio, 구운 그림 public/diagrams/<id>.svg), 웹 앵커(#id), PDF 목록이 모두 이 값을 쓴다.
 export type ChunkId =
   | "blue-green-deploy"
   | "bff-auth-flow"

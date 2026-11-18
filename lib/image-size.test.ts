@@ -52,8 +52,8 @@ describe("readImageSize", () => {
     expect(readImageSize(vp8l)).toEqual({ width: 1234, height: 567 });
   });
 
-  it("SVG 루트 태그의 width/height를 읽고, 편집용 content 안의 값은 무시한다", () => {
-    // draw.io SVG처럼 루트 태그가 앞 4KB 안에서 닫히지 않아도 읽는다.
+  it("SVG 루트 태그의 width/height를 읽고, 속성 값 안의 숫자는 무시한다", () => {
+    // 루트 태그가 앞 4KB 안에서 닫히지 않아도 읽는다.
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="992px" height="732px" viewBox="0 0 992 732" content="&lt;mxGeometry width=&quot;170&quot; height=&quot;54&quot;/&gt;${"x".repeat(5000)}`;
     expect(readImageSize(Buffer.from(svg).subarray(0, 4096))).toEqual({
       width: 992,
@@ -79,7 +79,7 @@ describe("getPublicImageSize", () => {
     for (const publicPath of [
       "design-system/image-1.webp",
       "dot-canvas/image-4.webp",
-      "diagrams/blue-green-deploy.drawio.svg",
+      "diagrams/blue-green-deploy.svg",
     ]) {
       const whole = readImageSize(
         readFileSync(path.join(process.cwd(), "public", publicPath)),

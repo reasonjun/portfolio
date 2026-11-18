@@ -1,0 +1,52 @@
+<mxfile host="Electron">
+  <diagram id="e2e-regression-baseline" name="e2e-regression-baseline">
+    <mxGraphModel grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="l1" parent="1" style="swimlane;startSize=34;html=1;fontSize=16;fontColor=#111111;strokeColor=#BBBBBB;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;rounded=0;fontFamily=Noto Sans KR;" value="&lt;b&gt;기준선 고정&lt;/b&gt;" vertex="1">
+          <mxGeometry height="388" width="222" as="geometry" />
+        </mxCell>
+        <mxCell id="bl" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;E2E 기준선&lt;/b&gt;&lt;br&gt;326가지 조합의 현재 동작&lt;br&gt;결함도 고치지 않고 고정" vertex="1">
+          <mxGeometry height="90" width="198" x="12" y="149" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" parent="1" style="swimlane;startSize=34;html=1;fontSize=16;fontColor=#111111;strokeColor=#BBBBBB;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;rounded=0;fontFamily=Noto Sans KR;" value="&lt;b&gt;AI 코딩 에이전트로 구현·단계마다 같은 E2E 재통과&lt;/b&gt;" vertex="1">
+          <mxGeometry height="388" width="492" x="252" as="geometry" />
+        </mxCell>
+        <mxCell id="s0" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;일괄등록 코드 제거&lt;/b&gt;: 화면에서 도달할 수 없던 경로" vertex="1">
+          <mxGeometry height="46" width="468" x="264" y="46" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;① 규칙 통합&lt;/b&gt;: 두 화면 → 순수 함수 모듈 한 곳&lt;br&gt;(화면별 분기 유지)" vertex="1">
+          <mxGeometry height="58" width="468" x="264" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;② 입력표 통일&lt;/b&gt;: 그리드 설정 → 공유 composable" vertex="1">
+          <mxGeometry height="46" width="468" x="264" y="194" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;③ 선언형 전환&lt;/b&gt;: 조건별 표시 규칙" vertex="1">
+          <mxGeometry height="46" width="468" x="264" y="262" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;④ 컴포넌트 분리&lt;/b&gt;: 단계·영역별" vertex="1">
+          <mxGeometry height="46" width="468" x="264" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="e0" edge="1" parent="1" source="bl" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="s0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n0" edge="1" parent="1" source="s0" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=Noto Sans KR;" target="s1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n1" edge="1" parent="1" source="s1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=Noto Sans KR;" target="s2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n2" edge="1" parent="1" source="s2" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=Noto Sans KR;" target="s3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" edge="1" parent="1" source="s3" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontFamily=Noto Sans KR;" target="s4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="note" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fontColor=#111111;strokeColor=none;fillColor=#F0F0F0;align=left;spacingLeft=14;fontFamily=Noto Sans KR;" value="결과: 정산 규칙 정의 두 곳 → 한 곳·네 단계 후에도 같은 E2E 통과·백엔드 mock 기반 화면 검증·CI 상시 실행 아님" vertex="1">
+          <mxGeometry height="48" width="744" y="400" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

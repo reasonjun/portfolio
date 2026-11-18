@@ -45,8 +45,8 @@ const readWebp = (buffer: Buffer): ImageSize | null => {
   return null;
 };
 
-// 루트 <svg>의 width/height(px), 없으면 viewBox. draw.io SVG는 루트 태그에 편집용 원본(content)이 커서
-// 앞부분만 읽으면 태그가 닫히지 않으므로 닫는 ">"를 요구하지 않는다.
+// 루트 <svg>의 width/height(단위 없음이나 px), 없으면 viewBox. pt 같은 다른 단위는 읽지 않고 viewBox로 넘어가므로,
+// 구운 그림은 크기를 px 숫자로 적는다(scripts/bake-diagrams.mjs). 앞 4KB만 읽으므로 닫는 ">"는 요구하지 않는다.
 const readSvg = (buffer: Buffer): ImageSize | null => {
   const svgTag = buffer.toString("utf8").match(/<svg\b[^>]*/)?.[0];
   if (!svgTag) return null;

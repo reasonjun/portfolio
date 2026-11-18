@@ -1,0 +1,178 @@
+<mxfile host="Electron">
+  <diagram id="d" name="Page-1">
+    <mxGraphModel grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ctx" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fontColor=#111111;strokeColor=none;fillColor=#F0F0F0;align=left;spacingLeft=14;fontFamily=Noto Sans KR;" value="&lt;div style=&quot;word-break:keep-all&quot;&gt;올가미로 고른 핀 n개 → 복제본 n개를 Fabric.js 그룹에 넣음&lt;br&gt;group.add()를 부를 때마다 기본 레이아웃(FitContentLayout)이&lt;br&gt;그룹 안 모든 객체의 위치·크기를 다시 계산&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="750" as="geometry" />
+        </mxCell>
+        <mxCell id="lb" parent="1" style="swimlane;startSize=34;html=1;fontSize=16;fontColor=#111111;strokeColor=#BBBBBB;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;rounded=0;fontFamily=Noto Sans KR;" value="&lt;b&gt;변경 전&lt;/b&gt;: 반복문에서 핀마다 add(pin)" vertex="1">
+          <mxGeometry height="358" width="365" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="la" parent="1" style="swimlane;startSize=34;html=1;fontSize=16;fontColor=#111111;strokeColor=#BBBBBB;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;rounded=0;fontFamily=Noto Sans KR;" value="&lt;b&gt;변경 후&lt;/b&gt;: 배열을 만든 뒤 add(...pins)" vertex="1">
+          <mxGeometry height="358" width="365" x="385" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="lex" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#444444;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="예: 핀 5개" vertex="1">
+          <mxGeometry height="24" width="200" x="12" y="134" as="geometry" />
+        </mxCell>
+        <mxCell id="ll1" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="add 1번째" vertex="1">
+          <mxGeometry height="28" width="84" x="12" y="164" as="geometry" />
+        </mxCell>
+        <mxCell id="lq1_0" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="100" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="lr1" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="재계산 1개" vertex="1">
+          <mxGeometry height="28" width="117" x="236" y="164" as="geometry" />
+        </mxCell>
+        <mxCell id="ll2" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="add 2번째" vertex="1">
+          <mxGeometry height="28" width="84" x="12" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="lq2_0" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="100" y="204" as="geometry" />
+        </mxCell>
+        <mxCell id="lq2_1" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="124" y="204" as="geometry" />
+        </mxCell>
+        <mxCell id="lr2" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="재계산 2개" vertex="1">
+          <mxGeometry height="28" width="117" x="236" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="ll3" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="add 3번째" vertex="1">
+          <mxGeometry height="28" width="84" x="12" y="236" as="geometry" />
+        </mxCell>
+        <mxCell id="lq3_0" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="100" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="lq3_1" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="124" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="lq3_2" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="148" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="lr3" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="재계산 3개" vertex="1">
+          <mxGeometry height="28" width="117" x="236" y="236" as="geometry" />
+        </mxCell>
+        <mxCell id="ll4" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="add 4번째" vertex="1">
+          <mxGeometry height="28" width="84" x="12" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="lq4_0" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="100" y="276" as="geometry" />
+        </mxCell>
+        <mxCell id="lq4_1" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="124" y="276" as="geometry" />
+        </mxCell>
+        <mxCell id="lq4_2" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="148" y="276" as="geometry" />
+        </mxCell>
+        <mxCell id="lq4_3" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="172" y="276" as="geometry" />
+        </mxCell>
+        <mxCell id="lr4" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="재계산 4개" vertex="1">
+          <mxGeometry height="28" width="117" x="236" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="ll5" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="add 5번째" vertex="1">
+          <mxGeometry height="28" width="84" x="12" y="308" as="geometry" />
+        </mxCell>
+        <mxCell id="lq5_0" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="100" y="312" as="geometry" />
+        </mxCell>
+        <mxCell id="lq5_1" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="124" y="312" as="geometry" />
+        </mxCell>
+        <mxCell id="lq5_2" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="148" y="312" as="geometry" />
+        </mxCell>
+        <mxCell id="lq5_3" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="172" y="312" as="geometry" />
+        </mxCell>
+        <mxCell id="lq5_4" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="196" y="312" as="geometry" />
+        </mxCell>
+        <mxCell id="lr5" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="재계산 5개" vertex="1">
+          <mxGeometry height="28" width="117" x="236" y="308" as="geometry" />
+        </mxCell>
+        <mxCell id="rex" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#444444;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="예: 핀 5개" vertex="1">
+          <mxGeometry height="24" width="200" x="397" y="134" as="geometry" />
+        </mxCell>
+        <mxCell id="rarr" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="복제본 배열" vertex="1">
+          <mxGeometry height="28" width="84" x="397" y="164" as="geometry" />
+        </mxCell>
+        <mxCell id="rbox" parent="1" style="rounded=1;html=1;strokeColor=#888888;dashed=1;fillColor=none;arcSize=12;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="32" width="124" x="481" y="162" as="geometry" />
+        </mxCell>
+        <mxCell id="rq0_0" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="485" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="rq0_1" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="509" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="rq0_2" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="533" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="rq0_3" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="557" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="rq0_4" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="581" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="rl" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="add 1번" vertex="1">
+          <mxGeometry height="28" width="84" x="397" y="308" as="geometry" />
+        </mxCell>
+        <mxCell id="rq1_0" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="485" y="312" as="geometry" />
+        </mxCell>
+        <mxCell id="rq1_1" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="509" y="312" as="geometry" />
+        </mxCell>
+        <mxCell id="rq1_2" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="533" y="312" as="geometry" />
+        </mxCell>
+        <mxCell id="rq1_3" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="557" y="312" as="geometry" />
+        </mxCell>
+        <mxCell id="rq1_4" parent="1" style="rounded=0;html=1;strokeColor=#111111;fillColor=#E8E8E8;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="581" y="312" as="geometry" />
+        </mxCell>
+        <mxCell id="rr" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="재계산 5개" vertex="1">
+          <mxGeometry height="28" width="117" x="621" y="308" as="geometry" />
+        </mxCell>
+        <mxCell id="rdown" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#444444;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" value="한 번에 넣음">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="543" y="196" as="sourcePoint" />
+            <mxPoint x="543" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lrule" parent="1" style="rounded=0;html=1;strokeColor=none;fillColor=#BBBBBB;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="1" width="341" x="12" y="352" as="geometry" />
+        </mxCell>
+        <mxCell id="ls0" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="합계 1+2+…+n = n(n+1)/2 → &lt;b&gt;O(n²)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="24" width="341" x="12" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="ls1" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="핀 2,400개: 약 288만 번*" vertex="1">
+          <mxGeometry height="24" width="341" x="12" y="386" as="geometry" />
+        </mxCell>
+        <mxCell id="ls2" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="끝날 때까지 메인 스레드 점유 → 멈춤" vertex="1">
+          <mxGeometry height="24" width="341" x="12" y="412" as="geometry" />
+        </mxCell>
+        <mxCell id="rrule" parent="1" style="rounded=0;html=1;strokeColor=none;fillColor=#BBBBBB;fontFamily=Noto Sans KR;" value="" vertex="1">
+          <mxGeometry height="1" width="341" x="397" y="352" as="geometry" />
+        </mxCell>
+        <mxCell id="rs0" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="합계 n → &lt;b&gt;O(n)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="24" width="341" x="397" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="rs1" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="핀 2,400개: 2,400번" vertex="1">
+          <mxGeometry height="24" width="341" x="397" y="386" as="geometry" />
+        </mxCell>
+        <mxCell id="rs2" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#111111;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="재계산 한 번으로 끝나 멈춤 없음" vertex="1">
+          <mxGeometry height="24" width="341" x="397" y="412" as="geometry" />
+        </mxCell>
+        <mxCell id="foot" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#444444;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="* 코드 구조로 계산한 최대값(잰 값 아님)" vertex="1">
+          <mxGeometry height="22" width="750" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="also" parent="1" style="text;html=1;whiteSpace=wrap;fontSize=15;fontColor=#444444;verticalAlign=middle;align=left;fontFamily=Noto Sans KR;" value="잘라내기·이동, 올가미 영역 표시도 같은 방식으로 바꿈" vertex="1">
+          <mxGeometry height="22" width="750" y="486" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

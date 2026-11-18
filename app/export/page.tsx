@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { codeFont } from "@/app/fonts";
+import type { CaseStudyProject } from "@/app/types/project";
 import { ChunkPoints } from "@/components/case-study/chunk-points";
 import {
   keepLineStart,
@@ -14,6 +16,7 @@ import {
   chunkFigureSrc,
   getMainTech,
   getPdfChunks,
+  type PdfChunk,
 } from "@/lib/projects";
 import { joinMeta } from "@/lib/utils";
 import "./paper.css";
@@ -32,12 +35,69 @@ const SITE_LABEL = PROFILE.siteUrl
   .replace(/^https?:\/\//, "")
   .replace(/\/$/, "");
 
+interface ChunkSheetProps {
+  project: CaseStudyProject;
+  chunk: PdfChunk;
+  pageNumber: number;
+  pageCount: number;
+}
+
+const ChunkSheet = ({
+  project,
+  chunk,
+  pageNumber,
+  pageCount,
+}: ChunkSheetProps) => {
+  const src = chunkFigureSrc(chunk.id);
+  const size = getPublicImageSize(src);
+
+  return (
+    <section className="sheet" data-sheet={chunk.id}>
+      <header className="sheet-meta">
+        <p>
+          {joinMeta(
+            project.title,
+            project.company,
+            project.period,
+            project.caseStudy.team,
+          )}
+        </p>
+        <p>{getMainTech(project.techStack).join(" · ")}</p>
+      </header>
+      <h2 className="sheet-title">
+        <a
+          href={`${PROFILE.siteUrl}projects/${project.id}/#${chunkDetailAnchor(chunk.id)}`}
+        >
+          {keepLineStart(chunk.title)}
+        </a>
+      </h2>
+      <figure
+        className="sheet-figure"
+        style={{ aspectRatio: `${size.width} / ${size.height}` }}
+      >
+        <Image
+          src={withBasePath(src)}
+          alt={chunk.figure.alt}
+          width={size.width}
+          height={size.height}
+          loading="eager"
+        />
+      </figure>
+      <p className="sheet-caption">{renderInlineCode(chunk.figure.caption)}</p>
+      <ChunkPoints chunk={chunk} />
+      <footer className="sheet-foot">
+        {pageNumber} / {pageCount}
+      </footer>
+    </section>
+  );
+};
+
 export default function ExportPage() {
   const chunks = getPdfChunks();
   const pageCount = chunks.length + 1;
 
   return (
-    <div className="paper">
+    <div className={`paper ${codeFont.variable}`}>
       {/* 표지. 소개·경력·연락처·목차는 이력서와 겹쳐서 넣지 않는다. */}
       <section className="sheet sheet-cover" data-sheet="cover">
         <h1 className="cover-name">{PROFILE.name}</h1>
@@ -51,53 +111,16 @@ export default function ExportPage() {
       </section>
 
       {/* 덩어리 하나에 한 쪽. scripts/generate-pdf.mjs가 data-sheet로 쪽 상자를 찾는다. 이름을 바꾸면 함께 바꾼다. */}
-      {chunks.map(({ project, chunk }, index) => {
-        const src = chunkFigureSrc(chunk.id);
-        const size = getPublicImageSize(src);
-
-        return (
-          <section key={chunk.id} className="sheet" data-sheet={chunk.id}>
-            <header className="sheet-meta">
-              <p>
-                {joinMeta(
-                  project.title,
-                  project.company,
-                  project.period,
-                  project.caseStudy.team,
-                )}
-              </p>
-              <p>{getMainTech(project.techStack).join(" · ")}</p>
-            </header>
-            <h2 className="sheet-title">
-              <a
-                href={`${PROFILE.siteUrl}projects/${project.id}/#${chunkDetailAnchor(chunk.id)}`}
-              >
-                {keepLineStart(chunk.title)}
-              </a>
-            </h2>
-            <figure
-              className="sheet-figure"
-              style={{ aspectRatio: `${size.width} / ${size.height}` }}
-            >
-              <Image
-                src={withBasePath(src)}
-                alt={chunk.figure.alt}
-                width={size.width}
-                height={size.height}
-                loading="eager"
-              />
-            </figure>
-            <p className="sheet-caption">
-              {renderInlineCode(chunk.figure.caption)}
-            </p>
-            <ChunkPoints chunk={chunk} />
-            {/* 쪽 번호는 표지를 1로 센다. */}
-            <footer className="sheet-foot">
-              {index + 2} / {pageCount}
-            </footer>
-          </section>
-        );
-      })}
+      {chunks.map(({ project, chunk }, index) => (
+        <ChunkSheet
+          key={chunk.id}
+          project={project}
+          chunk={chunk}
+          // 쪽 번호는 표지를 1로 센다.
+          pageNumber={index + 2}
+          pageCount={pageCount}
+        />
+      ))}
     </div>
   );
 }

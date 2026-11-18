@@ -1,0 +1,127 @@
+<mxfile host="Electron">
+  <diagram id="Cll7mO9rkbnharKz01Pw" name="pageWithNumber">
+    <mxGraphModel grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="780" pageHeight="720" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=14;fontFamily=Noto Sans KR;" value="브라우저" vertex="1">
+          <mxGeometry height="40" width="150" x="10" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#999999;dashed=1;fontFamily=Noto Sans KR;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="40" as="sourcePoint" />
+            <mxPoint x="85" y="605" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=14;fontFamily=Noto Sans KR;" value="BFF (Next.js)" vertex="1">
+          <mxGeometry height="40" width="150" x="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#999999;dashed=1;fontFamily=Noto Sans KR;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="40" as="sourcePoint" />
+            <mxPoint x="375" y="605" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=14;fontFamily=Noto Sans KR;" value="백엔드 API" vertex="1">
+          <mxGeometry height="40" width="150" x="590" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#999999;dashed=1;fontFamily=Noto Sans KR;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="665" y="40" as="sourcePoint" />
+            <mxPoint x="665" y="605" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c7" parent="1" style="rounded=0;html=1;align=left;spacingLeft=8;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=none;fillColor=#F0F0F0;fontFamily=Noto Sans KR;" value="1. 로그인" vertex="1">
+          <mxGeometry height="26" width="750" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="c8" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" value="로그인 요청">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="102" as="sourcePoint" />
+            <mxPoint x="375" y="102" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c9" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" value="로그인">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="136" as="sourcePoint" />
+            <mxPoint x="665" y="136" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c10" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;dashed=1;fontFamily=Noto Sans KR;" value="access·refresh 토큰">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="665" y="170" as="sourcePoint" />
+            <mxPoint x="375" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c11" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;dashed=1;fontFamily=Noto Sans KR;" value="HttpOnly 암호화 세션 쿠키">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="204" as="sourcePoint" />
+            <mxPoint x="85" y="204" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c12" parent="1" style="rounded=0;html=1;align=left;spacingLeft=8;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=none;fillColor=#F0F0F0;fontFamily=Noto Sans KR;" value="2. API 요청" vertex="1">
+          <mxGeometry height="26" width="750" y="226" as="geometry" />
+        </mxCell>
+        <mxCell id="c13" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" value="요청 + 세션 쿠키 자동 전송">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="276" as="sourcePoint" />
+            <mxPoint x="375" y="276" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c14" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" value="복호화한 access 토큰으로 호출">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="310" as="sourcePoint" />
+            <mxPoint x="665" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c15" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;dashed=1;fontFamily=Noto Sans KR;" value="응답">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="665" y="344" as="sourcePoint" />
+            <mxPoint x="375" y="344" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c16" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;dashed=1;fontFamily=Noto Sans KR;" value="응답 (토큰 없음)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="378" as="sourcePoint" />
+            <mxPoint x="85" y="378" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c17" parent="1" style="rounded=0;html=1;align=left;spacingLeft=8;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=none;fillColor=#F0F0F0;fontFamily=Noto Sans KR;" value="3. 만료 5분 전 동시 요청" vertex="1">
+          <mxGeometry height="26" width="750" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="c18" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" value="요청 A">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="450" as="sourcePoint" />
+            <mxPoint x="375" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c19" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" value="요청 B">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="484" as="sourcePoint" />
+            <mxPoint x="375" y="484" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c20" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" value="POST /auth/refresh (같은 모듈 내 1회)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="521" as="sourcePoint" />
+            <mxPoint x="665" y="521" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;fontFamily=Noto Sans KR;" value="요청 B는 진행 중인&lt;br&gt;refresh를 공유" vertex="1">
+          <mxGeometry height="42" width="260" x="100" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="c22" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;dashed=1;fontFamily=Noto Sans KR;" value="새 access·refresh 토큰">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="665" y="555" as="sourcePoint" />
+            <mxPoint x="375" y="555" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c23" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;dashed=1;fontFamily=Noto Sans KR;" value="응답 A·B (갱신 쿠키는 A에 포함)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="589" as="sourcePoint" />
+            <mxPoint x="85" y="589" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

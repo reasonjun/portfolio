@@ -1,0 +1,91 @@
+<mxfile host="Electron">
+  <diagram id="nextauthTokenRefresh" name="nextauth-token-refresh">
+    <mxGraphModel grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="780" pageHeight="560" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=14;fontFamily=Noto Sans KR;" value="브라우저" vertex="1">
+          <mxGeometry height="40" width="150" x="10" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#999999;dashed=1;fontFamily=Noto Sans KR;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="40" as="sourcePoint" />
+            <mxPoint x="85" y="528" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=14;fontFamily=Noto Sans KR;" value="NextAuth.js (Next.js)" vertex="1">
+          <mxGeometry height="40" width="210" x="270" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#999999;dashed=1;fontFamily=Noto Sans KR;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="40" as="sourcePoint" />
+            <mxPoint x="375" y="528" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=14;fontFamily=Noto Sans KR;" value="OIDC 인증 서버" vertex="1">
+          <mxGeometry height="40" width="150" x="590" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#999999;dashed=1;fontFamily=Noto Sans KR;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="665" y="40" as="sourcePoint" />
+            <mxPoint x="665" y="528" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c8" parent="1" style="text;html=1;align=left;verticalAlign=middle;spacingLeft=8;fontSize=15;fontColor=#444444;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" value="전제: 로그인 때 받은 토큰과 액세스 토큰의 만료 시각(exp)이 암호화 세션 쿠키에 들어 있다" vertex="1">
+          <mxGeometry height="26" width="750" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c9" parent="1" style="rounded=0;html=1;align=left;spacingLeft=8;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=none;fillColor=#F0F0F0;fontFamily=Noto Sans KR;" value="1. 만료 전 세션 조회" vertex="1">
+          <mxGeometry height="26" width="750" x="10" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="c10" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" value="세션 조회 + 세션 쿠키 자동 전송">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="136" as="sourcePoint" />
+            <mxPoint x="375" y="136" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;fontFamily=Noto Sans KR;" value="jwt 콜백: exp 확인 → 만료 전" vertex="1">
+          <mxGeometry height="30" width="250" x="250" y="154" as="geometry" />
+        </mxCell>
+        <mxCell id="c12" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;dashed=1;fontFamily=Noto Sans KR;" value="세션 (기존 토큰 그대로)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="212" as="sourcePoint" />
+            <mxPoint x="85" y="212" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c13" parent="1" style="rounded=0;html=1;align=left;spacingLeft=8;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=none;fillColor=#F0F0F0;fontFamily=Noto Sans KR;" value="2. 만료 후 세션 조회" vertex="1">
+          <mxGeometry height="26" width="750" x="10" y="236" as="geometry" />
+        </mxCell>
+        <mxCell id="c14" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" value="세션 조회 + 세션 쿠키 자동 전송">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="286" as="sourcePoint" />
+            <mxPoint x="375" y="286" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c15" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;fontFamily=Noto Sans KR;" value="jwt 콜백: exp 확인 → 만료 후" vertex="1">
+          <mxGeometry height="30" width="250" x="250" y="304" as="geometry" />
+        </mxCell>
+        <mxCell id="c16" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" value="리프레시 토큰으로 새 토큰 요청&lt;br&gt;(토큰 엔드포인트)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="368" as="sourcePoint" />
+            <mxPoint x="665" y="368" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c17" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;dashed=1;fontFamily=Noto Sans KR;" value="새 액세스 토큰&lt;br&gt;(회전 시 새 리프레시 토큰)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="665" y="428" as="sourcePoint" />
+            <mxPoint x="375" y="428" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;fontFamily=Noto Sans KR;" value="새 리프레시 토큰이 오면 교체, 없으면 기존 유지" vertex="1">
+          <mxGeometry height="30" width="360" x="195" y="456" as="geometry" />
+        </mxCell>
+        <mxCell id="c19" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;dashed=1;fontFamily=Noto Sans KR;" value="Set-Cookie: 새 토큰을 담은 세션 쿠키">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="512" as="sourcePoint" />
+            <mxPoint x="85" y="512" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

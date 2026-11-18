@@ -1,0 +1,61 @@
+<mxfile host="Electron">
+  <diagram id="OZK5pU6vkTGFGVqtxPL9" name="pageWithNumber">
+    <mxGraphModel grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="780" pageHeight="600" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="h1" parent="1" style="rounded=0;html=1;align=left;spacingLeft=8;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=none;fillColor=#F0F0F0;fontFamily=Noto Sans KR;" value="1. 개발 환경 (mock 모드): 엔드포인트 단위로 mock과 실API를 섞음" vertex="1">
+          <mxGeometry height="26" width="750" as="geometry" />
+        </mxCell>
+        <mxCell id="b1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=14;fontFamily=Noto Sans KR;" value="브라우저" vertex="1">
+          <mxGeometry height="54" width="83" x="10" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="b2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=14;fontFamily=Noto Sans KR;" value="Next.js 서버&lt;br&gt;&lt;span style=&quot;font-weight:normal;font-size:16px&quot;&gt;RSC·Server Action·BFF의 fetch&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="263" x="115" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="b3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=14;fontFamily=Noto Sans KR;" value="MSW setupServer&lt;br&gt;&lt;span style=&quot;font-weight:normal;font-size:16px&quot;&gt;instrumentation.ts에서 listen&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="304" x="436" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="b1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" target="b2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="b2" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" target="b3" value="가로챔">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#FFFFFF;fontFamily=Noto Sans KR;" value="핸들러가&lt;br&gt;있는가" vertex="1">
+          <mxGeometry height="80" width="140" x="518" y="112" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="b3" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontFamily=Noto Sans KR;" target="d1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=14;fontFamily=Noto Sans KR;" value="mock 리졸버&lt;br&gt;&lt;span style=&quot;font-weight:normal;font-size:16px&quot;&gt;예: 검토요청 상세·수정·상태 전이&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="263" x="115" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="d1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" target="m1" value="있음">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=14;fontFamily=Noto Sans KR;" value="실 백엔드 API&lt;br&gt;&lt;span style=&quot;font-weight:normal;font-size:16px&quot;&gt;예: 인증·메뉴·공통코드, 검토요청 목록·엑셀&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="320" x="428" y="226" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="d1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;fontFamily=Noto Sans KR;" target="r1" value="없음 (bypass)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n1" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=15;fontColor=#444444;fontFamily=Noto Sans KR;" value="API가 공개되면 해당 핸들러를 지움&lt;br&gt;→ 다음 요청부터 실API로 나감" vertex="1">
+          <mxGeometry height="40" width="263" x="115" y="184" as="geometry" />
+        </mxCell>
+        <mxCell id="h3" parent="1" style="rounded=0;html=1;align=left;spacingLeft=8;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=none;fillColor=#F0F0F0;fontFamily=Noto Sans KR;" value="2. 운영·스테이징 빌드: mock 코드 제거" vertex="1">
+          <mxGeometry height="26" width="750" y="294" as="geometry" />
+        </mxCell>
+        <mxCell id="p1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=14;fontFamily=Noto Sans KR;" value="빌드 스크립트&lt;br&gt;&lt;span style=&quot;font-weight:normal;font-size:16px&quot;&gt;NEXT_PUBLIC_USE_MOCK=false 고정&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="308" x="10" y="332" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=14;fontFamily=Noto Sans KR;" value="빌드 산출물&lt;br&gt;&lt;span style=&quot;font-weight:normal;font-size:16px&quot;&gt;상수로 인라인돼 mock 분기 제거, MSW·mock 시드 0건&lt;/span&gt;" vertex="1">
+          <mxGeometry height="54" width="392" x="348" y="332" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="p1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontFamily=Noto Sans KR;" target="p2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

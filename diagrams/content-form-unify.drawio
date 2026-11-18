@@ -1,0 +1,73 @@
+<mxfile host="Electron">
+  <diagram id="d" name="Page-1">
+    <mxGraphModel grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="l1" parent="1" style="swimlane;startSize=34;html=1;fontSize=16;fontColor=#111111;strokeColor=#BBBBBB;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;rounded=0;fontFamily=Noto Sans KR;" value="&lt;b&gt;변경 전&lt;/b&gt;: 화면마다 복제된 입력 폼" vertex="1">
+          <mxGeometry height="330" width="272" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" parent="1" style="swimlane;startSize=34;html=1;fontSize=16;fontColor=#111111;strokeColor=#BBBBBB;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;rounded=0;fontFamily=Noto Sans KR;" value="&lt;b&gt;변경 후&lt;/b&gt;: 기준 한 곳" vertex="1">
+          <mxGeometry height="330" width="452" x="292" as="geometry" />
+        </mxCell>
+        <mxCell id="a0" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#555555;strokeColor=#888888;dashed=1;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;계약등록&lt;/b&gt;: 입력 폼 사본&lt;br&gt;필수값·검증 규칙 제각각" vertex="1">
+          <mxGeometry height="48" width="248" x="12" y="46" as="geometry" />
+        </mxCell>
+        <mxCell id="s0" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;계약등록&lt;/b&gt;" vertex="1">
+          <mxGeometry height="48" width="116" x="304" y="46" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#555555;strokeColor=#888888;dashed=1;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;콘텐츠 등록&lt;/b&gt;: 입력 폼 사본&lt;br&gt;필수값·검증 규칙 제각각" vertex="1">
+          <mxGeometry height="48" width="248" x="12" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;콘텐츠 등록&lt;/b&gt;" vertex="1">
+          <mxGeometry height="48" width="116" x="304" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#555555;strokeColor=#888888;dashed=1;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;콘텐츠 변경&lt;/b&gt;: 입력 폼 사본&lt;br&gt;필수값·검증 규칙 제각각" vertex="1">
+          <mxGeometry height="48" width="248" x="12" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;콘텐츠 변경&lt;/b&gt;" vertex="1">
+          <mxGeometry height="48" width="116" x="304" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#555555;strokeColor=#888888;dashed=1;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;영상 등록&lt;/b&gt;: 입력 폼 사본&lt;br&gt;필수값·검증 규칙 제각각" vertex="1">
+          <mxGeometry height="48" width="248" x="12" y="214" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;영상 등록&lt;/b&gt;" vertex="1">
+          <mxGeometry height="48" width="116" x="304" y="214" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#555555;strokeColor=#888888;dashed=1;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;영상 변경&lt;/b&gt;: 입력 폼 사본&lt;br&gt;필수값·검증 규칙 제각각" vertex="1">
+          <mxGeometry height="48" width="248" x="12" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;영상 변경&lt;/b&gt;" vertex="1">
+          <mxGeometry height="48" width="116" x="304" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="cc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;공통 콘텐츠 입력 컴포넌트&lt;/b&gt;&lt;br&gt;필수값·검증 규칙을 한곳에서 정의" vertex="1">
+          <mxGeometry height="72" width="264" x="468" y="92" as="geometry" />
+        </mxCell>
+        <mxCell id="cp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;그룹콘텐츠 중복 검사&lt;/b&gt;&lt;br&gt;공통 composable" vertex="1">
+          <mxGeometry height="60" width="264" x="468" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="note" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fontColor=#111111;strokeColor=none;fillColor=#F0F0F0;align=left;spacingLeft=14;fontFamily=Noto Sans KR;" value="콘텐츠 입력 폼의 기준: 다섯 곳 → 한 곳" vertex="1">
+          <mxGeometry height="40" width="744" y="342" as="geometry" />
+        </mxCell>
+        <mxCell id="e0" edge="1" parent="1" source="s0" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="cc" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="s1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="cc" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="s2" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="cc" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="s3" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="cc" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="s4" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="cc" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ep" edge="1" parent="1" source="cc" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;fontFamily=Noto Sans KR;" target="cp" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

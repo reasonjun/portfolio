@@ -29,9 +29,8 @@ body:has(.paper) {
   background: #ffffff;
 }
 
-/* 코드 식별자가 하이픈에서 끊기지 않게 하고, 옅은 바탕으로 본문과 구분한다. */
+/* 옅은 바탕으로 본문과 구분한다. */
 .paper code {
-  white-space: nowrap;
   font-size: 0.88em;
   padding: 0 2px;
   border-radius: 2px;

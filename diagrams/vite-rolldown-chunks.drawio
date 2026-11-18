@@ -1,0 +1,46 @@
+<mxfile host="Electron">
+  <diagram id="d" name="Page-1">
+    <mxGraphModel grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="l1" parent="1" style="swimlane;startSize=34;html=1;fontSize=16;fontColor=#111111;strokeColor=#BBBBBB;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;rounded=0;fontFamily=Noto Sans KR;" value="&lt;b&gt;변경 전&lt;/b&gt;: Vite 5" vertex="1">
+          <mxGeometry height="298" width="236" as="geometry" />
+        </mxCell>
+        <mxCell id="b1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;번들러 두 개&lt;/b&gt;&lt;br&gt;개발: esbuild·빌드: Rollup" vertex="1">
+          <mxGeometry height="56" width="220" x="8" y="42" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#555555;strokeColor=#888888;dashed=1;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;라이브러리와 앱 코드 혼재&lt;/b&gt;&lt;br&gt;진입 640KiB: Vuetify 등&lt;br&gt;공통 1,879KiB: RealGrid" vertex="1">
+          <mxGeometry height="116" width="220" x="8" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="t1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="CI 운영 빌드 &lt;b&gt;약 145초&lt;/b&gt;&lt;br&gt;JS·CSS 전체 6,398KiB" vertex="1">
+          <mxGeometry height="60" width="220" x="8" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" parent="1" style="swimlane;startSize=34;html=1;fontSize=16;fontColor=#111111;strokeColor=#BBBBBB;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;rounded=0;fontFamily=Noto Sans KR;" value="&lt;b&gt;변경 후&lt;/b&gt;: Vite 8" vertex="1">
+          <mxGeometry height="298" width="370" x="380" as="geometry" />
+        </mxCell>
+        <mxCell id="b2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;Rolldown으로 통합&lt;/b&gt;&lt;br&gt;개발·빌드가 같은 번들러" vertex="1">
+          <mxGeometry height="56" width="354" x="388" y="42" as="geometry" />
+        </mxCell>
+        <mxCell id="k1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;realgrid&lt;/b&gt;&lt;br&gt;CJS·트리셰이킹 불가" vertex="1">
+          <mxGeometry height="54" width="168" x="388" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="k2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;vuetify&lt;/b&gt;&lt;br&gt;UI 라이브러리" vertex="1">
+          <mxGeometry height="54" width="178" x="564" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="k3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;vendor&lt;/b&gt;&lt;br&gt;CJS → ESM 교체" vertex="1">
+          <mxGeometry height="54" width="168" x="388" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="k4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;fillColor=#FFFFFF;arcSize=12;fontFamily=Noto Sans KR;" value="&lt;b&gt;앱 코드&lt;/b&gt;&lt;br&gt;미사용 패키지·코드 제거" vertex="1">
+          <mxGeometry height="54" width="178" x="564" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="t2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontColor=#111111;strokeColor=#111111;strokeWidth=2;fillColor=#E8E8E8;arcSize=12;fontFamily=Noto Sans KR;" value="CI 운영 빌드 &lt;b&gt;약 35초&lt;/b&gt; (약 76% 단축)&lt;br&gt;JS·CSS 전체 5,066KiB (약 21% 감소)" vertex="1">
+          <mxGeometry height="60" width="354" x="388" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="l1" style="endArrow=block;endFill=1;html=1;strokeColor=#111111;fontColor=#111111;fontSize=15;labelBackgroundColor=#FFFFFF;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontFamily=Noto Sans KR;" target="l2" value="번들 분석 후 분리">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
