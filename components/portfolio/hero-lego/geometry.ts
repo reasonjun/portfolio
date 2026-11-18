@@ -113,7 +113,6 @@ export const BRICK_ART = BRICKS.map((brick) => {
         14,
       ),
     ),
-    // 앞면에 인쇄된 화면. 지역 좌표의 원점은 앞면의 왼쪽 위다.
     face: faceAt(0, BRICK_DEPTH, brick.h),
     center: iso([brick.w / 2, BRICK_DEPTH / 2, brick.h / 2], PROJECTION),
   };

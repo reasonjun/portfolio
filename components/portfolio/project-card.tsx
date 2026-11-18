@@ -15,8 +15,7 @@ interface ProjectCardProps {
 }
 
 /**
- * 대표 프로젝트 카드 하나. 링크는 제목에만 걸고, 카드 전체가 눌리도록 ::after로 영역을 넓힌다.
- * 이미지가 없는 프로젝트는 썸네일 영역 없이 텍스트 카드로 둔다.
+ * 링크는 제목에만 걸고, 카드 전체가 눌리도록 ::after로 영역을 넓힌다.
  */
 export const ProjectCard = ({
   href,

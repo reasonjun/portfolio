@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { Kind } from "./model";
 
-// 양 끝이 둥근 막대. 블록에 인쇄된 글자 줄과 버튼은 대부분 이 모양이다.
+// 블록에 인쇄된 글자 줄과 버튼은 대부분 이 모양이다.
 const Pill = ({
   className,
   x,

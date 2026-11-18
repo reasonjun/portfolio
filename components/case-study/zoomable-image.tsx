@@ -39,7 +39,6 @@ interface ZoomableImageProps {
   eager?: boolean;
 }
 
-// 본문에서는 폭에 맞춰 보여 주고, 클릭하면 모달로 크게 띄운다.
 // 화면보다 크면 모달 안쪽 상자에서 스크롤된다.
 export const ZoomableImage = ({
   src,
