@@ -574,7 +574,7 @@ export const PROJECTS_DATA: Project[] = [
     title: "디자인 시스템 구축",
     description:
       "개발자가 화면마다 똑같은 모양으로 가져다 쓰는 버튼·입력창 같은 부품 모음",
-    company: "개인 프로젝트",
+    company: "사이드 프로젝트",
     period: "2025. 04.~2025. 06.",
     techStack: [
       "TypeScript 5",
@@ -692,7 +692,7 @@ export const PROJECTS_DATA: Project[] = [
     images: ["dot-editor/image-1.webp", "dot-editor/image-2.webp"],
     coverPosition: "left top",
     caseStudy: {
-      team: "프론트엔드 2·백엔드 1",
+      team: "프론트엔드·백엔드 3",
       summary:
         "CKEditor 5에 가상 스크롤을 직접 붙여 대용량 문서에서 체감 20초씩 이어지던 스크롤 멈춤을 1초 안팎으로 줄이고, 가상 스크롤로 비게 된 화면 밖 문단까지 내보내기 전 접근성 검사가 동작하도록 재설계",
       background:
@@ -840,7 +840,7 @@ export const PROJECTS_DATA: Project[] = [
       "dot-canvas/image-4.webp",
     ],
     caseStudy: {
-      team: "프론트엔드 1·백엔드 1·SDK 1·점역엔진 1",
+      team: "프론트엔드·백엔드 2",
       summary:
         "운영 빌드 설정 수정, 번들 분할·지연 로딩, CloudFront 도입으로 캐시를 비운 첫 접속의 LCP를 1분 이상에서 1초로 단축",
       background:
