@@ -1,5 +1,6 @@
 // 덩어리 id. 그림 파일 이름(원본 diagrams/<id>.drawio, 구운 그림 public/diagrams/<id>.svg), 웹 앵커(#id), PDF 목록이 모두 이 값을 쓴다.
 export type ChunkId =
+  | "fsd-boundary-check"
   | "blue-green-deploy"
   | "bff-auth-flow"
   | "msw-mock-switch"

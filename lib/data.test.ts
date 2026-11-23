@@ -59,6 +59,7 @@ describe("프로젝트 데이터", () => {
       chunk.figure ? [chunk.id] : [],
     );
     expect(figureIds).toEqual([
+      "fsd-boundary-check",
       "blue-green-deploy",
       "bff-auth-flow",
       "msw-mock-switch",
