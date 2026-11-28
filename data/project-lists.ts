@@ -3,14 +3,13 @@ import type { ChunkId } from "@/app/types/project";
 // 무엇을 어느 화면에 어떤 순서로 싣는지 정한다. 사례 내용은 data/projects.ts에 둔다.
 // 홈은 프로젝트 단위로, PDF는 덩어리 단위로 고른다. 두 목록은 서로 독립이다.
 
-// 홈 '대표 프로젝트' 카드. 임팩트순.
 export const HOME_PROJECT_IDS = [
   "enterprise-legal-management",
   "ip-management-system",
   "external-settlement-system",
+  "design-system",
   "wysiwyg-editor",
   "tactile-graphics-editor",
-  "design-system",
 ];
 
 // 이력서와 함께 내는 PDF에 싣는 덩어리. 적힌 순서가 PDF의 쪽 순서다.

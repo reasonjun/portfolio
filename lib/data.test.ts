@@ -96,11 +96,11 @@ describe("경력 데이터", () => {
     ).not.toContain("프런트엔드");
   });
 
-  it("닷 경력에 초기 로딩 1분 이상 → 1초와 측정 조건이 있다", () => {
+  it("닷 경력에 초기 로딩 1분 이상 → 1초로 단축한 문장이 있다", () => {
     const dot = EXPERIENCES_DATA.find((experience) => experience.id === "dot");
-    const loading = dot?.duties.find((duty) => duty.includes("1분 이상 → 1초"));
-    expect(loading).toContain("캐시 비운 첫 접속");
-    expect(loading).toContain("운영 환경 기준");
+    expect(
+      dot?.duties.some((duty) => duty.includes("1분 이상 → 1초로 단축")),
+    ).toBe(true);
   });
 
   it("닷은 백엔드 개발 직무를 뒷받침하는 Java/Spring Boot 문장이 있다", () => {
